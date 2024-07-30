@@ -7,6 +7,8 @@
     fetchTarball
     https://github.com/NixOS/nixpkgs/archive/nixos-unstable.tar.gz;
 in {
+  imports = [<home-manager/nixos>];
+
   nixpkgs.config = {
     allowUnfree = true;
     packageOverrides = pkgs: {
