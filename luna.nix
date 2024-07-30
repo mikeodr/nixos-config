@@ -13,6 +13,8 @@ in {
       unstable = import unstableTarball {
         config = config.nixpkgs.config;
       };
+      # Jellyfin hardware acceleration
+      vaapiIntel = pkgs.vaapiIntel.override {enableHybridCodec = true;};
     };
   };
 
@@ -99,4 +101,28 @@ in {
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
   programs.mtr.enable = true;
+
+  # Jellyfin Media Mounts
+  fileSystems."/mnt/media" = {
+    device = "172.16.0.3:/volume2/Media";
+    fsType = "nfs4";
+    options = ["auto"];
+  };
+
+  # Jellyfin acceleration Mounts
+  hardware.opengl = {
+    enable = true;
+    extraPackages = with pkgs; [
+      intel-media-driver
+      vaapiIntel
+      vaapiVdpau
+      libvdpau-va-gl
+      intel-compute-runtime # OpenCL filter support (hardware tonemapping and subtitle burn-in)
+    ];
+  };
+
+  services.jellyfin = {
+    enable = true;
+    openFirewall = true;
+  };
 }
