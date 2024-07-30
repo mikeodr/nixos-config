@@ -58,32 +58,22 @@ in {
     zstd
   ];
 
-  programs.zsh = {
-    enable = true;
-    ohMyZsh = {
+  programs = {
+    zsh = {
       enable = true;
-      plugins = ["git" "docker" "sudo" "extract"];
-      theme = "robbyrussell";
+      ohMyZsh = {
+        enable = true;
+        plugins = ["git" "docker" "sudo" "extract"];
+        theme = "robbyrussell";
+      };
     };
+
+    vim.defaultEditor = true;
+
+    # Some programs need SUID wrappers, can be configured further or are
+    # started in user sessions.
+    mtr.enable = true;
   };
-
-  # Enable the OpenSSH daemon.
-  services.openssh = {
-    enable = true;
-    settings = {
-      PermitRootLogin = "no";
-      PasswordAuthentication = false;
-    };
-  };
-
-  services.qemuGuest.enable = true;
-
-  services.tailscale = {
-    enable = true;
-    package = pkgs.unstable.tailscale;
-  };
-
-  programs.vim.defaultEditor = true;
 
   system.autoUpgrade = {
     enable = true;
@@ -98,9 +88,28 @@ in {
     channel = "https://channels.nixos.org/nixos-24.05";
   };
 
-  # Some programs need SUID wrappers, can be configured further or are
-  # started in user sessions.
-  programs.mtr.enable = true;
+  services = {
+    # Enable the OpenSSH daemon.
+    openssh = {
+      enable = true;
+      settings = {
+        PermitRootLogin = "no";
+        PasswordAuthentication = false;
+      };
+    };
+
+    qemuGuest.enable = true;
+
+    tailscale = {
+      enable = true;
+      package = pkgs.unstable.tailscale;
+    };
+
+    jellyfin = {
+      enable = true;
+      openFirewall = true;
+    };
+  };
 
   # Jellyfin Media Mounts
   fileSystems."/mnt/media" = {
@@ -119,10 +128,5 @@ in {
       libvdpau-va-gl
       intel-compute-runtime # OpenCL filter support (hardware tonemapping and subtitle burn-in)
     ];
-  };
-
-  services.jellyfin = {
-    enable = true;
-    openFirewall = true;
   };
 }
