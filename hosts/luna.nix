@@ -44,6 +44,12 @@ in {
     };
   };
 
+  home-manager.useGlobalPkgs = true;
+
+  home-manager.users.specter = {pkgs, ...}: {
+    home.stateVersion = "24.05";
+  };
+
   environment.systemPackages = with pkgs; [
     alejandra
     curl
