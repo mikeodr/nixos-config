@@ -29,7 +29,7 @@ in {
     # Define a user account. Don't forget to set a password with ‘passwd’.
     users.specter = {
       isNormalUser = true;
-      extraGroups = ["wheel"]; # Enable ‘sudo’ for the user.
+      extraGroups = ["wheel"];
       initialPassword = "correcthorsestaplebattery";
       openssh.authorizedKeys.keyFiles = [
         (builtins.fetchurl {
