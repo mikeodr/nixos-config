@@ -59,6 +59,12 @@ in {
   ];
 
   programs = {
+    # Allow ld dynamic linking of downloaded binaries
+    nix-ld = {
+      enable = true;
+      package = pkgs.nix-ld-rs;
+    };
+
     zsh = {
       enable = true;
       ohMyZsh = {
