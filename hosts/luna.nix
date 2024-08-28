@@ -104,6 +104,19 @@ in {
     channel = "https://channels.nixos.org/nixos-24.05";
   };
 
+  security.acme = {
+    acceptTerms = true;
+    defaults.email = "spry.frog6886@hidemail.ca";
+
+    certs."unusedbytes.ca" = {
+      domain = "unusedbytes.ca";
+      extraDomainNames = ["*.unusedbytes.ca"];
+      dnsProvider = "cloudflare";
+      dnsPropagationCheck = true;
+      credentialsFile = /home/specter/.secrets/cf;
+    };
+  };
+
   services = {
     # Enable the OpenSSH daemon.
     openssh = {
