@@ -125,8 +125,9 @@ in {
     };
     virtualHosts."oink.unusedbytes.ca" = {
       extraConfig = ''
-        reverse_proxy https://overseerr.unusedbytes.ca
-        header_up Host {upstream_hostport}
+        reverse_proxy https://overseerr.unusedbytes.ca {
+          header_up Host "overseerr.unusedbytes.ca"
+        }
       '';
       useACMEHost = "unusedbytes.ca";
     };
