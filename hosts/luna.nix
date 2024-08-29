@@ -137,6 +137,12 @@ in {
       '';
       useACMEHost = "unusedbytes.ca";
     };
+    virtualHosts.":443" = {
+      extraConfig = ''
+        respond "Not Found" 404
+      '';
+      useACMEHost = "unusedbytes.ca";
+    };
   };
 
   services = {
