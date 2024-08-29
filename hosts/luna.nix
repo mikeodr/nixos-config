@@ -20,10 +20,6 @@ in {
     };
   };
 
-  # Use the GRUB 2 boot loader.
-  boot.loader.grub.enable = true;
-  boot.loader.grub.device = "/dev/sda"; # or "nodev" for efi only
-
   # Set your time zone.
   time.timeZone = "America/Toronto";
 
@@ -53,6 +49,7 @@ in {
   environment.systemPackages = with pkgs; [
     alejandra
     curl
+    dig
     dua
     du-dust
     git
@@ -61,6 +58,7 @@ in {
     htop
     mtr
     neofetch
+    tcpdump
     vim
     wget
     zstd
@@ -119,15 +117,31 @@ in {
 
   services.caddy = {
     enable = true;
-    virtualHosts."example.org".extraConfig = ''
-      respond "Hello, world!"
-    '';
+    virtualHosts."luna.unusedbytes.ca" = {
+      extraConfig = ''
+        reverse_proxy http://localhost:8096
+      '';
+      useACMEHost = "unusedbytes.ca";
+    };
+    virtualHosts."oink.unusedbytes.ca" = {
+      extraConfig = ''
+        reverse_proxy https://overseerr.unusedbytes.ca
+      '';
+      useACMEHost = "unusedbytes.ca";
+    };
+    virtualHosts."plex.unusedbytes.ca" = {
+      extraConfig = ''
+        reverse_proxy https://plexserver.unusedbytes.ca:32400
+      '';
+      useACMEHost = "unusedbytes.ca";
+    };
   };
 
   services = {
     # Enable the OpenSSH daemon.
     openssh = {
       enable = true;
+      openFirewall = true;
       settings = {
         PermitRootLogin = "no";
         PasswordAuthentication = false;
@@ -139,11 +153,11 @@ in {
     tailscale = {
       enable = true;
       package = pkgs.unstable.tailscale;
+      openFirewall = true;
     };
 
     jellyfin = {
       enable = true;
-      openFirewall = true;
     };
   };
 
@@ -164,5 +178,22 @@ in {
       libvdpau-va-gl
       intel-compute-runtime # OpenCL filter support (hardware tonemapping and subtitle burn-in)
     ];
+  };
+
+  networking = {
+    useDHCP = false;
+    interfaces.ens18.ipv4.addresses = [
+      {
+        address = "172.16.0.11";
+        prefixLength = 24;
+      }
+    ];
+    defaultGateway = "172.16.0.1";
+    nameservers = ["172.16.0.1"];
+  };
+
+  networking.firewall = {
+    enable = true;
+    allowedTCPPorts = [80 443];
   };
 }
