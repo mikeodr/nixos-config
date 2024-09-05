@@ -102,6 +102,15 @@ in {
     channel = "https://channels.nixos.org/nixos-24.05";
   };
 
+  nix = {
+    settings.auto-optimise-store = true;
+    gc = {
+      automatic = true;
+      dates = "weekly";
+      options = "--delete-older-than 7d";
+    };
+  };
+
   security.acme = {
     acceptTerms = true;
     defaults.email = "spry.frog6886@hidemail.ca";
