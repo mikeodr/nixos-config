@@ -178,7 +178,7 @@ in {
     };
 
     sonarr = {
-      enable = true;
+      enable = false;
       package = pkgs.unstable.sonarr;
       openFirewall = true;
     };
