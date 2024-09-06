@@ -176,6 +176,11 @@ in {
     jellyfin = {
       enable = true;
     };
+
+    sonarr = {
+      enable = true;
+      openFirewall = true;
+    };
   };
 
   # Jellyfin Media Mounts
