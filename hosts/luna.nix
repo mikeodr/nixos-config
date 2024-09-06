@@ -171,6 +171,8 @@ in {
       enable = true;
       settings = {
         server = {
+          interface = ["0.0.0.0"];
+          access-control = ["0.0.0.0/0 allow"];
           local-data = [
             "\"freshrss.unusedbytes.ca CNAME luna.unusedbytes.ca\""
             "\"sonarr.unusedbytes.ca CNAME luna.unusedbytes.ca\""
