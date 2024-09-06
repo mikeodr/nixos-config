@@ -167,6 +167,18 @@ in {
 
     qemuGuest.enable = true;
 
+    unbound = {
+      enable = true;
+      settings = {
+        server = {
+          local-data = [
+            "\"freshrss.unusedbytes.ca CNAME luna.unusedbytes.ca\""
+            "\"sonarr.unusedbytes.ca CNAME luna.unusedbytes.ca\""
+          ];
+        };
+      };
+    };
+
     tailscale = {
       enable = true;
       package = pkgs.unstable.tailscale;
