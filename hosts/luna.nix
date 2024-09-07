@@ -126,7 +126,7 @@ in {
 
   services.caddy = {
     enable = true;
-    virtualHosts."luna.unusedbytes.ca" = {
+    virtualHosts."jellyfin.unusedbytes.ca" = {
       extraConfig = ''
         reverse_proxy http://localhost:8096
       '';
@@ -178,6 +178,14 @@ in {
             "\"sonarr.unusedbytes.ca CNAME luna.unusedbytes.ca\""
           ];
         };
+        forward-zone = [
+          {
+            name = ".";
+            forward-addr = [
+              "172.16.0.1"
+            ];
+          }
+        ];
       };
     };
 
@@ -189,6 +197,13 @@ in {
 
     jellyfin = {
       enable = true;
+    };
+
+    freshrss = {
+      enable = true;
+      package = pkgs.unstable.freshrss;
+      passwordFile = /home/specter/.secrets/freshrss;
+      baseUrl = "https://luna.unusedbytes.ca/rss";
     };
 
     sonarr = {
