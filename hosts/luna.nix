@@ -204,7 +204,7 @@ in {
       package = pkgs.unstable.freshrss;
       passwordFile = /home/specter/.secrets/freshrss;
       baseUrl = "https://luna.unusedbytes.ca/rss";
-      virtualHost = null;
+      #virtualHost = null;
     };
 
     sonarr = {
