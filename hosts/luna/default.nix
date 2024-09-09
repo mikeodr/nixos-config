@@ -1,5 +1,9 @@
-{ pkgs, nixpkgs, pkgs-unstable, ... }: 
 {
+  pkgs,
+  nixpkgs,
+  pkgs-unstable,
+  ...
+}: {
   imports = [
     ./hardware-configuration.nix
   ];
@@ -28,7 +32,6 @@
       ];
     };
   };
-
 
   environment.systemPackages = with pkgs; [
     alejandra
@@ -97,7 +100,7 @@
 
   nix = {
     settings = {
-      experimental-features = [ "nix-command" "flakes" ];
+      experimental-features = ["nix-command" "flakes"];
       auto-optimise-store = true;
     };
     # gc = {
@@ -264,15 +267,15 @@
 
   # Jellyfin acceleration Mounts
   hardware.opengl = {
-      enable = true;
-      extraPackages = with pkgs; [
-        intel-media-driver
-        vaapiIntel
-        vaapiVdpau
-        libvdpau-va-gl
-        intel-compute-runtime # OpenCL filter support (hardware tonemapping and subtitle burn-in)
-      ];
-    };
+    enable = true;
+    extraPackages = with pkgs; [
+      intel-media-driver
+      vaapiIntel
+      vaapiVdpau
+      libvdpau-va-gl
+      intel-compute-runtime # OpenCL filter support (hardware tonemapping and subtitle burn-in)
+    ];
+  };
 
   networking = {
     useDHCP = false;

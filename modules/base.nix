@@ -1,4 +1,8 @@
-{config, system, pkgs, ...}:
 {
-    system.stateVersion = "24.05";
+  config,
+  system,
+  pkgs,
+  ...
+}: {
+  system.stateVersion = "24.05";
 }
