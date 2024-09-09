@@ -1,23 +1,12 @@
+{ pkgs, nixpkgs, pkgs-unstable, ... }: 
 {
-  config,
-  pkgs,
-  ...
-}: let
-  unstableTarball =
-    fetchTarball
-    https://github.com/NixOS/nixpkgs/archive/nixos-unstable.tar.gz;
-in {
-  imports = [<home-manager/nixos>];
+  imports = [
+    ./hardware-configuration.nix
+  ];
 
-  nixpkgs.config = {
-    allowUnfree = true;
-    packageOverrides = pkgs: {
-      unstable = import unstableTarball {
-        config = config.nixpkgs.config;
-      };
-      # Jellyfin hardware acceleration
-      vaapiIntel = pkgs.vaapiIntel.override {enableHybridCodec = true;};
-    };
+  boot = {
+    loader.grub.device = "/dev/sda";
+    tmp.cleanOnBoot = true;
   };
 
   # Set your time zone.
@@ -40,11 +29,6 @@ in {
     };
   };
 
-  home-manager.useGlobalPkgs = true;
-
-  home-manager.users.specter = {pkgs, ...}: {
-    home.stateVersion = "24.05";
-  };
 
   environment.systemPackages = with pkgs; [
     alejandra
@@ -56,8 +40,10 @@ in {
     gnutar
     gzip
     htop
+    intel-gpu-tools
     mtr
     neofetch
+    nh
     tcpdump
     vim
     wget
@@ -65,6 +51,13 @@ in {
   ];
 
   programs = {
+    nh = {
+      enable = true;
+      clean.enable = true;
+      clean.extraArgs = "--keep-since 7d --keep 3";
+      flake = "/home/specter/nixos-config";
+    };
+
     # Allow ld dynamic linking of downloaded binaries
     nix-ld = {
       enable = true;
@@ -103,12 +96,15 @@ in {
   };
 
   nix = {
-    settings.auto-optimise-store = true;
-    gc = {
-      automatic = true;
-      dates = "weekly";
-      options = "--delete-older-than 7d";
+    settings = {
+      experimental-features = [ "nix-command" "flakes" ];
+      auto-optimise-store = true;
     };
+    # gc = {
+    #   automatic = true;
+    #   dates = "weekly";
+    #   options = "--delete-older-than 7d";
+    # };
   };
 
   security.acme = {
@@ -146,6 +142,12 @@ in {
       '';
       useACMEHost = "unusedbytes.ca";
     };
+    # virtualHosts."obsidian-livesync.unusedbytes.ca" = {
+    #   extraConfig = ''
+    #     reverse_proxy http://localhost:5984
+    #   '';
+    #   useACMEHost = "unusedbytes.ca";
+    # };
     virtualHosts.":443" = {
       extraConfig = ''
         respond "Not Found" 404
@@ -167,51 +169,83 @@ in {
 
     qemuGuest.enable = true;
 
-    unbound = {
-      enable = true;
-      settings = {
-        server = {
-          interface = ["0.0.0.0"];
-          access-control = ["0.0.0.0/0 allow"];
-          local-data = [
-            "\"freshrss.unusedbytes.ca CNAME luna.unusedbytes.ca\""
-            "\"sonarr.unusedbytes.ca CNAME luna.unusedbytes.ca\""
-          ];
-        };
-        forward-zone = [
-          {
-            name = ".";
-            forward-addr = [
-              "172.16.0.1"
-            ];
-          }
-        ];
-      };
-    };
+    # unbound = {
+    #   enable = true;
+    #   settings = {
+    #     server = {
+    #       interface = ["0.0.0.0"];
+    #       access-control = ["0.0.0.0/0 allow"];
+    #       local-data = [
+    #         "\"obsidian-livesync.unusedbytes.ca CNAME luna.unusedbytes.ca\""
+    #       ];
+    #     };
+    #     forward-zone = [
+    #       {
+    #         name = ".";
+    #         forward-addr = [
+    #           "172.16.0.1"
+    #         ];
+    #       }
+    #     ];
+    #   };
+    # };
 
     tailscale = {
       enable = true;
-      package = pkgs.unstable.tailscale;
+      package = pkgs-unstable.tailscale;
       openFirewall = true;
     };
 
     jellyfin = {
       enable = true;
+      openFirewall = true;
     };
 
-    freshrss = {
-      enable = true;
-      package = pkgs.unstable.freshrss;
-      passwordFile = /home/specter/.secrets/freshrss;
-      baseUrl = "https://luna.unusedbytes.ca/rss";
-      #virtualHost = null;
-    };
+    # freshrss = {
+    #   enable = true;
+    #   package = unstable.freshrss;
+    #   passwordFile = /home/specter/.secrets/freshrss;
+    #   baseUrl = "https://luna.unusedbytes.ca/rss";
+    #   #virtualHost = null;
+    # };
 
     sonarr = {
       enable = false;
       package = pkgs.unstable.sonarr;
       openFirewall = true;
     };
+
+    # # Obsidian Livesync
+    # couchdb = {
+    #   enable = true;
+    #   bindAddress = "0.0.0.0";
+    #   configFile = obsidianEnvFile;
+    #   # https://github.com/vrtmrz/obsidian-livesync/blob/main/docs/setup_own_server.md#configure
+    #   extraConfig = ''
+    #     [couchdb]
+    #     single_node=true
+    #     max_document_size = 50000000
+
+    #     [chttpd]
+    #     require_valid_user = true
+    #     max_http_request_size = 4294967296
+    #     enable_cors = true
+
+    #     [chttpd_auth]
+    #     require_valid_user = true
+    #     authentication_redirect = /_utils/session.html
+
+    #     [httpd]
+    #     WWW-Authenticate = Basic realm="couchdb"
+
+    #     [cors]
+    #     origins = app://obsidian.md, capacitor://localhost, http://localhost
+    #     credentials = true
+    #     headers = accept, authorization, content-type, origin, referer
+    #     methods = GET,PUT,POST,HEAD,DELETE
+    #     max_age = 3600
+    #   '';
+    # };
   };
 
   # Jellyfin Media Mounts
@@ -221,17 +255,24 @@ in {
     options = ["auto"];
   };
 
+  # Jellyfin acceleration configs
+  nixpkgs.config = {
+    packageOverrides = pkgs: {
+      vaapiIntel = pkgs.vaapiIntel.override {enableHybridCodec = true;};
+    };
+  };
+
   # Jellyfin acceleration Mounts
   hardware.opengl = {
-    enable = true;
-    extraPackages = with pkgs; [
-      intel-media-driver
-      vaapiIntel
-      vaapiVdpau
-      libvdpau-va-gl
-      intel-compute-runtime # OpenCL filter support (hardware tonemapping and subtitle burn-in)
-    ];
-  };
+      enable = true;
+      extraPackages = with pkgs; [
+        intel-media-driver
+        vaapiIntel
+        vaapiVdpau
+        libvdpau-va-gl
+        intel-compute-runtime # OpenCL filter support (hardware tonemapping and subtitle burn-in)
+      ];
+    };
 
   networking = {
     useDHCP = false;
@@ -248,6 +289,5 @@ in {
   networking.firewall = {
     enable = true;
     allowedTCPPorts = [80 443];
-    allowedUDPPorts = [53];
   };
 }
