@@ -34,17 +34,6 @@
       package = pkgs.nix-ld-rs;
     };
 
-    zsh = {
-      enable = true;
-      ohMyZsh = {
-        enable = true;
-        plugins = ["git" "docker" "sudo" "extract"];
-        theme = "robbyrussell";
-      };
-    };
-
-    vim.defaultEditor = true;
-
     # Some programs need SUID wrappers, can be configured further or are
     # started in user sessions.
     mtr.enable = true;
