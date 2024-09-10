@@ -2,10 +2,14 @@
   pkgs,
   nixpkgs,
   pkgs-unstable,
+  home-manager,
   ...
 }: {
   imports = [
+    ../../modules/server.nix
     ./hardware-configuration.nix
+    ./jellyfin.nix
+    ../../modules/intel_acceleration.nix
   ];
 
   boot = {
@@ -13,44 +17,7 @@
     tmp.cleanOnBoot = true;
   };
 
-  # Set your time zone.
-  time.timeZone = "America/Toronto";
-
-  users = {
-    defaultUserShell = pkgs.zsh;
-
-    # Define a user account. Don't forget to set a password with ‘passwd’.
-    users.specter = {
-      isNormalUser = true;
-      extraGroups = ["wheel"];
-      initialPassword = "correcthorsestaplebattery";
-      openssh.authorizedKeys.keyFiles = [
-        (builtins.fetchurl {
-          url = "https://github.com/mikeodr.keys";
-          sha256 = "009zqghgzi5zs1ghpnxyrhr90xxzr5s8479paqgkj25rxn4nz887";
-        })
-      ];
-    };
-  };
-
   environment.systemPackages = with pkgs; [
-    alejandra
-    curl
-    dig
-    dua
-    du-dust
-    git
-    gnutar
-    gzip
-    htop
-    intel-gpu-tools
-    mtr
-    neofetch
-    nh
-    tcpdump
-    vim
-    wget
-    zstd
   ];
 
   programs = {
@@ -160,16 +127,6 @@
   };
 
   services = {
-    # Enable the OpenSSH daemon.
-    openssh = {
-      enable = true;
-      openFirewall = true;
-      settings = {
-        PermitRootLogin = "no";
-        PasswordAuthentication = false;
-      };
-    };
-
     qemuGuest.enable = true;
 
     # unbound = {
@@ -192,17 +149,6 @@
     #     ];
     #   };
     # };
-
-    tailscale = {
-      enable = true;
-      package = pkgs-unstable.tailscale;
-      openFirewall = true;
-    };
-
-    jellyfin = {
-      enable = true;
-      openFirewall = true;
-    };
 
     # freshrss = {
     #   enable = true;
@@ -251,36 +197,8 @@
     # };
   };
 
-  # Jellyfin Media Mounts
-  fileSystems."/mnt/media" = {
-    device = "172.16.0.3:/volume2/Media";
-    fsType = "nfs4";
-    options = ["auto"];
-  };
-
-  # Jellyfin acceleration configs
-  nixpkgs.config = {
-    packageOverrides = pkgs: {
-      vaapiIntel = pkgs.vaapiIntel.override {enableHybridCodec = true;};
-    };
-  };
-
-  # Jellyfin acceleration Mounts
-  hardware = {
-    intel-gpu-tools.enable = true;
-    opengl = {
-      enable = true;
-      extraPackages = with pkgs; [
-        intel-media-driver
-        vaapiIntel
-        vaapiVdpau
-        libvdpau-va-gl
-        intel-compute-runtime # OpenCL filter support (hardware tonemapping and subtitle burn-in)
-      ];
-    };
-  };
-
   networking = {
+    hostName = "luna";
     useDHCP = false;
     interfaces.ens18.ipv4.addresses = [
       {
