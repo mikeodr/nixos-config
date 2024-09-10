@@ -10,9 +10,11 @@
     ./tailscale.nix
   ];
 
+  programs.zsh.enable = true;
   users = {
     # Define a user account. Don't forget to set a password with ‘passwd’.
     users.specter = {
+      shell = pkgs.zsh;
       isNormalUser = true;
       extraGroups = ["wheel"];
       initialPassword = "correcthorsestaplebattery";
