@@ -19,6 +19,14 @@
   # Enable intel acceleration in custom module
   intelAcceleration.enable = true;
 
+  # Enable Dynamic Downloaded Binary linking in custom module
+  ldDynamicLink.enable = true;
+
+  # Enable system auto updates in custom module
+  autoUpdate.enable = true;
+
+  isVM = true;
+
   # Jellyfin Media Mounts
   fileSystems."/mnt/media" = {
     device = "172.16.0.3:/volume2/Media";
@@ -27,52 +35,14 @@
   };
 
   environment.systemPackages = with pkgs; [
+    colmena
   ];
 
   programs = {
     nh = {
       enable = true;
-      clean.enable = true;
-      clean.extraArgs = "--keep-since 7d --keep 3";
       flake = "/home/specter/nixos-config";
     };
-
-    # Allow ld dynamic linking of downloaded binaries
-    nix-ld = {
-      enable = true;
-      package = pkgs.nix-ld-rs;
-    };
-
-    # Some programs need SUID wrappers, can be configured further or are
-    # started in user sessions.
-    mtr.enable = true;
-
-    ssh.startAgent = true;
-  };
-
-  system.autoUpgrade = {
-    enable = true;
-    allowReboot = true;
-    flags = [
-      "--update-input"
-      "nixpkgs"
-      "-L" # print build logs
-    ];
-    dates = "06:00";
-    randomizedDelaySec = "45min";
-    channel = "https://channels.nixos.org/nixos-24.05";
-  };
-
-  nix = {
-    settings = {
-      experimental-features = ["nix-command" "flakes"];
-      auto-optimise-store = true;
-    };
-    # gc = {
-    #   automatic = true;
-    #   dates = "weekly";
-    #   options = "--delete-older-than 7d";
-    # };
   };
 
   security.acme = {
