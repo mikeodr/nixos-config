@@ -6,15 +6,24 @@
   ...
 }: {
   imports = [
-    ../../modules/server.nix
     ./hardware-configuration.nix
-    ./jellyfin.nix
-    ../../modules/intel_acceleration.nix
+    ../../modules/server.nix
+    ../../modules/jellyfin.nix
   ];
 
   boot = {
     loader.grub.device = "/dev/sda";
     tmp.cleanOnBoot = true;
+  };
+
+  # Enable intel acceleration in custom module
+  intelAcceleration.enable = true;
+
+  # Jellyfin Media Mounts
+  fileSystems."/mnt/media" = {
+    device = "172.16.0.3:/volume2/Media";
+    fsType = "nfs4";
+    options = ["auto"];
   };
 
   environment.systemPackages = with pkgs; [
