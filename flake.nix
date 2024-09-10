@@ -15,22 +15,8 @@
     home-manager,
     ...
   } @ inputs: {
-    nixosConfigurations = {
-      luna = nixpkgs.lib.nixosSystem rec {
-        system = "x86_64-linux";
 
-        specialArgs = {
-          pkgs-unstable = import nixpkgs-unstable {
-            inherit system;
-            config.allowUnfree = true;
-          };
-        };
+    nixosConfigurations = import ./hosts inputs;
 
-        modules = [
-          ./hosts/luna
-          home-manager.nixosModules.home-manager
-        ];
-      };
-    };
   };
 }
