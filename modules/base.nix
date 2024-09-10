@@ -6,6 +6,8 @@
 }: {
   time.timeZone = "America/Toronto";
 
+  programs.vim.defaultEditor = true;
+
   environment.systemPackages = with pkgs; [
     curl
     dig
