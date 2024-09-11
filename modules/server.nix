@@ -7,6 +7,7 @@
 }: {
   imports = [
     ./base.nix
+    ./certs.nix
     ./tailscale.nix
   ];
 

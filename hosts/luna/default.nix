@@ -25,7 +25,11 @@
   # Enable system auto updates in custom module
   autoUpdate.enable = true;
 
+  # Is a VM enable QEMU guest agent in custom module
   isVM = true;
+
+  # Generate ACME Certs in custom module
+  acmeCertGeneration.enable = true;
 
   # Jellyfin Media Mounts
   fileSystems."/mnt/media" = {
@@ -44,20 +48,6 @@
       flake = "/home/specter/nixos-config";
     };
   };
-
-  security.acme = {
-    acceptTerms = true;
-    defaults.email = "spry.frog6886@hidemail.ca";
-
-    certs."unusedbytes.ca" = {
-      domain = "unusedbytes.ca";
-      extraDomainNames = ["*.unusedbytes.ca"];
-      dnsProvider = "cloudflare";
-      dnsPropagationCheck = true;
-      credentialsFile = /home/specter/.secrets/cf;
-    };
-  };
-
   services.caddy = {
     enable = true;
     virtualHosts."jellyfin.unusedbytes.ca" = {
