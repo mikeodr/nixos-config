@@ -65,7 +65,7 @@
     };
     virtualHosts."plex.unusedbytes.ca" = {
       extraConfig = ''
-        reverse_proxy https://plexserver.unusedbytes.ca:32400
+        reverse_proxy http://thor.unusedbytes.ca:32400
       '';
       useACMEHost = "unusedbytes.ca";
     };
