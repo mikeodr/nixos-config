@@ -19,10 +19,13 @@
 
   time.timeZone = "America/Toronto";
 
+  security.sudo.wheelNeedsPassword = false;
+
   nix = {
     settings = {
       experimental-features = ["nix-command" "flakes"];
       auto-optimise-store = true;
+      trusted-users = ["specter"];
     };
     gc = {
       automatic = true;

@@ -43,6 +43,9 @@
         luna.deployment = {
           tags = ["vm" "server"];
           allowLocalDeployment = true;
+          # Disable SSH deployment. This node will be skipped in a
+          # normal`colmena apply`.
+          targetHost = null;
         };
 
         thor.deployment = {
