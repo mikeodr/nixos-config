@@ -1,7 +1,6 @@
 {
   pkgs,
   nixpkgs,
-  pkgs-unstable,
   home-manager,
   ...
 }: {
