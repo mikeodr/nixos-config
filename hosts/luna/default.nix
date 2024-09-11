@@ -42,12 +42,6 @@
     colmena
   ];
 
-  programs = {
-    nh = {
-      enable = true;
-      flake = "/home/specter/nixos-config";
-    };
-  };
   services.caddy = {
     enable = true;
     virtualHosts."jellyfin.unusedbytes.ca" = {
