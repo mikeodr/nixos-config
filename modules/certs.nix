@@ -9,6 +9,8 @@
   };
 
   config = lib.mkIf config.acmeCertGeneration.enable {
+    sops.secrets."security/acme/cloudflare_dns_api_token" = {};
+
     security.acme = {
       acceptTerms = true;
       defaults.email = "spry.frog6886@hidemail.ca";
@@ -18,7 +20,7 @@
         extraDomainNames = ["*.unusedbytes.ca"];
         dnsProvider = "cloudflare";
         dnsPropagationCheck = true;
-        credentialsFile = /home/specter/.secrets/cf;
+        credentialsFile = /var/run/secrets/security/acme/cloudflare_dns_api_token;
       };
     };
   };

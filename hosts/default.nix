@@ -2,6 +2,7 @@
   nixpkgs,
   nixpkgs-unstable,
   home-manager,
+  sops-nix,
   ...
 }: {
   luna = nixpkgs.lib.nixosSystem rec {
@@ -15,6 +16,7 @@
     modules = [
       ./luna
       home-manager.nixosModules.home-manager
+      sops-nix.nixosModules.sops
     ];
   };
 }

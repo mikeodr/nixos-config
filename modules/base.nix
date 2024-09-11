@@ -10,6 +10,13 @@
     ./ld_link.nix
   ];
 
+  sops = {
+    defaultSopsFile = ../secrets/secrets.yaml;
+    defaultSopsFormat = "yaml";
+
+    age.keyFile = "/home/specter/.config/sops/age/keys.txt";
+  };
+
   time.timeZone = "America/Toronto";
 
   nix = {
@@ -54,6 +61,7 @@
     neofetch
     nh
     rsync
+    sops
     tcpdump
     tmux
     vim
