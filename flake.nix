@@ -44,6 +44,10 @@
           tags = ["vm" "server"];
           allowLocalDeployment = true;
         };
+
+        thor.deployment = {
+          tags = ["vm" "server"];
+        };
       };
   };
 }
