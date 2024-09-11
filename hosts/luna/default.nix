@@ -79,29 +79,6 @@
   };
 
   services = {
-    qemuGuest.enable = true;
-
-    # unbound = {
-    #   enable = true;
-    #   settings = {
-    #     server = {
-    #       interface = ["0.0.0.0"];
-    #       access-control = ["0.0.0.0/0 allow"];
-    #       local-data = [
-    #         "\"obsidian-livesync.unusedbytes.ca CNAME luna.unusedbytes.ca\""
-    #       ];
-    #     };
-    #     forward-zone = [
-    #       {
-    #         name = ".";
-    #         forward-addr = [
-    #           "172.16.0.1"
-    #         ];
-    #       }
-    #     ];
-    #   };
-    # };
-
     # freshrss = {
     #   enable = true;
     #   package = unstable.freshrss;
