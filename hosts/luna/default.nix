@@ -7,7 +7,6 @@
   imports = [
     ./hardware-configuration.nix
     ../../modules/server.nix
-    ../../modules/jellyfin.nix
   ];
 
   boot = {
@@ -40,6 +39,13 @@
   environment.systemPackages = with pkgs; [
     colmena
   ];
+
+  services = {
+    jellyfin = {
+      enable = true;
+      openFirewall = true;
+    };
+  };
 
   services.caddy = {
     enable = true;

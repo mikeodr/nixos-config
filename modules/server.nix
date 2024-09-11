@@ -8,6 +8,7 @@
   imports = [
     ./base.nix
     ./certs.nix
+    ./intel_acceleration.nix
     ./tailscale.nix
   ];
 
