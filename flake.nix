@@ -15,13 +15,35 @@
   };
 
   outputs = {
+    self,
     nixpkgs,
     nixpkgs-unstable,
     home-manager,
     ...
-  } @ inputs: {
-
+  } @ inputs: let
+    lib = nixpkgs.lib;
+  in {
     nixosConfigurations = import ./hosts inputs;
 
+    colmena =
+      lib.recursiveUpdate
+      (builtins.mapAttrs (k: v: {imports = v._module.args.modules;}) self.nixosConfigurations)
+      {
+        meta = {
+          nixpkgs = import nixpkgs {
+            system = "x86_64-linux";
+            overlays = [];
+          };
+          nodeNixpkgs = builtins.mapAttrs (_: v: v.pkgs) self.nixosConfigurations;
+          nodeSpecialArgs = builtins.mapAttrs (_: v: v._module.specialArgs) self.nixosConfigurations;
+        };
+
+        defaults.deployment.targetUser = "specter";
+
+        luna.deployment = {
+          tags = ["vm" "server"];
+          allowLocalDeployment = true;
+        };
+      };
   };
 }
