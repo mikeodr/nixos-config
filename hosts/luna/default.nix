@@ -7,6 +7,7 @@
   imports = [
     ./hardware-configuration.nix
     ../../modules/server.nix
+    ./wireguard.nix
   ];
 
   boot = {
