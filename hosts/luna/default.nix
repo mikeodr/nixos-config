@@ -47,6 +47,9 @@
     };
   };
 
+  # Ensure cert renewals reload caddy
+  security.acme.certs."unusedbytes.ca".reloadServices = ["caddy"];
+
   services.caddy = {
     enable = true;
     virtualHosts."jellyfin.unusedbytes.ca" = {
@@ -65,7 +68,7 @@
     };
     virtualHosts."plex.unusedbytes.ca" = {
       extraConfig = ''
-        reverse_proxy http://thor.unusedbytes.ca:32400
+        reverse_proxy https://thor.unusedbytes.ca:32400
       '';
       useACMEHost = "unusedbytes.ca";
     };
