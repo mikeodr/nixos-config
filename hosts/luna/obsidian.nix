@@ -1,4 +1,15 @@
 {config, ...}: {
+
+  # The secret that is placed here must take the following form in the
+  # unencrypted yaml for this to work as it's appened direct to the couchdb.ini
+  # configuration via systemd Env statements. The username and password are the
+  # user/pass in your livesync config in obsidian
+
+  # obsidian:
+  #   env: |
+  #       [admins]
+  #       yourusernamehere = yourpasswordhere
+
   sops.secrets."obsidian/env" = {
     owner = config.services.couchdb.user;
     group = config.services.couchdb.group;
