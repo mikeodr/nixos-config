@@ -28,7 +28,6 @@
     extraConfig = {
       core = {
         autocrlf = "input";
-        # excludesfile = /home/modriscoll/.gitignore_global
       };
       gpg = {
         format = "ssh";
