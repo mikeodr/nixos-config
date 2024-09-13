@@ -39,4 +39,9 @@
       home.stateVersion = "24.05";
     };
   };
+
+  services.prometheus.exporters.node = {
+    enable = true;
+    openFirewall = true;
+  };
 }
