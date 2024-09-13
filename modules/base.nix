@@ -54,6 +54,7 @@
     dig
     dua
     du-dust
+    fastfetch
     git
     gnutar
     gzip
@@ -61,7 +62,6 @@
     iftop
     iotop
     mtr
-    neofetch
     nh
     rsync
     sops
