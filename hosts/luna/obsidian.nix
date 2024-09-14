@@ -1,5 +1,4 @@
 {config, ...}: {
-
   # The secret that is placed here must take the following form in the
   # unencrypted yaml for this to work as it's appened direct to the couchdb.ini
   # configuration via systemd Env statements. The username and password are the

@@ -34,4 +34,19 @@
       sops-nix.nixosModules.sops
     ];
   };
+
+  sherlock = nixpkgs.lib.nixosSystem rec {
+    system = "x86_64-linux";
+    specialArgs = {
+      pkgs-unstable = import nixpkgs-unstable {
+        inherit system;
+        config.allowUnfree = true;
+      };
+    };
+    modules = [
+      ./sherlock
+      home-manager.nixosModules.home-manager
+      sops-nix.nixosModules.sops
+    ];
+  };
 }

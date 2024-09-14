@@ -51,6 +51,10 @@
         thor.deployment = {
           tags = ["vm" "server"];
         };
+
+        sherlock.deployment = {
+          tags = ["vm" "server" "monitoring"];
+        };
       };
   };
 }
