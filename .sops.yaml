@@ -1,7 +1,11 @@
 keys:
-  - &primary age1xnvszcgyzaswgte4vt4c34sat3trdc4wqra2e8p53a00u0tmdvvs0fe4gl
+  - &luna age1xnvszcgyzaswgte4vt4c34sat3trdc4wqra2e8p53a00u0tmdvvs0fe4gl
+  - &thor age16726j7ylq4mn7fny20vs5xhxysg35ewfwqrkydmpgw78cdu3xqzs0ywcg2
+  - &caddytor01 age19f093z4zwej5gwe96c340fycjapvqnk5zjauep0xpnguyyxpzylqt62kak
 creation_rules:
   - path_regex: secrets/secrets.yaml$
     key_groups:
     - age:
-      - *primary
+      - *luna
+      - *thor
+      - *caddytor01
