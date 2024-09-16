@@ -55,6 +55,11 @@
         sherlock.deployment = {
           tags = ["vm" "server" "monitoring"];
         };
+
+        caddy-tor1-01.deployment = {
+          tags = ["vm" "vps"];
+          targetHost = "159.203.62.219";
+        };
       };
   };
 }

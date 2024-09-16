@@ -49,4 +49,19 @@
       sops-nix.nixosModules.sops
     ];
   };
+
+  caddy-tor1-01 = nixpkgs.lib.nixosSystem rec {
+    system = "x86_64-linux";
+    specialArgs = {
+      pkgs-unstable = import nixpkgs-unstable {
+        inherit system;
+        config.allowUnfree = true;
+      };
+    };
+    modules = [
+      ./caddy-tor1-01
+      home-manager.nixosModules.home-manager
+      sops-nix.nixosModules.sops
+    ];
+  };
 }
