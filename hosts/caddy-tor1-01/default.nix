@@ -25,6 +25,8 @@
   # Ensure cert renewals reload caddy
   security.acme.certs."unusedbytes.ca".reloadServices = ["caddy"];
 
+  services.uptime-kuma.enable = true;
+
   services.caddy = {
     enable = true;
     virtualHosts."jf.unusedbytes.ca" = {
@@ -45,6 +47,13 @@
       '';
       useACMEHost = "unusedbytes.ca";
     };
+    virtualHosts."status.unusedbytes.ca" = {
+      extraConfig = ''
+        reverse_proxy 127.0.0.1:3001
+      '';
+      useACMEHost = "unusedbytes.ca";
+    };
+
     virtualHosts.":443" = {
       extraConfig = ''
         respond "Not Found" 404
