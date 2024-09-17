@@ -1,4 +1,5 @@
 {
+  lib,
   pkgs,
   nixpkgs,
   pkgs-unstable,
@@ -25,7 +26,10 @@
   # Ensure cert renewals reload caddy
   security.acme.certs."unusedbytes.ca".reloadServices = ["caddy"];
 
-  services.uptime-kuma.enable = true;
+  services.uptime-kuma = {
+    enable = true;
+  };
+  systemd.services.uptime-kuma.path = [ pkgs.unixtools.ping pkgs-unstable.tailscale ];
 
   services.caddy = {
     enable = true;
