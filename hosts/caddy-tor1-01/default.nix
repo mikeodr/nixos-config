@@ -1,4 +1,5 @@
 {
+  config,
   lib,
   pkgs,
   nixpkgs,
@@ -29,7 +30,9 @@
   services.uptime-kuma = {
     enable = true;
   };
-  systemd.services.uptime-kuma.path = [ pkgs.unixtools.ping pkgs-unstable.tailscale ];
+  # Override the path to include tailscale
+  # from https://github.com/NixOS/nixpkgs/blob/6afb255d976f85f3359e4929abd6f5149c323a02/nixos/modules/services/monitoring/uptime-kuma.nix#L50
+  systemd.services.uptime-kuma.path = [pkgs.unixtools.ping pkgs-unstable.tailscale] ++ lib.optional config.services.uptime-kuma.appriseSupport pkgs.apprise;
 
   services.caddy = {
     enable = true;
@@ -42,6 +45,16 @@
     virtualHosts."plex.unusedbytes.ca" = {
       extraConfig = ''
         reverse_proxy http://thor:32400
+
+        header {
+        Content-Security-Policy "default-src 'none'; prefetch-src 'self'; script-src 'unsafe-eval' 'report-sample'; script-src-elem https://www.gstatic.com 'self' 'unsafe-inline'; style-src 'report-sample' 'self' 'unsafe-inline' https://fonts.googleapis.com; object-src 'none'; base-uri 'self'; connect-src 'self' https://*.plex.direct:32400 https://*.plex.tv https://plex.tv wss://*.plex.tv wss://*.plex.direct:32400; font-src 'self' https://fonts.gstatic.com; frame-src 'self' https://*.plex.direct:32400; frame-ancestors 'none'; img-src 'self' blob: data: https://*.plex.tv https://*.plex.direct:32400; manifest-src 'self'; media-src 'self' data: blob: https://*.plex.direct:32400; worker-src 'none'; form-action 'self'; upgrade-insecure-requests"
+          Strict-Transport-Security max-age=31536000
+          Referrer-Policy "no-referrer, strict-origin-when-cross-origin"
+          X-Content-Type-Options nosniff
+          X-Frame-Options DENY
+          X-XSS-Protection 1
+          Access-Control-Allow-Origin https://plex.unusedbytes.ca
+        }
       '';
       useACMEHost = "unusedbytes.ca";
     };
