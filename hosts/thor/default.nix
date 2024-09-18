@@ -59,6 +59,26 @@
     };
   };
 
+  services.borgbackup.jobs = {
+    plex = {
+      paths = [
+        "/var/lib/plex/Plex Media Server"
+      ];
+      exclude = [
+        "/var/lib/plex/Plex Media Server/Cache"
+        "/var/lib/plex/Plex Media Server/Crash Reports"
+      ];
+      doInit = false;
+      encryption.mode = "none";
+      repo = "/mnt/media/borgBackup/plex";
+      compression = "auto,zstd";
+      startAt = "daily";
+      environment = {
+        BORG_UNKNOWN_UNENCRYPTED_REPO_ACCESS_IS_OK = "yes";
+      };
+    };
+  };
+
   environment.systemPackages = with pkgs; [
     openssl
   ];

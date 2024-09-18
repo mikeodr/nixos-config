@@ -44,12 +44,13 @@
           tags = ["vm" "server"];
           allowLocalDeployment = true;
           # Disable SSH deployment. This node will be skipped in a
-          # normal`colmena apply`.
+          # normal `colmena apply`.
           targetHost = null;
         };
 
         thor.deployment = {
           tags = ["vm" "server"];
+          targetHost = "thor.unusedbytes.ca";
         };
 
         sherlock.deployment = {

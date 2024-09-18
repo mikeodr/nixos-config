@@ -115,6 +115,23 @@
     # };
   };
 
+  services.borgbackup.jobs = {
+    jellyfin = {
+      paths = [
+        "/var/lib/jellyfin/config"
+        "/var/lib/jellyfin/data"
+      ];
+      doInit = false;
+      encryption.mode = "none";
+      repo = "/mnt/media/borgBackup/jellyfin";
+      compression = "auto,zstd";
+      startAt = "daily";
+      environment = {
+        BORG_UNKNOWN_UNENCRYPTED_REPO_ACCESS_IS_OK = "yes";
+      };
+    };
+  };
+
   networking = {
     hostName = "luna";
     useDHCP = false;
