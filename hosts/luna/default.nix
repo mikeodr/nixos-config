@@ -32,6 +32,9 @@
   # Generate ACME Certs in custom module
   acmeCertGeneration.enable = true;
 
+  # Custom module enable UDP GRO forwarding and IP forwarding
+  ip_forwarding.enable = true;
+
   # Jellyfin Media Mounts
   fileSystems."/mnt/media" = {
     device = "172.16.0.3:/volume2/Media";
@@ -134,15 +137,11 @@
 
   networking = {
     hostName = "luna";
-    useDHCP = false;
-    interfaces.ens18.ipv4.addresses = [
-      {
-        address = "172.16.0.11";
-        prefixLength = 24;
-      }
-    ];
-    defaultGateway = "172.16.0.1";
-    nameservers = ["172.16.0.1"];
+    interfaces = {
+      "ens18" = {
+        useDHCP = true;
+      };
+    };
   };
 
   networking.firewall = {

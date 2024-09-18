@@ -1,11 +1,17 @@
 {pkgs, ...}: {
+  imports = [
+    ../../modules/ip_forwarding.nix
+  ];
+
+  # Enable IP forwarding and GRO forward
+  ip_forwarding.enable = true;
+
   sops.secrets."security/wg0/privateKey" = {};
   sops.secrets."security/wg0/peer_mango_psk" = {};
   sops.secrets."security/wg0/peer_mike_iphone_psk" = {};
 
   networking = {
     nat = {
-      enable = true;
       externalInterface = "ens18";
       internalInterfaces = ["wg0"];
     };
