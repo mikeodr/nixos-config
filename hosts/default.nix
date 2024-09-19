@@ -4,7 +4,7 @@
   home-manager,
   sops-nix,
   ...
-}: {
+}@inputs : {
   luna = nixpkgs.lib.nixosSystem rec {
     system = "x86_64-linux";
     specialArgs = {
@@ -12,6 +12,7 @@
         inherit system;
         config.allowUnfree = true;
       };
+      inherit inputs;
     };
     modules = [
       ./luna
@@ -27,6 +28,7 @@
         inherit system;
         config.allowUnfree = true;
       };
+      inherit inputs;
     };
     modules = [
       ./thor
@@ -42,6 +44,7 @@
         inherit system;
         config.allowUnfree = true;
       };
+      inherit inputs;
     };
     modules = [
       ./sherlock
@@ -57,6 +60,7 @@
         inherit system;
         config.allowUnfree = true;
       };
+      inherit inputs;
     };
     modules = [
       ./caddy-tor1-01

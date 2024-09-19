@@ -2,6 +2,7 @@
   config,
   lib,
   pkgs,
+  inputs,
   ...
 }: {
   options = {
@@ -13,14 +14,14 @@
     system.autoUpgrade = {
       enable = true;
       allowReboot = true;
+      flake = inputs.self.outPath;
       flags = [
         "--update-input"
         "nixpkgs"
-        "-L" # print build logs
+        "--no-write-lock-file"
       ];
       dates = "06:00";
       randomizedDelaySec = "45min";
-      channel = "https://channels.nixos.org/nixos-24.05";
     };
   };
 }
