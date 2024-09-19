@@ -55,6 +55,7 @@
 
         sherlock.deployment = {
           tags = ["vm" "server" "monitoring"];
+          targetHost = "sherlock.unusedbytes.ca";
         };
 
         caddy-tor1-01.deployment = {
