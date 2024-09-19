@@ -83,5 +83,7 @@
     openssl
   ];
 
+  services.prometheus.exporters.node.openFirewall = true;
+
   system.stateVersion = "24.05";
 }

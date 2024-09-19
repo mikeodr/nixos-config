@@ -144,6 +144,7 @@
     };
   };
 
+  services.prometheus.exporters.node.openFirewall = true;
   networking.firewall = {
     enable = true;
     allowedTCPPorts = [80 443];
