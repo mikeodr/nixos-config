@@ -15,6 +15,8 @@
 
   autoUpdate.enable = true;
   isVM = true;
+  ip_forwarding.enable = true;
+  ip_forward_interfaces = ["eth0"];
 
   zramSwap.enable = true;
   networking.hostName = "caddy-tor1-01";
