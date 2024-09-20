@@ -20,6 +20,9 @@
   # Enable intel acceleration in custom module
   intelAcceleration.enable = true;
 
+  # Enable Dynamic Downloaded Binary linking in custom module
+  ldDynamicLink.enable = true;
+
   # Enable system auto updates in custom module
   autoUpdate.enable = true;
 
