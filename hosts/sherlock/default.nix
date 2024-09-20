@@ -21,8 +21,16 @@
 
   networking = {
     hostName = "sherlock";
+    interfaces = {
+      "ens18" = {
+        useDHCP = true;
+      };
+    };
   };
   services.prometheus.exporters.node.openFirewall = true;
+  networking.firewall = {
+    enable = true;
+  };
 
   system.stateVersion = "24.05"; # Did you read the comment?
 }
