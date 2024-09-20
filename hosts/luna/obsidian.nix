@@ -9,15 +9,16 @@
   #       [admins]
   #       yourusernamehere = yourpasswordhere
 
-  sops.secrets."obsidian/env" = {
+  sops.secrets.obsidian = {
     owner = config.services.couchdb.user;
     group = config.services.couchdb.group;
-    mode = "660";
+    mode = "440";
+    sopsFile = ./secrets.yaml;
   };
 
   services.couchdb = {
     enable = true;
-    configFile = "/run/secrets/obsidian/env";
+    configFile = config.sops.secrets.obsidian.path;
     # https://github.com/vrtmrz/obsidian-livesync/blob/main/docs/setup_own_server.md#configure
     extraConfig = ''
       [couchdb]

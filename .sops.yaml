@@ -11,3 +11,12 @@ creation_rules:
           - *thor
           - *sherlock
           - *caddytor01
+  - path_regex: hosts/luna/secrets.yaml$
+    key_groups:
+      - age:
+          - *luna
+  - path_regex: hosts/sherlock/secrets.yaml$
+    key_groups:
+      - age:
+          - *luna
+          - *sherlock
