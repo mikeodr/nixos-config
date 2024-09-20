@@ -1,4 +1,5 @@
 {
+  config,
   lib,
   pkgs-unstable,
   ...
@@ -7,14 +8,16 @@
     ./ip_forwarding.nix
   ];
 
-  sops.secrets."security/tailscale/auth_key" = {};
+  sops.secrets.tailscale_auth_key = {
+    sopsFile = ./tailscale_key.yaml;
+  };
 
   services = {
     tailscale = {
       enable = true;
       package = pkgs-unstable.tailscale;
       openFirewall = true;
-      authKeyFile = "/run/secrets/security/tailscale/auth_key";
+      authKeyFile = config.sops.secrets.tailscale_auth_key.path;
       extraUpFlags = [
         "--ssh"
       ];

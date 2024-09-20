@@ -20,3 +20,10 @@ creation_rules:
       - age:
           - *luna
           - *sherlock
+  - path_regex: modules/tailscale_key.yaml$
+    key_groups:
+      - age:
+          - *luna
+          - *thor
+          - *sherlock
+          - *caddytor01
