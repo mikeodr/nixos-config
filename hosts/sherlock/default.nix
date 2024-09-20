@@ -8,6 +8,7 @@
   imports = [
     ./hardware-configuration.nix
     ../../modules/server.nix
+    ./prometheus.nix
   ];
 
   boot = {
