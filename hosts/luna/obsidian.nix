@@ -4,10 +4,9 @@
   # configuration via systemd Env statements. The username and password are the
   # user/pass in your livesync config in obsidian
 
-  # obsidian:
-  #   env: |
-  #       [admins]
-  #       yourusernamehere = yourpasswordhere
+  # obsidian: |
+  #   [admins]
+  #   yourusernamehere = yourpasswordhere
 
   sops.secrets.obsidian = {
     owner = config.services.couchdb.user;
