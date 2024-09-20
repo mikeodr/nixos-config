@@ -1,6 +1,7 @@
 keys:
   - &luna age1xnvszcgyzaswgte4vt4c34sat3trdc4wqra2e8p53a00u0tmdvvs0fe4gl
   - &thor age16726j7ylq4mn7fny20vs5xhxysg35ewfwqrkydmpgw78cdu3xqzs0ywcg2
+  - &sherlock age1n0xlcm7h9m0644hpe89k5jv3ac9zlenkx2yx020sgs6ml3u6dfmq863vmw
   - &caddytor01 age19f093z4zwej5gwe96c340fycjapvqnk5zjauep0xpnguyyxpzylqt62kak
 creation_rules:
   - path_regex: secrets/secrets.yaml$
@@ -8,4 +9,5 @@ creation_rules:
     - age:
       - *luna
       - *thor
+      - *sherlock
       - *caddytor01
