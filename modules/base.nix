@@ -50,6 +50,7 @@
     iotop
     mtr
     nh
+    nmap
     rsync
     sops
     tcpdump
