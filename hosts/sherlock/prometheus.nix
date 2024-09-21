@@ -12,11 +12,6 @@
     };
   };
 in {
-  # sops.secrets."security/hass_token" = {
-  #   owner = "prometheus";
-  #   mode = "440";
-  # };
-
   sops.secrets.hass_token = {
     owner = "prometheus";
     mode = "440";
