@@ -10,6 +10,7 @@
     ./certs.nix
     ./intel_acceleration.nix
     ./tailscale.nix
+    ./tc4400_exporter.nix
   ];
 
   programs.zsh.enable = true;
