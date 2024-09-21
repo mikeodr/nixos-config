@@ -26,6 +26,8 @@ in {
 
     exporters.node.enable = true;
 
+    exporters.tc4400_exporter.enable = true;
+
     exporters.blackbox = {
       enable = true;
       openFirewall = true;
