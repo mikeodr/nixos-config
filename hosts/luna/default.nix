@@ -3,6 +3,8 @@
   pkgs,
   nixpkgs,
   home-manager,
+  userConfig,
+  system,
   ...
 }: {
   imports = [

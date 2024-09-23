@@ -4,15 +4,22 @@
   home-manager,
   sops-nix,
   ...
-} @ inputs: {
-  luna = nixpkgs.lib.nixosSystem rec {
-    system = "x86_64-linux";
+} @ inputs: let
+  system = "x86_64-linux";
+
+  userConfig = {
+    username = "specter";
+  };
+in {
+  luna = nixpkgs.lib.nixosSystem {
     specialArgs = {
       pkgs-unstable = import nixpkgs-unstable {
         inherit system;
         config.allowUnfree = true;
       };
       inherit inputs;
+      inherit system;
+      inherit userConfig;
     };
     modules = [
       ./luna
@@ -21,14 +28,15 @@
     ];
   };
 
-  thor = nixpkgs.lib.nixosSystem rec {
-    system = "x86_64-linux";
+  thor = nixpkgs.lib.nixosSystem {
     specialArgs = {
       pkgs-unstable = import nixpkgs-unstable {
         inherit system;
         config.allowUnfree = true;
       };
       inherit inputs;
+      inherit system;
+      inherit userConfig;
     };
     modules = [
       ./thor
@@ -37,14 +45,15 @@
     ];
   };
 
-  sherlock = nixpkgs.lib.nixosSystem rec {
-    system = "x86_64-linux";
+  sherlock = nixpkgs.lib.nixosSystem {
     specialArgs = {
       pkgs-unstable = import nixpkgs-unstable {
         inherit system;
         config.allowUnfree = true;
       };
       inherit inputs;
+      inherit system;
+      inherit userConfig;
     };
     modules = [
       ./sherlock
@@ -53,14 +62,15 @@
     ];
   };
 
-  caddy-tor1-01 = nixpkgs.lib.nixosSystem rec {
-    system = "x86_64-linux";
+  caddy-tor1-01 = nixpkgs.lib.nixosSystem {
     specialArgs = {
       pkgs-unstable = import nixpkgs-unstable {
         inherit system;
         config.allowUnfree = true;
       };
       inherit inputs;
+      inherit system;
+      inherit userConfig;
     };
     modules = [
       ./caddy-tor1-01

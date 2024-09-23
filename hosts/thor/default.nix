@@ -1,8 +1,9 @@
 {
   pkgs,
-  nixpkgs,
   pkgs-unstable,
   home-manager,
+  userConfig,
+  system,
   ...
 }: {
   imports = [

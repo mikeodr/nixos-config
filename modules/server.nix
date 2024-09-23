@@ -3,6 +3,7 @@
   system,
   pkgs,
   home-manager,
+  userConfig,
   ...
 }: {
   imports = [
@@ -16,7 +17,7 @@
   programs.zsh.enable = true;
   users = {
     # Define a user account. Don't forget to set a password with ‘passwd’.
-    users.specter = {
+    users.${userConfig.username} = {
       shell = pkgs.zsh;
       isNormalUser = true;
       extraGroups = ["wheel"];
@@ -35,7 +36,7 @@
       imports = [
         ../home
       ];
-      home.username = "specter";
+      home.username = userConfig.username;
       home.homeDirectory = "/home/specter";
       home.stateVersion = "24.05";
     };
