@@ -1,18 +1,37 @@
-{...}: {
+{config, ...}: {
+  sops.secrets = {
+    slack_api_hook = {
+      owner = "prometheus";
+      mode = "440";
+      sopsFile = ./secrets.yaml;
+    };
+
+    pagerduty_service_key = {
+      owner = "prometheus";
+      mode = "440";
+      sopsFile = ./secrets.yaml;
+    };
+
+    hc_ping_url = {
+      owner = "prometheus";
+      mode = "440";
+      sopsFile = ./secrets.yaml;
+    };
+  };
+
   services.prometheus.alertmanager = {
     enable = true;
     openFirewall = true;
 
     configuration = {
       global = {
-        slack_api_url = "https://hooks.slack.com/services/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";
+        slack_api_url_file = config.sops.secrets.slack_api_hook.path;
       };
 
       route = {
         group_by = ["alertname"];
         group_wait = "10s";
         group_interval = "10s";
-        #   repeat_interval = "1h";
         receiver = "blackhole";
         routes = [
           {
@@ -42,8 +61,8 @@
           ];
           pagerduty_configs = [
             {
-              service_key = "0677310704ec4abfa0a5bb596e374dea";
               severity = "{{.Labels.severity}}";
+              service_key_file = config.sops.secrets.pagerduty_service_key.path;
             }
           ];
         }
@@ -52,8 +71,8 @@
           slack_configs = [{send_resolved = true;}];
           pagerduty_configs = [
             {
-              service_key = "0677310704ec4abfa0a5bb596e374dea";
               severity = "{{.Labels.severity}}";
+              service_key_file = config.sops.secrets.pagerduty_service_key.path;
             }
           ];
         }
@@ -61,7 +80,7 @@
           name = "deadman";
           webhook_configs = [
             {
-              url = "https://hc-ping.com/88e0b0bf-c9a5-4c1e-a362-55f16920ca12";
+              url_file = config.sops.secrets.hc_ping_url.path;
               send_resolved = true;
             }
           ];
@@ -79,12 +98,6 @@
           equal = ["alertname" "dev" "instnace"];
         }
       ];
-# inhibit_rules:
-#   - source_match:
-#       severity: 'critical'
-#     target_match:
-#       severity: 'warning'
-#     equal: ['alertname', 'dev', 'instance']
-    };
+  };
   };
 }
