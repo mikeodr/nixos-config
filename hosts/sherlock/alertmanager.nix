@@ -2,19 +2,19 @@
   sops.secrets = {
     slack_api_hook = {
       owner = "prometheus";
-      mode = "440";
+      mode = "444";
       sopsFile = ./secrets.yaml;
     };
 
     pagerduty_service_key = {
       owner = "prometheus";
-      mode = "440";
+      mode = "444";
       sopsFile = ./secrets.yaml;
     };
 
     hc_ping_url = {
       owner = "prometheus";
-      mode = "440";
+      mode = "444";
       sopsFile = ./secrets.yaml;
     };
   };
@@ -98,6 +98,6 @@
           equal = ["alertname" "dev" "instnace"];
         }
       ];
-  };
+    };
   };
 }

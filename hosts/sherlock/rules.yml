@@ -1,0 +1,99 @@
+groups:
+  - name: System
+    rules:
+      - alert: Watchdog
+        expr: vector(1)
+
+      - alert: Hass Low Battery On Device
+        expr: hass_sensor_battery_percent{friendly_name!~".*iPhone.*|.*Mac.*|Backupsxs1300G.*|tesla.*|.*[bB]ackup [rR]eserve"} < 25
+        for: 1d
+        labels:
+          severity: warning
+        annotations:
+          summary: "Hass low battery device: {{ $labels.friendly_name }}, {{ $labels.entity }}"
+
+      - alert: Root readonly
+        expr: node_filesystem_readonly{mountpoint="/"} != 0
+        for: 5m
+        labels:
+          severity: warning
+
+      - alert: Disk remaining low
+        #- alert: Disk predicted to be full
+        #expr: predict_linear(node_filesystem_free_bytes[3h], 4*3600) < 0
+        expr: node_filesystem_free_bytes{mountpoint="/"} / node_filesystem_size_bytes{mountpoint="/"} < .10
+        for: 15m
+        labels:
+          severity: warning
+
+      - alert: Out of Memory
+        expr: ((node_memory_MemAvailable_bytes{instance!="opnsense:9100"} / node_memory_MemTotal_bytes) * 100) <= 10
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "Out of memory (instance {{ $labels.instance }})"
+          description: "Node memory is filling up (< 10% left)\n  VALUE = {{ $value }}\n  LABELS: {{ $labels }}"
+
+      - alert: Out of Memory
+        expr: ((node_memory_free_bytes{instance!="opnsense:9100"} / node_memory_size_bytes) * 100) <= 5
+        for: 30m
+        labels:
+          severity: warning
+        annotations:
+          summary: "Out of memory (instance {{ $labels.instance }})"
+          description: "Node memory is filling up (< 5% left)\n  VALUE = {{ $value }}\n  LABELS: {{ $labels }}"
+
+      - alert: SSL Certificate Will Expire Soon
+        expr: probe_ssl_earliest_cert_expiry - time() < (86400 * 15)
+        for: 15m
+        labels:
+          severity: warning
+        annotations:
+          summary: "SSL certificate will expire soon (instance {{ $labels.instance }})"
+          description: "SSL certificate expires in 15 days\n  VALUE = {{ $value }}\n  LABELS: {{ $labels }}"
+
+      - alert: SSL Certificate Expired
+        expr: probe_ssl_earliest_cert_expiry - time() <= 0
+        for: 15m
+        labels:
+          severity: critical
+        annotations:
+          summary: "SSL certificate expired (instance {{ $labels.instance }})"
+          description: "SSL certificate has expired already\n  VALUE = {{ $value }}\n  LABELS: {{ $labels }}"
+
+      - alert: Critical Services are down
+        expr: probe_success{instance=~".*plex.*|.*hass.*|.*unifi.*|.*cryo01.*|.*opnsense.*|.*reactor01.*"} == 0
+        for: 15m
+        labels:
+          severity: critical
+        annotations:
+          summary: "Critical service isn't responding with 2XX: ({{ $labels.instance }})"
+          description: "{{ $labels.instance }} of job {{ $labels.job }}"
+
+      - alert: Trinity Service Down
+        expr: probe_success{instance!~".*hass.*|.*unifi.*|.*cryo01.*|.*opnsense.*|.*reactor01.*|.*plex.*"} == 0
+        for: 15m
+        labels:
+          severity: warning
+        annotations:
+          summary: "User-facing service isn't responding with 2XX: ({{ $labels.instance }})"
+          description: "{{ $labels.instance }} of job {{ $labels.job }}"
+
+      - alert: Scrape Target Failure
+        expr: up == 0
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "Scrape target is down"
+          description: "{{ $labels.instance }} of job {{ $labels.job }}"
+
+      - alert: PVE LVM Storage Full
+        expr: (pve_disk_usage_bytes{id=~".*local-lvm.*"} / on (instance, id) pve_disk_size_bytes) * 100 > 90
+        for: 12h
+        labels:
+          severity: warning
+        annotations:
+          summary: "Proxmox storage on {{ $labels.instance }} is high"
+          description: "{{ $labels.instance }} is experiencing high disk usage on {{ $labels.id}}"

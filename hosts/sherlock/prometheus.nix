@@ -36,6 +36,10 @@ in {
       configFile = pkgs.writeText "blackbox.yml" (builtins.toJSON blackboxConfig);
     };
 
+    ruleFiles = [
+      ./rules.yml
+    ];
+
     alertmanagers = [
       {
         static_configs = [
