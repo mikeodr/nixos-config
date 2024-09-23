@@ -26,7 +26,10 @@ in {
     # See: https://search.nixos.org/options?channel=24.05&show=services.prometheus.checkConfig&from=0&size=50&sort=relevance&type=packages&query=services.prometheus.checkConfig
     checkConfig = "syntax-only";
 
-    exporters.node.enable = true;
+    exporters.node = {
+      enable = true;
+      openFirewall = true;
+    };
 
     exporters.tc4400_exporter.enable = true;
 

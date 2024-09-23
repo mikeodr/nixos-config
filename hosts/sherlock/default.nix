@@ -10,6 +10,7 @@
     ../../modules/server.nix
     ./prometheus.nix
     ./alertmanager.nix
+    ./caddy.nix
   ];
 
   boot = {
@@ -29,7 +30,7 @@
       };
     };
   };
-  services.prometheus.exporters.node.openFirewall = true;
+
   networking.firewall = {
     enable = true;
   };
