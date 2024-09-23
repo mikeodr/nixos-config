@@ -19,6 +19,8 @@ in {
   };
 
   services.prometheus = {
+    enable = true;
+
     # By default the check verifies also if all referenced paths exist.
     # This however cannot work if any of these paths refers to age/sops secrets as these files are created during the activation phase.
     # See: https://search.nixos.org/options?channel=24.05&show=services.prometheus.checkConfig&from=0&size=50&sort=relevance&type=packages&query=services.prometheus.checkConfig
@@ -34,7 +36,16 @@ in {
       configFile = pkgs.writeText "blackbox.yml" (builtins.toJSON blackboxConfig);
     };
 
-    enable = true;
+    alertmanagers = [
+      {
+        static_configs = [
+          {
+            targets = ["localhost:9093"];
+          }
+        ];
+      }
+    ];
+
     scrapeConfigs = [
       {
         job_name = "node";

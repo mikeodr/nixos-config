@@ -9,6 +9,7 @@
     ./hardware-configuration.nix
     ../../modules/server.nix
     ./prometheus.nix
+    ./alertmanager.nix
   ];
 
   boot = {
