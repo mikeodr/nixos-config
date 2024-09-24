@@ -70,6 +70,17 @@ in {
         ];
       }
       {
+        job_name = "tc4400 scrape";
+        scrape_timeout = "60s";
+        static_configs = [
+          {
+            targets = [
+              "localhost:9623"
+            ];
+          }
+        ];
+      }
+      {
         job_name = "http_probe";
         params = {
           modules = ["http_2xx"];
