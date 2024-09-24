@@ -1,18 +1,18 @@
 {config, ...}: {
   sops.secrets = {
-    slack_api_hook = {
+    slackApiHook = {
       owner = "prometheus";
       mode = "444";
       sopsFile = ./secrets.yaml;
     };
 
-    pagerduty_service_key = {
+    pagerdutyServiceKey = {
       owner = "prometheus";
       mode = "444";
       sopsFile = ./secrets.yaml;
     };
 
-    hc_ping_url = {
+    hcPingUrl = {
       owner = "prometheus";
       mode = "444";
       sopsFile = ./secrets.yaml;
@@ -25,7 +25,7 @@
 
     configuration = {
       global = {
-        slack_api_url_file = config.sops.secrets.slack_api_hook.path;
+        slack_api_url_file = config.sops.secrets.slackApiHook.path;
       };
 
       route = {
@@ -62,7 +62,7 @@
           pagerduty_configs = [
             {
               severity = "{{.Labels.severity}}";
-              service_key_file = config.sops.secrets.pagerduty_service_key.path;
+              service_key_file = config.sops.secrets.pagerdutyServiceKey.path;
             }
           ];
         }
@@ -72,7 +72,7 @@
           pagerduty_configs = [
             {
               severity = "{{.Labels.severity}}";
-              service_key_file = config.sops.secrets.pagerduty_service_key.path;
+              service_key_file = config.sops.secrets.pagerdutyServiceKey.path;
             }
           ];
         }
@@ -80,7 +80,7 @@
           name = "deadman";
           webhook_configs = [
             {
-              url_file = config.sops.secrets.hc_ping_url.path;
+              url_file = config.sops.secrets.hcPingUrl.path;
               send_resolved = true;
             }
           ];

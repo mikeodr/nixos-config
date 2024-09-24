@@ -1,12 +1,10 @@
-{
-  userConfig,
-  ...
-}: {
+{userConfig, ...}: {
   imports = [
     ./hardware-configuration.nix
     ../../modules/server.nix
     ./prometheus.nix
     ./alertmanager.nix
+    ./grafana.nix
     ./caddy.nix
   ];
 

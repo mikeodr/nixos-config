@@ -12,7 +12,7 @@
     };
   };
 in {
-  sops.secrets.hass_token = {
+  sops.secrets.hassToken = {
     owner = "prometheus";
     mode = "440";
     sopsFile = ./secrets.yaml;
@@ -112,7 +112,7 @@ in {
         scrape_interval = "60s";
         metrics_path = "/api/prometheus";
         # See note about checkConfig above
-        authorization.credentials_file = config.sops.secrets.hass_token.path;
+        authorization.credentials_file = config.sops.secrets.hassToken.path;
         scheme = "https";
         static_configs = [{targets = ["hass.unusedbytes.ca"];}];
       }
