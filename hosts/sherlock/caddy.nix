@@ -17,6 +17,12 @@
       '';
       useACMEHost = "unusedbytes.ca";
     };
+    virtualHosts."grafana.unusedbytes.ca" = {
+      extraConfig = ''
+        reverse_proxy http://localhost:3000
+      '';
+      useACMEHost = "unusedbytes.ca";
+    };
   };
 
   networking.firewall = {
