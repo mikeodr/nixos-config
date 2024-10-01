@@ -10,6 +10,7 @@
   imports = [
     ./hardware-configuration.nix
     ../../modules/server.nix
+    ./containers.nix
     ./obsidian.nix
     ./wireguard.nix
   ];
@@ -80,6 +81,14 @@
       '';
       useACMEHost = "unusedbytes.ca";
     };
+    virtualHosts."freshrss.unusedbytes.ca" = {
+      extraConfig = ''
+        reverse_proxy http://localhost:8080 {
+          header_up Host "freshrss.unusedbytes.ca"
+        }
+      '';
+      useACMEHost = "unusedbytes.ca";
+    };
     virtualHosts."obsidian-livesync.unusedbytes.ca" = {
       extraConfig = ''
         reverse_proxy http://127.0.0.1:${toString config.services.couchdb.port}
@@ -110,16 +119,6 @@
     };
   };
 
-  services = {
-    # freshrss = {
-    #   enable = true;
-    #   package = unstable.freshrss;
-    #   passwordFile = /home/specter/.secrets/freshrss;
-    #   baseUrl = "https://luna.unusedbytes.ca/rss";
-    #   #virtualHost = null;
-    # };
-  };
-
   services.borgbackup.jobs = {
     jellyfin = {
       paths = [
@@ -129,6 +128,19 @@
       doInit = false;
       encryption.mode = "none";
       repo = "/mnt/media/borgBackup/jellyfin";
+      compression = "auto,zstd";
+      startAt = "daily";
+      environment = {
+        BORG_UNKNOWN_UNENCRYPTED_REPO_ACCESS_IS_OK = "yes";
+      };
+    };
+    freshrss = {
+      paths = [
+        "/var/lib/freshrss"
+      ];
+      doInit = false;
+      encryption.mode = "none";
+      repo = "/mnt/media/borgBackup/freshrss";
       compression = "auto,zstd";
       startAt = "daily";
       environment = {
