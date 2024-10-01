@@ -17,10 +17,6 @@
       enable = true;
       package = pkgs-unstable.tailscale;
       openFirewall = true;
-      authKeyFile = config.sops.secrets.tailscale_auth_key.path;
-      extraUpFlags = [
-        "--ssh"
-      ];
     };
   };
 }
