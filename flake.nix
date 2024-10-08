@@ -1,4 +1,6 @@
 {
+  description = "Nix configs for my systems, servers and macs";
+
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-24.05";
     nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
