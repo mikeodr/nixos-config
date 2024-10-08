@@ -24,85 +24,87 @@
     };
   };
 
-  outputs = {
-    self,
-    nixpkgs,
-    nixpkgs-unstable,
-    nix-darwin,
-    nix-homebrew,
-    home-manager,
-    ...
-  } @ inputs: let
-    lib = nixpkgs.lib;
-  in {
-    nixosConfigurations = import ./hosts inputs;
+  outputs =
+    { self
+    , nixpkgs
+    , nixpkgs-unstable
+    , nix-darwin
+    , nix-homebrew
+    , home-manager
+    , ...
+    } @ inputs:
+    let
+      lib = nixpkgs.lib;
+    in
+    {
+      nixosConfigurations = import ./hosts inputs;
 
-    darwinConfigurations."Michaels-MacBook-Air" = nix-darwin.lib.darwinSystem {
-      modules = [
-        ./darwin/default.nix
-        nix-homebrew.darwinModules.nix-homebrew
-        {
-          nix-homebrew = {
-            # Install Homebrew under the default prefix
-            enable = true;
+      darwinConfigurations."Michaels-MacBook-Air" = nix-darwin.lib.darwinSystem {
+        modules = [
+          ./darwin/default.nix
+          nix-homebrew.darwinModules.nix-homebrew
+          {
+            nix-homebrew = {
+              # Install Homebrew under the default prefix
+              enable = true;
 
-            # Apple Silicon Only: Also install Homebrew under the default Intel prefix for Rosetta 2
-            enableRosetta = true;
+              # Apple Silicon Only: Also install Homebrew under the default Intel prefix for Rosetta 2
+              enableRosetta = true;
 
-            user = "mikeodr";
-          };
-        }
-      ];
-      specialArgs = {
-        inherit inputs;
-        inherit self;
+              user = "mikeodr";
+            };
+          }
+        ];
+        specialArgs = {
+          inherit inputs;
+          inherit self;
+        };
       };
+
+      # Expose the package set, including overlays, for convenience.
+      darwinPackages = self.darwinConfigurations."Michaels-MacBook-Air".pkgs;
+
+      colmena =
+        lib.recursiveUpdate
+          (builtins.mapAttrs (k: v: { imports = v._module.args.modules; }) self.nixosConfigurations)
+          {
+            meta = {
+              nixpkgs = import nixpkgs {
+                system = "x86_64-linux";
+                overlays = [ ];
+              };
+              nodeNixpkgs = builtins.mapAttrs (_: v: v.pkgs) self.nixosConfigurations;
+              nodeSpecialArgs = builtins.mapAttrs (_: v: v._module.specialArgs) self.nixosConfigurations;
+            };
+
+            defaults.deployment.targetUser = "specter";
+
+            luna.deployment = {
+              tags = [ "vm" "server" ];
+              allowLocalDeployment = true;
+              # Disable SSH deployment. This node will be skipped in a
+              # normal `colmena apply`.
+              targetHost = "luna.unusedbytes.ca";
+              buildOnTarget = true;
+            };
+
+            thor.deployment = {
+              tags = [ "vm" "server" ];
+              targetHost = "thor.unusedbytes.ca";
+              buildOnTarget = true;
+            };
+
+            sherlock.deployment = {
+              tags = [ "vm" "server" "monitoring" ];
+              targetHost = "sherlock.unusedbytes.ca";
+              buildOnTarget = true;
+            };
+
+            caddy-tor1-01.deployment = {
+              tags = [ "vm" "vps" ];
+              targetHost = "159.203.62.219";
+              buildOnTarget = true;
+            };
+          };
     };
-
-    # Expose the package set, including overlays, for convenience.
-    darwinPackages = self.darwinConfigurations."Michaels-MacBook-Air".pkgs;
-
-    colmena =
-      lib.recursiveUpdate
-      (builtins.mapAttrs (k: v: {imports = v._module.args.modules;}) self.nixosConfigurations)
-      {
-        meta = {
-          nixpkgs = import nixpkgs {
-            system = "x86_64-linux";
-            overlays = [];
-          };
-          nodeNixpkgs = builtins.mapAttrs (_: v: v.pkgs) self.nixosConfigurations;
-          nodeSpecialArgs = builtins.mapAttrs (_: v: v._module.specialArgs) self.nixosConfigurations;
-        };
-
-        defaults.deployment.targetUser = "specter";
-
-        luna.deployment = {
-          tags = ["vm" "server"];
-          allowLocalDeployment = true;
-          # Disable SSH deployment. This node will be skipped in a
-          # normal `colmena apply`.
-          targetHost = "luna.unusedbytes.ca";
-          buildOnTarget = true;
-        };
-
-        thor.deployment = {
-          tags = ["vm" "server"];
-          targetHost = "thor.unusedbytes.ca";
-          buildOnTarget = true;
-        };
-
-        sherlock.deployment = {
-          tags = ["vm" "server" "monitoring"];
-          targetHost = "sherlock.unusedbytes.ca";
-          buildOnTarget = true;
-        };
-
-        caddy-tor1-01.deployment = {
-          tags = ["vm" "vps"];
-          targetHost = "159.203.62.219";
-          buildOnTarget = true;
-        };
-      };
-  };
 }
