@@ -16,6 +16,7 @@
     jq
     mkalias
     neovim
+    nixpkgs-fmt
     nixd
     nmap
   ];
