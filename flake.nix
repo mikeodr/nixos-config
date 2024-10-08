@@ -82,22 +82,26 @@
           allowLocalDeployment = true;
           # Disable SSH deployment. This node will be skipped in a
           # normal `colmena apply`.
-          targetHost = null;
+          targetHost = "luna.unusedbytes.ca";
+          buildOnTarget = true;
         };
 
         thor.deployment = {
           tags = ["vm" "server"];
           targetHost = "thor.unusedbytes.ca";
+          buildOnTarget = true;
         };
 
         sherlock.deployment = {
           tags = ["vm" "server" "monitoring"];
           targetHost = "sherlock.unusedbytes.ca";
+          buildOnTarget = true;
         };
 
         caddy-tor1-01.deployment = {
           tags = ["vm" "vps"];
           targetHost = "159.203.62.219";
+          buildOnTarget = true;
         };
       };
   };
