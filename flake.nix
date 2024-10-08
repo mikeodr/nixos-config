@@ -3,6 +3,16 @@
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-24.05";
     nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
 
+    nix-darwin = {
+      url = "github:LnL7/nix-darwin";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    nix-homebrew = {
+      url = "github:zhaofengli-wip/nix-homebrew";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     home-manager = {
       url = "github:nix-community/home-manager/release-24.05";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -18,12 +28,39 @@
     self,
     nixpkgs,
     nixpkgs-unstable,
+    nix-darwin,
+    nix-homebrew,
     home-manager,
     ...
   } @ inputs: let
     lib = nixpkgs.lib;
   in {
     nixosConfigurations = import ./hosts inputs;
+
+    darwinConfigurations."Michaels-MacBook-Air" = nix-darwin.lib.darwinSystem {
+      modules = [
+        ./darwin/default.nix
+        nix-homebrew.darwinModules.nix-homebrew
+        {
+          nix-homebrew = {
+            # Install Homebrew under the default prefix
+            enable = true;
+
+            # Apple Silicon Only: Also install Homebrew under the default Intel prefix for Rosetta 2
+            enableRosetta = true;
+
+            user = "mikeodr";
+          };
+        }
+      ];
+      specialArgs = {
+        inherit inputs;
+        inherit self;
+      };
+    };
+
+    # Expose the package set, including overlays, for convenience.
+    darwinPackages = self.darwinConfigurations."Michaels-MacBook-Air".pkgs;
 
     colmena =
       lib.recursiveUpdate
