@@ -60,6 +60,17 @@
     };
   };
 
+  systemd.services = {
+    auto-reboot = {
+      description = "Reboot Service";
+      startAt = [ "Tue 03:00:00" ];
+      serviceConfig = {
+        Type = "oneshot";
+        ExecStart = "/run/current-system/sw/bin/reboot";
+      };
+    };
+  };
+
   services.borgbackup.jobs = {
     plex = {
       paths = [
