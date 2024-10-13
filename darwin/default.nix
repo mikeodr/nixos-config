@@ -2,13 +2,16 @@
 , pkgs
 , self
 , ...
-}: {
+}:
+let
+  username = "mikeodr";
+in
+{
   nixpkgs.config.allowUnfree = true;
 
   environment.systemPackages = with pkgs; [
     arping
     alacritty
-    alejandra
     colima
     colmena
     docker
@@ -20,6 +23,16 @@
     nmap
   ];
 
+  nix-homebrew = {
+    # Install Homebrew under the default prefix
+    enable = true;
+
+    # Apple Silicon Only: Also install Homebrew under the default Intel prefix for Rosetta 2
+    enableRosetta = true;
+
+    user = username;
+  };
+
   homebrew = {
     enable = true;
 
@@ -28,17 +41,49 @@
     ];
 
     masApps = {
-      "Tailscale" = 1475387142;
       "Status Clock" = 552792489;
+      "Tailscale" = 1475387142;
     };
 
     onActivation.cleanup = "zap";
+    onActivation.autoUpdate = true;
+    onActivation.upgrade = true;
   };
 
   fonts.packages = [
     # Fix alacritty warning about missing fonts
     (pkgs.nerdfonts.override { fonts = [ "JetBrainsMono" ]; })
   ];
+
+  system.keyboard = {
+    enableKeyMapping = true;
+    remapCapsLockToControl = true;
+  };
+
+  system.defaults = {
+    dock = {
+      autohide = true;
+      orientation = "bottom";
+    };
+
+    NSGlobalDomain = {
+      # Turn off "natural" scrolling
+      "com.apple.swipescrolldirection" = false;
+      AppleInterfaceStyle = "Dark";
+      # Set clock to 24hour style
+      AppleICUForce24HourTime = true;
+      # Allow press and hold for vim keys to move around
+      ApplePressAndHoldEnabled = false;
+    };
+
+    finder = {
+      FXPreferredViewStyle = "clmv";
+    };
+
+    loginwindow.GuestEnabled = false;
+  };
+
+  system.startup.chime = false;
 
   system.activationScripts.applications.text =
     let
@@ -66,7 +111,16 @@
   # nix.package = pkgs.nix;
 
   # Necessary for using flakes on this system.
-  nix.settings.experimental-features = "nix-command flakes";
+  nix = {
+    gc.automatic = true;
+    optimise.automatic = true;
+
+    settings = {
+      auto-optimise-store = true;
+      experimental-features = [ "nix-command" "flakes" ];
+      warn-dirty = false;
+    };
+  };
 
   # Create /etc/zshrc that loads the nix-darwin environment.
   programs.zsh.enable = true; # default shell on catalina
