@@ -1,16 +1,13 @@
-{
-  nixpkgs,
-  nixpkgs-unstable,
-  home-manager,
-  sops-nix,
-  ...
-} @ inputs: let
+{ nixpkgs
+, nixpkgs-unstable
+, home-manager
+, sops-nix
+, ...
+} @ inputs:
+let
   system = "x86_64-linux";
-
-  userConfig = {
-    username = "specter";
-  };
-in {
+in
+{
   luna = nixpkgs.lib.nixosSystem {
     specialArgs = {
       pkgs-unstable = import nixpkgs-unstable {
@@ -19,7 +16,6 @@ in {
       };
       inherit inputs;
       inherit system;
-      inherit userConfig;
     };
     modules = [
       ./luna
@@ -36,7 +32,6 @@ in {
       };
       inherit inputs;
       inherit system;
-      inherit userConfig;
     };
     modules = [
       ./thor
@@ -53,7 +48,6 @@ in {
       };
       inherit inputs;
       inherit system;
-      inherit userConfig;
     };
     modules = [
       ./sherlock
@@ -70,7 +64,6 @@ in {
       };
       inherit inputs;
       inherit system;
-      inherit userConfig;
     };
     modules = [
       ./caddy-tor1-01

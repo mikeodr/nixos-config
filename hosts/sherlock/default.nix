@@ -1,4 +1,4 @@
-{userConfig, ...}: {
+{ ... }: {
   imports = [
     ./hardware-configuration.nix
     ../../modules/server.nix
