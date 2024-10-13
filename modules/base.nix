@@ -1,8 +1,7 @@
-{
-  config,
-  system,
-  pkgs,
-  ...
+{ config
+, system
+, pkgs
+, ...
 }: {
   imports = [
     ./auto_update.nix
@@ -23,9 +22,10 @@
 
   nix = {
     settings = {
-      experimental-features = ["nix-command" "flakes"];
+      experimental-features = [ "nix-command" "flakes" ];
       auto-optimise-store = true;
-      trusted-users = ["specter"];
+      trusted-users = [ "specter" ];
+      warn-dirty = false;
     };
     gc = {
       automatic = true;
@@ -49,13 +49,14 @@
     iftop
     iotop
     mtr
+    neovim
+    nixpkgs-fmt
     nh
     nmap
     rsync
     sops
     tcpdump
     tmux
-    vim
     wget
     zstd
   ];
