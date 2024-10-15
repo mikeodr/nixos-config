@@ -30,7 +30,7 @@
     useGlobalPkgs = true;
     useUserPackages = true;
     verbose = true;
-    users.specter = import ../home;
+    users.specter = import ../home { inherit config pkgs; };
   };
 
   services.prometheus.exporters.node = {

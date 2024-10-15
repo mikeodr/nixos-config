@@ -1,4 +1,12 @@
-{ config, ... }: {
+{ config, pkgs, ... }:
+let
+  sessionVariables =
+    if pkgs.system == "x86_64-darwin" || pkgs.system == "aarch64-darwin" then {
+      SSH_AUTH_SOCK = "/Users/mikeodr/.1password/agent.sock";
+    }
+    else { };
+in
+{
   enable = true;
 
   history.size = 10000;
@@ -19,6 +27,8 @@
     control-l = "clear";
     clean = "clear";
   };
+
+  sessionVariables = sessionVariables;
 
   oh-my-zsh = {
     enable = true;
