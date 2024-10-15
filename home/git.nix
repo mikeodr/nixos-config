@@ -17,10 +17,6 @@
     cob = "checkout -b";
     fpush = "push --force-with-lease";
   };
-  signing = {
-    key = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILOkkbCny2gXw85T1CEUdMIyizGrmDx9CqxzyLCu9WLk";
-    signByDefault = true;
-  };
 
   extraConfig = {
     core = {
@@ -28,6 +24,9 @@
     };
     gpg = {
       format = "ssh";
+    };
+    user = {
+      signingkey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILOkkbCny2gXw85T1CEUdMIyizGrmDx9CqxzyLCu9WLk";
     };
   };
 }
