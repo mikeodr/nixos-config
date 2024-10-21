@@ -41,23 +41,22 @@
     {
       nixosConfigurations = import ./hosts inputs;
 
-      darwinConfigurations."Michaels-MacBook-Air" = nix-darwin.lib.darwinSystem {
-        modules = [
-          ./darwin/default.nix
-          nix-homebrew.darwinModules.nix-homebrew
-          home-manager.darwinModules.home-manager
-          {
-            # `home-manager` config
-            home-manager.useGlobalPkgs = true;
-            home-manager.useUserPackages = true;
-            home-manager.users.mikeodr = import ./darwin/home.nix;
-          }
-        ];
-        specialArgs = {
-          inherit inputs;
-          inherit self;
+      darwinConfigurations."Michaels-MacBook-Air" =
+        let
+          userName = "mikeodr";
+          userHome = "/Users/mikeodr";
+        in
+        nix-darwin.lib.darwinSystem {
+          modules = [
+            ./darwin/default.nix
+            nix-homebrew.darwinModules.nix-homebrew
+            home-manager.darwinModules.home-manager
+          ];
+          specialArgs = {
+            inherit inputs;
+            inherit self;
+          };
         };
-      };
 
       # Expose the package set, including overlays, for convenience.
       darwinPackages = self.darwinConfigurations."Michaels-MacBook-Air".pkgs;
@@ -71,8 +70,12 @@
                 system = "x86_64-linux";
                 overlays = [ ];
               };
-              nodeNixpkgs = builtins.mapAttrs (_: v: v.pkgs) self.nixosConfigurations;
-              nodeSpecialArgs = builtins.mapAttrs (_: v: v._module.specialArgs) self.nixosConfigurations;
+              nodeNixpkgs = builtins.mapAttrs
+                (_: v: v.pkgs)
+                self.nixosConfigurations;
+              nodeSpecialArgs = builtins.mapAttrs
+                (_: v: v._module.specialArgs)
+                self.nixosConfigurations;
             };
 
             defaults.deployment.targetUser = "specter";

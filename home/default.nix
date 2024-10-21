@@ -1,11 +1,14 @@
 { config
 , pkgs
+, lib
+, userName
+, userHome
 , ...
 }: {
   programs.home-manager.enable = true;
 
-  home.username = "specter";
-  home.homeDirectory = "/home/specter";
+  home.username = userName;
+  home.homeDirectory = lib.mkForce userHome;
   home.stateVersion = "24.05";
 
   home.packages = with pkgs; [
@@ -17,6 +20,7 @@
   programs = {
     neovim = import ../home/neovim.nix { };
     git = import ./git.nix { };
-    zsh = import ./zsh.nix { inherit config; };
+    zoxide = import ../home/zoxide.nix { inherit pkgs; };
+    zsh = import ./zsh.nix { inherit config pkgs; };
   };
 }

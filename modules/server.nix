@@ -1,9 +1,15 @@
 { config
-, system
-, pkgs
 , home-manager
+, lib
+, pkgs
+, system
 , ...
-}: {
+}:
+let
+  userName = "specter";
+  userHome = "/home/specter";
+in
+{
   imports = [
     ./base.nix
     ./certs.nix
@@ -15,7 +21,7 @@
   programs.zsh.enable = true;
   users = {
     # Define a user account. Don't forget to set a password with ‘passwd’.
-    users.specter = {
+    users.${userName} = {
       shell = pkgs.zsh;
       isNormalUser = true;
       extraGroups = [ "wheel" ];
@@ -30,7 +36,7 @@
     useGlobalPkgs = true;
     useUserPackages = true;
     verbose = true;
-    users.specter = import ../home { inherit config pkgs; };
+    users.${userName} = import ../home { inherit config lib pkgs userName userHome; };
   };
 
   services.prometheus.exporters.node = {

@@ -42,6 +42,7 @@
     dua
     du-dust
     fastfetch
+    fzf
     git
     gnutar
     gzip
@@ -58,6 +59,7 @@
     tcpdump
     tmux
     wget
+    zoxide
     zstd
   ];
 

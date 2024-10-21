@@ -1,13 +1,23 @@
 { config
+, lib
 , pkgs
 , self
+, home-manager
 , ...
 }:
 let
-  username = "mikeodr";
+  userName = "mikeodr";
+  userHome = "/Users/mikeodr";
 in
 {
   nixpkgs.config.allowUnfree = true;
+
+  home-manager = {
+    useGlobalPkgs = true;
+    useUserPackages = true;
+    verbose = true;
+    users.${userName} = import ../home { inherit config lib pkgs userName userHome; };
+  };
 
   environment.systemPackages = with pkgs; [
     arping
@@ -15,12 +25,14 @@ in
     colima
     colmena
     docker
+    du-dust
     jq
     mkalias
     neovim
     nixpkgs-fmt
     nixd
     nmap
+    zoxide
   ];
 
   nix-homebrew = {
@@ -30,7 +42,7 @@ in
     # Apple Silicon Only: Also install Homebrew under the default Intel prefix for Rosetta 2
     enableRosetta = true;
 
-    user = username;
+    user = userName;
   };
 
   homebrew = {

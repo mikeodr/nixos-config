@@ -10,15 +10,15 @@ in
   enable = true;
 
   history.size = 10000;
-  history.path = "${config.xdg.dataHome}/zsh/history";
 
   shellAliases = {
-    rm = "rm -i";
     cp = "cp -v";
-    mv = "mv -v";
     df = "df -h";
-    top = "htop";
+    du = "dust";
+    mv = "mv -v";
+    rm = "rm -i";
     pgrep = "pgrep -l";
+    top = "htop";
 
     vim = "nvim";
     ls = "ls --color";
