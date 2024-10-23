@@ -22,6 +22,7 @@ in
   environment.systemPackages = with pkgs; [
     arping
     alacritty
+    alejandra
     colima
     colmena
     docker
