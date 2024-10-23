@@ -1,4 +1,4 @@
-{ ... }: {
+{...}: {
   enable = true;
   defaultEditor = true;
   viAlias = true;

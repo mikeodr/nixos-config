@@ -1,22 +1,20 @@
-{ config
-, lib
-, pkgs
-, self
-, home-manager
-, ...
-}:
-let
+{
+  config,
+  lib,
+  pkgs,
+  self,
+  ...
+}: let
   userName = "mikeodr";
   userHome = "/Users/mikeodr";
-in
-{
+in {
   nixpkgs.config.allowUnfree = true;
 
   home-manager = {
     useGlobalPkgs = true;
     useUserPackages = true;
     verbose = true;
-    users.${userName} = import ../home { inherit config lib pkgs userName userHome; };
+    users.${userName} = import ../home {inherit config lib pkgs userName userHome;};
   };
 
   environment.systemPackages = with pkgs; [
@@ -65,7 +63,7 @@ in
 
   fonts.packages = [
     # Fix alacritty warning about missing fonts
-    (pkgs.nerdfonts.override { fonts = [ "JetBrainsMono" ]; })
+    (pkgs.nerdfonts.override {fonts = ["JetBrainsMono"];})
   ];
 
   system.keyboard = {
@@ -98,14 +96,13 @@ in
 
   system.startup.chime = false;
 
-  system.activationScripts.applications.text =
-    let
-      env = pkgs.buildEnv {
-        name = "system-applications";
-        paths = config.environment.systemPackages;
-        pathsToLink = "/Applications";
-      };
-    in
+  system.activationScripts.applications.text = let
+    env = pkgs.buildEnv {
+      name = "system-applications";
+      paths = config.environment.systemPackages;
+      pathsToLink = "/Applications";
+    };
+  in
     pkgs.lib.mkForce ''
       # Set up applications.
       echo "setting up /Applications..." >&2
@@ -130,7 +127,7 @@ in
 
     settings = {
       auto-optimise-store = true;
-      experimental-features = [ "nix-command" "flakes" ];
+      experimental-features = ["nix-command" "flakes"];
       warn-dirty = false;
     };
   };

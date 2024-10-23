@@ -1,4 +1,4 @@
-{ ... }: {
+{...}: {
   enable = true;
   userName = "Mike O'Driscoll";
   userEmail = "mike@unusedbytes.ca";

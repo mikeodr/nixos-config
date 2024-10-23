@@ -1,6 +1,7 @@
-{ pkgs
-, pkgs-unstable
-, ...
+{
+  pkgs,
+  pkgs-unstable,
+  ...
 }: {
   imports = [
     ./hardware-configuration.nix
@@ -25,10 +26,10 @@
   fileSystems."/mnt/media" = {
     device = "172.16.0.3:/volume2/Media";
     fsType = "nfs4";
-    options = [ "auto" ];
+    options = ["auto"];
   };
 
-  sops.secrets."security/acme/plex_pkcs12_pass" = { };
+  sops.secrets."security/acme/plex_pkcs12_pass" = {};
   security.acme.certs."unusedbytes.ca" = {
     group = "plex";
     # Ensure renew of cert generates a plex compatible cert and reloads the service
@@ -37,7 +38,7 @@
       chown acme:plex plex.pkfx
       chmod 640 plex.pkfx
     '';
-    reloadServices = [ "plex" ];
+    reloadServices = ["plex"];
   };
 
   services = {
@@ -59,7 +60,7 @@
   systemd.services = {
     auto-reboot = {
       description = "Reboot Service";
-      startAt = [ "Tue 03:00:00" ];
+      startAt = ["Tue 03:00:00"];
       serviceConfig = {
         Type = "oneshot";
         ExecStart = "/run/current-system/sw/bin/reboot";

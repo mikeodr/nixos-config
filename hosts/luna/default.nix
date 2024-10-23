@@ -1,6 +1,7 @@
-{ config
-, pkgs
-, ...
+{
+  config,
+  pkgs,
+  ...
 }: {
   imports = [
     ./hardware-configuration.nix
@@ -37,7 +38,7 @@
   fileSystems."/mnt/media" = {
     device = "172.16.0.3:/volume2/Media";
     fsType = "nfs4";
-    options = [ "auto" ];
+    options = ["auto"];
   };
 
   environment.systemPackages = with pkgs; [
@@ -52,7 +53,7 @@
   };
 
   # Ensure cert renewals reload caddy
-  security.acme.certs."unusedbytes.ca".reloadServices = [ "caddy" ];
+  security.acme.certs."unusedbytes.ca".reloadServices = ["caddy"];
 
   services.caddy = {
     enable = true;
@@ -156,7 +157,7 @@
   services.prometheus.exporters.node.openFirewall = true;
   networking.firewall = {
     enable = true;
-    allowedTCPPorts = [ 80 443 ];
+    allowedTCPPorts = [80 443];
   };
 
   system.stateVersion = "24.05";

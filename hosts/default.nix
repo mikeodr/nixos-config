@@ -1,13 +1,12 @@
-{ nixpkgs
-, nixpkgs-unstable
-, home-manager
-, sops-nix
-, ...
-} @ inputs:
-let
-  system = "x86_64-linux";
-in
 {
+  nixpkgs,
+  nixpkgs-unstable,
+  home-manager,
+  sops-nix,
+  ...
+} @ inputs: let
+  system = "x86_64-linux";
+in {
   luna = nixpkgs.lib.nixosSystem {
     specialArgs = {
       pkgs-unstable = import nixpkgs-unstable {

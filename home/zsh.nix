@@ -1,12 +1,15 @@
-{ config, pkgs, ... }:
-let
+{
+  config,
+  pkgs,
+  ...
+}: let
   sessionVariables =
-    if pkgs.system == "x86_64-darwin" || pkgs.system == "aarch64-darwin" then {
+    if pkgs.system == "x86_64-darwin" || pkgs.system == "aarch64-darwin"
+    then {
       SSH_AUTH_SOCK = "/Users/mikeodr/.1password/agent.sock";
     }
-    else { };
-in
-{
+    else {};
+in {
   enable = true;
 
   history.size = 10000;

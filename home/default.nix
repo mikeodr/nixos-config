@@ -1,9 +1,10 @@
-{ config
-, pkgs
-, lib
-, userName
-, userHome
-, ...
+{
+  config,
+  pkgs,
+  lib,
+  userName,
+  userHome,
+  ...
 }: {
   programs.home-manager.enable = true;
 
@@ -18,9 +19,9 @@
   ];
 
   programs = {
-    neovim = import ../home/neovim.nix { };
-    git = import ./git.nix { };
-    zoxide = import ../home/zoxide.nix { inherit pkgs; };
-    zsh = import ./zsh.nix { inherit config pkgs; };
+    neovim = import ../home/neovim.nix {};
+    git = import ./git.nix {};
+    zoxide = import ../home/zoxide.nix {inherit pkgs;};
+    zsh = import ./zsh.nix {inherit config pkgs;};
   };
 }
