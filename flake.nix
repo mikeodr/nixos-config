@@ -29,7 +29,6 @@
   outputs = {
     self,
     nixpkgs,
-    nixpkgs-unstable,
     nix-darwin,
     nix-homebrew,
     home-manager,
@@ -39,21 +38,17 @@
   in {
     nixosConfigurations = import ./hosts inputs;
 
-    darwinConfigurations."Michaels-MacBook-Air" = let
-      userName = "mikeodr";
-      userHome = "/Users/mikeodr";
-    in
-      nix-darwin.lib.darwinSystem {
-        modules = [
-          ./darwin/default.nix
-          nix-homebrew.darwinModules.nix-homebrew
-          home-manager.darwinModules.home-manager
-        ];
-        specialArgs = {
-          inherit inputs;
-          inherit self;
-        };
+    darwinConfigurations."Michaels-MacBook-Air" = nix-darwin.lib.darwinSystem {
+      modules = [
+        ./darwin/default.nix
+        nix-homebrew.darwinModules.nix-homebrew
+        home-manager.darwinModules.home-manager
+      ];
+      specialArgs = {
+        inherit inputs;
+        inherit self;
       };
+    };
 
     # Expose the package set, including overlays, for convenience.
     darwinPackages = self.darwinConfigurations."Michaels-MacBook-Air".pkgs;

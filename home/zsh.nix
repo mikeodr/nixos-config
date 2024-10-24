@@ -1,8 +1,4 @@
-{
-  config,
-  pkgs,
-  ...
-}: let
+{pkgs, ...}: let
   sessionVariables =
     if pkgs.system == "x86_64-darwin" || pkgs.system == "aarch64-darwin"
     then {
