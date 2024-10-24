@@ -1,0 +1,11 @@
+{
+    "nix.enableLanguageServer": true,
+    "nix.serverPath": "nixd",
+    "[nix]": {
+        "editor.defaultFormatter": "kamadorueda.alejandra",
+        "editor.formatOnPaste": true,
+        "editor.formatOnSave": true,
+        "editor.formatOnType": false
+    },
+    "alejandra.program": "alejandra"
+}
