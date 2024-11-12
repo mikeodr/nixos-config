@@ -20,7 +20,7 @@
 
   programs = {
     neovim = import ../home/neovim.nix {};
-    git = import ./git.nix {};
+    git = import ./git.nix {inherit pkgs;};
     zoxide = import ../home/zoxide.nix {inherit pkgs;};
     zsh = import ./zsh.nix {inherit config pkgs;};
   };
