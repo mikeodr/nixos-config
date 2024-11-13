@@ -7,6 +7,7 @@
     cm = "commit";
     br = "branch";
     co = "checkout";
+    com = "!f() { git checkout main 2>/dev/null || git checkout master; }; f";
     lg = "log -p";
     lsd = "log --graph --decorate --pretty=oneline --abbrev-commit --all";
     unstage = "reset HEAD";
