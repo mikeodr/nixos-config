@@ -27,6 +27,7 @@ in {
     du-dust
     jq
     mkalias
+    mtr
     neovim
     nixpkgs-fmt
     nixd
