@@ -1,9 +1,4 @@
-{
-  config,
-  system,
-  pkgs,
-  ...
-}: {
+{pkgs, ...}: {
   imports = [
     ./auto_update.nix
     ./qemu_guest.nix
@@ -24,15 +19,16 @@
   nix = {
     settings = {
       experimental-features = ["nix-command" "flakes"];
-      auto-optimise-store = true;
       trusted-users = ["specter"];
       warn-dirty = false;
     };
+
     gc = {
       automatic = true;
       dates = "weekly";
       options = "--delete-older-than 7d --keep 3";
     };
+    optimise.automatic = true;
   };
 
   programs.vim.defaultEditor = true;
