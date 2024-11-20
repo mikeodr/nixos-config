@@ -25,6 +25,8 @@ in {
     colmena
     docker
     du-dust
+    fastfetch
+    fzf
     jq
     mkalias
     mtr
