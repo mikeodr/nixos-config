@@ -29,6 +29,12 @@ Please see [Vimjoyer's Excellent Video](https://www.youtube.com/watch?v=G5f6GC7S
 - `colmena apply switch --on <host>`
 - `colmena apply switch --on @tag`
 
+### Adding a new host via colmena
+
+- Host should have a user set
+- SSH key should be set
+- Set `security.sudo.wheelNeedsPassword = false;`
+
 ### Adding a new host to the secrets access
 
 - For a new host run:  
@@ -37,7 +43,8 @@ Please see [Vimjoyer's Excellent Video](https://www.youtube.com/watch?v=G5f6GC7S
 - Add public key returned to `.sops.yaml`
 - Update secrets/secrets.yaml with new keys:  
 `nix-shell -p sops --run "sops updatekeys secrets/secrets.yaml"`
+`nix-shell -p sops --run "sops updatekeys modules/tailscale_key.yaml"`
 
 #### Credits
 
-[BonusPlay/sysconf](https://github.com/BonusPlay/sysconf), a random repo I found that had a nice layout, and used colemna for managing multiple hosts.
+[BonusPlay/sysconf](https://github.com/BonusPlay/sysconf), a random repo I found that had a nice layout, and used colmena for managing multiple hosts.
