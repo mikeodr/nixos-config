@@ -3,6 +3,7 @@ keys:
   - &thor age16726j7ylq4mn7fny20vs5xhxysg35ewfwqrkydmpgw78cdu3xqzs0ywcg2
   - &sherlock age1n0xlcm7h9m0644hpe89k5jv3ac9zlenkx2yx020sgs6ml3u6dfmq863vmw
   - &caddytor01 age19f093z4zwej5gwe96c340fycjapvqnk5zjauep0xpnguyyxpzylqt62kak
+  - &knox age1mjg69pwlyg9l7afvmpjadx5s3u4gnwfa0mjpchaqka9k9uwtpfes2s5f6u
 creation_rules:
   - path_regex: secrets/secrets.yaml$
     key_groups:
@@ -11,6 +12,7 @@ creation_rules:
           - *thor
           - *sherlock
           - *caddytor01
+          - *knox
   - path_regex: hosts/luna/secrets.yaml$
     key_groups:
       - age:
@@ -27,3 +29,4 @@ creation_rules:
           - *thor
           - *sherlock
           - *caddytor01
+          - *knox
