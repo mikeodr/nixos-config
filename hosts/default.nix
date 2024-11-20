@@ -70,4 +70,20 @@ in {
       sops-nix.nixosModules.sops
     ];
   };
+
+  knox = nixpkgs.lib.nixosSystem {
+    specialArgs = {
+      pkgs-unstable = import nixpkgs-unstable {
+        inherit system;
+        config.allowUnfree = true;
+      };
+      inherit inputs;
+      inherit system;
+    };
+    modules = [
+      ./knox
+      home-manager.nixosModules.home-manager
+      sops-nix.nixosModules.sops
+    ];
+  };
 }
