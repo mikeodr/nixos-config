@@ -100,6 +100,12 @@
           targetHost = "159.203.62.219";
           buildOnTarget = true;
         };
+
+        knox.deployment = {
+          tags = ["vm" "server"];
+          targetHost = "knox.unusedbytes.ca";
+          buildOnTarget = true;
+        };
       };
   };
 }
