@@ -34,6 +34,7 @@ in {
     nixpkgs-fmt
     nixd
     nmap
+    sops
     zoxide
   ];
 
