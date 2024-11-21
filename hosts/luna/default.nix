@@ -107,6 +107,12 @@
       '';
       useACMEHost = "unusedbytes.ca";
     };
+    virtualHosts."mealie.unusedbytes.ca" = {
+      extraConfig = ''
+        reverse_proxy http://localhost:9000
+      '';
+      useACMEHost = "unusedbytes.ca";
+    };
     virtualHosts.":443" = {
       extraConfig = ''
         respond "Not Found" 404
@@ -133,6 +139,7 @@
     freshrss = {
       paths = [
         "/var/lib/freshrss"
+        "/var/lib/pods/mealie/data"
       ];
       doInit = false;
       encryption.mode = "none";
