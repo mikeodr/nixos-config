@@ -1,9 +1,4 @@
-{
-  config,
-  lib,
-  pkgs-unstable,
-  ...
-}: {
+{pkgs-unstable, ...}: {
   imports = [
     ./ip_forwarding.nix
   ];

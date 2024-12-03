@@ -32,6 +32,7 @@
   };
 
   programs.vim.defaultEditor = true;
+  programs.vim.enable = true;
 
   environment.systemPackages = with pkgs; [
     curl
