@@ -52,7 +52,7 @@
       };
       virtualHosts."oink.unusedbytes.ca" = {
         extraConfig = ''
-          reverse_proxy http://kirby:5055
+          reverse_proxy http://luna:5055
         '';
         useACMEHost = "unusedbytes.ca";
       };

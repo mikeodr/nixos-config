@@ -46,6 +46,84 @@ in {
         };
         ports = ["9000:9000/tcp"];
       };
+
+      nzbget = {
+        autoStart = true;
+        image = "lscr.io/linuxserver/nzbget:latest";
+        ports = ["127.0.0.1:6789:6789"];
+        environment = {
+          TZ = "America/Toronto";
+          PUID = "1000";
+          PGID = "100";
+        };
+        extraOptions = ["--pull=always"];
+        volumes = [
+          "/var/lib/nzbget:/config"
+          "/mnt/media/downloads:/downloads"
+        ];
+      };
+
+      sonarr = {
+        autoStart = true;
+        image = "lscr.io/linuxserver/sonarr:latest";
+        ports = ["127.0.0.1:8989:8989"];
+        environment = {
+          TZ = "America/Toronto";
+          PUID = "1000";
+          PGID = "100";
+        };
+        extraOptions = ["--pull=always"];
+        volumes = [
+          "/var/lib/sonarr:/config"
+          "/mnt/media/TV:/tv"
+          "/mnt/media/downloads:/downloads"
+        ];
+      };
+
+      radarr = {
+        autoStart = true;
+        image = "lscr.io/linuxserver/radarr:latest";
+        ports = ["127.0.0.1:7878:7878"];
+        environment = {
+          TZ = "America/Toronto";
+          PUID = "1000";
+          PGID = "100";
+        };
+        extraOptions = ["--pull=always"];
+        volumes = [
+          "/var/lib/radarr:/config"
+          "/mnt/media/Movies:/movies"
+          "/mnt/media/downloads:/downloads"
+        ];
+      };
+
+      prowlarr = {
+        autoStart = true;
+        image = "lscr.io/linuxserver/prowlarr:latest";
+        ports = ["127.0.0.1:9696:9696"];
+        environment = {
+          TZ = "America/Toronto";
+          PUID = "1000";
+          PGID = "100";
+        };
+        extraOptions = ["--pull=always"];
+        volumes = [
+          "/var/lib/prowlarr:/config"
+        ];
+      };
+
+      overseerr = {
+        autoStart = true;
+        image = "sctx/overseerr:latest";
+        ports = ["5055:5055"];
+        environment = {
+          LOG_LEVEL = "info";
+          TZ = "America/Toronto";
+        };
+        volumes = [
+          "/var/lib/overseerr:/app/config"
+        ];
+      };
     };
   };
 }

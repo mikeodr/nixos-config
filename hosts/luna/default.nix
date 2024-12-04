@@ -10,7 +10,6 @@
     ./containers.nix
     ./obsidian.nix
     ./wireguard.nix
-    ./trinity.nix
   ];
 
   boot = {
@@ -140,6 +139,11 @@
           reverse_proxy http://localhost:9696
         '';
         useACMEHost = "unusedbytes.ca";
+      };
+      "overseerr.unusedbytes.ca" = {
+        extraConfig = ''
+          reverse_proxy http://localhost:5055
+        '';
       };
       ":443" = {
         extraConfig = ''
