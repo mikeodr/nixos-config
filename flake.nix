@@ -53,6 +53,19 @@
       };
     };
 
+    darwinConfigurations."Michaels-MacBook-Pro" = nix-darwin.lib.darwinSystem {
+      system = "aarch64-darwin";
+      modules = [
+        ./darwin/default.nix
+        nix-homebrew.darwinModules.nix-homebrew
+        home-manager.darwinModules.home-manager
+      ];
+      specialArgs = {
+        inherit inputs;
+        inherit self;
+      };
+    };
+
     # Expose the package set, including overlays, for convenience.
     darwinPackages = self.darwinConfigurations."Michaels-MacBook-Air".pkgs;
 
