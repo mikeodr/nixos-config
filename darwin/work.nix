@@ -1,6 +1,5 @@
 {...}: let
   userName = "mikeodr";
-  userEmail = "mikeo@tailscale.com";
 in {
   nixpkgs.config.allowUnfree = true;
 
