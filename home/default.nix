@@ -27,6 +27,12 @@ in {
         type = lib.types.str;
         description = "Git signing key";
       };
+
+      additionalPkgs = lib.mkOption {
+        type = lib.types.listOf lib.types.package;
+        description = "List of additional per system package to install";
+        default = [];
+      };
     };
   };
 
@@ -42,12 +48,14 @@ in {
         home.homeDirectory = lib.mkForce cfg.homeDir;
         home.stateVersion = "24.05";
 
-        home.packages = with pkgs; [
-          git
-          jq
-          mtr
-          zsh
-        ];
+        home.packages = with pkgs;
+          [
+            git
+            jq
+            mtr
+            zsh
+          ]
+          ++ cfg.additionalPkgs;
 
         imports = [
           ./git.nix
