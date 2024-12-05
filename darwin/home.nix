@@ -4,7 +4,7 @@ in {
   nixpkgs.config.allowUnfree = true;
 
   imports = [
-    ./config.nix
+    ./common.nix
     ../home
   ];
 
