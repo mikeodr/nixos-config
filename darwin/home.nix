@@ -1,10 +1,4 @@
-{
-  config,
-  lib,
-  pkgs,
-  self,
-  ...
-}: let
+{...}: let
   userName = "mikeodr";
 in {
   nixpkgs.config.allowUnfree = true;
