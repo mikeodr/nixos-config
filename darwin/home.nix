@@ -10,12 +10,14 @@
 in {
   nixpkgs.config.allowUnfree = true;
 
-  home-manager = {
-    useGlobalPkgs = true;
-    useUserPackages = true;
-    verbose = true;
-    users.${userName} = import ../home {inherit config lib pkgs userName userHome;};
-  };
+  imports = [
+    ../home
+  ];
+
+  homeConfig.homeUser = userName;
+  homeConfig.homeDir = "/Users/${userName}";
+  homeConfig.gitEmail = "mike@unusedbytes.ca";
+  homeConfig.gitSigningKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILOkkbCny2gXw85T1CEUdMIyizGrmDx9CqxzyLCu9WLk";
 
   environment.systemPackages = with pkgs; [
     arping
@@ -35,6 +37,7 @@ in {
     nixd
     nmap
     sops
+    wget
     zoxide
   ];
 

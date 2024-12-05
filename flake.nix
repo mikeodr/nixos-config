@@ -43,7 +43,7 @@
 
     darwinConfigurations."Michaels-MacBook-Air" = nix-darwin.lib.darwinSystem {
       modules = [
-        ./darwin/default.nix
+        ./darwin/home.nix
         nix-homebrew.darwinModules.nix-homebrew
         home-manager.darwinModules.home-manager
       ];
@@ -56,7 +56,7 @@
     darwinConfigurations."Michaels-MacBook-Pro" = nix-darwin.lib.darwinSystem {
       system = "aarch64-darwin";
       modules = [
-        ./darwin/default.nix
+        ./darwin/work.nix
         nix-homebrew.darwinModules.nix-homebrew
         home-manager.darwinModules.home-manager
       ];

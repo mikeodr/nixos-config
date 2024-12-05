@@ -1,8 +1,12 @@
-{pkgs, ...}: let
+{
+  config,
+  pkgs,
+  ...
+}: let
   sessionVariables =
     if pkgs.system == "x86_64-darwin" || pkgs.system == "aarch64-darwin"
     then {
-      SSH_AUTH_SOCK = "/Users/mikeodr/.1password/agent.sock";
+      SSH_AUTH_SOCK = "${config.homeConfig.homeDir}/Library/Group Containers/2BUA8C4S2C.com.1password/t/agent.sock";
     }
     else {};
 in {
