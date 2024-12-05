@@ -37,12 +37,13 @@ in {
     enable = true;
     theme = "robbyrussell";
     plugins = [
+      "command-not-found"
+      "direnv"
       "git"
-      "sudo"
       "golang"
       "rust"
-      "command-not-found"
       "pass"
+      "sudo"
     ];
   };
 }
