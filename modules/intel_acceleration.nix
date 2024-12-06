@@ -1,6 +1,5 @@
 {
   pkgs,
-  nixpkgs,
   lib,
   config,
   ...
