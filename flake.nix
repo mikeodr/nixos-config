@@ -104,11 +104,6 @@
           buildOnTarget = true;
         };
 
-        caddy-tor1-01.deployment = {
-          tags = ["vm" "vps"];
-          buildOnTarget = true;
-        };
-
         tachi.deployment = {
           tags = ["vm" "vps"];
           buildOnTarget = true;

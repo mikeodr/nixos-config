@@ -55,22 +55,6 @@ in {
     ];
   };
 
-  caddy-tor1-01 = nixpkgs.lib.nixosSystem {
-    specialArgs = {
-      pkgs-unstable = import nixpkgs-unstable {
-        inherit system;
-        config.allowUnfree = true;
-      };
-      inherit inputs;
-      inherit system;
-    };
-    modules = [
-      ./caddy-tor1-01
-      home-manager.nixosModules.home-manager
-      sops-nix.nixosModules.sops
-    ];
-  };
-
   knox = nixpkgs.lib.nixosSystem {
     specialArgs = {
       pkgs-unstable = import nixpkgs-unstable {
