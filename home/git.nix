@@ -64,7 +64,7 @@ in {
           then
             branch=$(git symbolic-ref --short HEAD)
             # If the branch contains a ticket number, proceed
-            # $match is automatically populated with the capure groups for
+            # $match is automatically populated with the capture groups for
             # the project and ticket number
             if [[ "$branch" =~ ^.+([A-Z]{3,5})[_-]([0-9]+).* ]]
             then
