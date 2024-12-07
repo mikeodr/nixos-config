@@ -86,4 +86,20 @@ in {
       sops-nix.nixosModules.sops
     ];
   };
+
+  tachi = nixpkgs.lib.nixosSystem {
+    specialArgs = {
+      pkgs-unstable = import nixpkgs-unstable {
+        system = "aarch64-linux";
+        config.allowUnfree = true;
+      };
+      inherit inputs;
+      system = "aarch64-linux";
+    };
+    modules = [
+      ./tachi
+      home-manager.nixosModules.home-manager
+      sops-nix.nixosModules.sops
+    ];
+  };
 }

@@ -7,17 +7,22 @@
 }: {
   imports = [
     ./hardware-configuration.nix
-    ./networking.nix
     ../../modules/server.nix
   ];
 
   autoUpdate.enable = true;
   isVM = true;
   ip_forwarding.enable = true;
-  ip_forward_interfaces = ["eth0"];
+  ip_forward_interfaces = ["enp0s6"];
+
+  boot = {
+    loader.grub.device = "/dev/sda";
+    tmp.cleanOnBoot = true;
+    loader.grub.configurationLimit = 1;
+  };
 
   zramSwap.enable = true;
-  networking.hostName = "caddy-tor1-01";
+  networking.hostName = "tachi";
   networking.domain = "";
   services.openssh.enable = true;
 
@@ -25,7 +30,7 @@
   acmeCertGeneration.enable = true;
 
   # Ensure cert renewals reload caddy
-  security.acme.certs."unusedbytes.ca".reloadServices = ["caddy"];
+  # security.acme.certs."unusedbytes.ca".reloadServices = ["caddy"];
 
   # Override the path to include tailscale
   # from https://github.com/NixOS/nixpkgs/blob/6afb255d976f85f3359e4929abd6f5149c323a02/nixos/modules/services/monitoring/uptime-kuma.nix#L50
@@ -83,5 +88,5 @@
     allowedTCPPorts = [80 443];
   };
 
-  system.stateVersion = "23.11";
+  system.stateVersion = "23.05";
 }
