@@ -42,8 +42,8 @@ Please see [Vimjoyer's Excellent Video](https://www.youtube.com/watch?v=G5f6GC7S
   - `nix-shell -p age --run "age-keygen -o ~/.config/sops/age/keys.txt"`
 - Add public key returned to `.sops.yaml`
 - Update secrets/secrets.yaml with new keys:  
-`nix-shell -p sops --run "sops updatekeys secrets/secrets.yaml"`
-`nix-shell -p sops --run "sops updatekeys modules/tailscale_key.yaml"`
+  - `nix-shell -p sops --run "sops updatekeys secrets/secrets.yaml"`
+  - `nix-shell -p sops --run "sops updatekeys modules/tailscale_key.yaml"`
 
 #### Credits
 
