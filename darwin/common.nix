@@ -22,6 +22,7 @@
     nixd
     nmap
     sops
+    watch
     wget
     zoxide
   ];
