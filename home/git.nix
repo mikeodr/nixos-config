@@ -53,32 +53,6 @@ in {
         user.signingkey = cfg.signingKey;
         push.autoSetupRemote = true;
       };
-
-      hooks = {
-        "prepare-commit-msg" = pkgs.writeShellScript "commit_msg.sh" ''
-          COMMIT_MSG_FILE=$1
-          COMMIT_SOURCE=$2
-          SHA1=$3
-
-          if [[ -z "$COMMIT_SOURCE" ]]
-          then
-            branch=$(git symbolic-ref --short HEAD)
-            # If the branch contains a ticket number, proceed
-            # $match is automatically populated with the capture groups for
-            # the project and ticket number
-            if [[ "$branch" =~ ^.+([A-Z]{3,5})[_-]([0-9]+).* ]]
-            then
-              # Format the ticket number
-              ticket="''${BASH_REMATCH[1]:u}-''${BASH_REMATCH[2]}"
-              # Get the message if passed in already
-              gitMsg=$(cat "$COMMIT_MSG_FILE")
-              # Format the message
-              printf "[%s]" $ticket > "$COMMIT_MSG_FILE"
-              printf "$gitMsg" >> "$COMMIT_MSG_FILE"
-            fi
-          fi
-        '';
-      };
     };
   };
 }
