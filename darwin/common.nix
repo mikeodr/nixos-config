@@ -40,6 +40,10 @@
   homebrew = {
     enable = true;
 
+    casks = [
+      "flameshot"
+    ];
+
     brews = [
       "mas"
     ];
