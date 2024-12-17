@@ -41,7 +41,9 @@
     enable = true;
 
     casks = [
+      "1password-cli"
       "flameshot"
+      "tailscale" # Installs the pkg from pkgs.tailscale.com
     ];
 
     brews = [
@@ -50,7 +52,6 @@
 
     masApps = {
       "Status Clock" = 552792489;
-      "Tailscale" = 1475387142;
     };
 
     onActivation.cleanup = "zap";
