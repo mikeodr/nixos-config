@@ -8,6 +8,7 @@
     ./hardware-configuration.nix
     ../../modules/server.nix
     ./containers.nix
+    ./golink.nix
     ./obsidian.nix
     ./wireguard.nix
   ];
@@ -34,6 +35,8 @@
 
   # Custom module enable UDP GRO forwarding and IP forwarding
   ip_forwarding.enable = true;
+
+  services.golink.enable = true;
 
   # Jellyfin Media Mounts
   fileSystems."/mnt/media" = {
