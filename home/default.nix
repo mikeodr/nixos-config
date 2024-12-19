@@ -33,6 +33,11 @@ in {
         description = "List of additional per system package to install";
         default = [];
       };
+
+      extraEnvVars = lib.mkOption {
+        default = {};
+        description = "extra env vars";
+      };
     };
   };
 
@@ -59,16 +64,19 @@ in {
 
         imports = [
           ./git.nix
+          ./zsh.nix
         ];
 
         gitconfig.enable = true;
         gitconfig.userEmail = cfg.gitEmail;
         gitconfig.signingKey = cfg.gitSigningKey;
 
+        zshConfig.extraEnvVars = cfg.extraEnvVars;
+        zshConfig.homeDir = cfg.homeDir;
+
         programs = {
           neovim = import ../home/neovim.nix {};
           zoxide = import ../home/zoxide.nix {inherit pkgs;};
-          zsh = import ./zsh.nix {inherit config pkgs;};
         };
       };
     };
