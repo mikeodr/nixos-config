@@ -10,8 +10,6 @@
     tmp.cleanOnBoot = true;
   };
 
-  autoUpdate.enable = true;
-
   isVM = true;
 
   # Generate ACME Certs in custom module

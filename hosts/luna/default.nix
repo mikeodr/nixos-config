@@ -24,9 +24,6 @@
   # Enable Dynamic Downloaded Binary linking in custom module
   ldDynamicLink.enable = true;
 
-  # Enable system auto updates in custom module
-  autoUpdate.enable = true;
-
   # Is a VM enable QEMU guest agent in custom module
   isVM = true;
 

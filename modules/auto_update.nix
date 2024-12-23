@@ -8,6 +8,7 @@
   options = {
     autoUpdate.enable =
       lib.mkEnableOption "Enable automatic updates of the system";
+    default = false;
   };
 
   config = lib.mkIf config.autoUpdate.enable {
