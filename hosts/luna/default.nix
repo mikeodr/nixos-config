@@ -145,6 +145,11 @@
           reverse_proxy http://localhost:5055
         '';
       };
+      "watchstate.unusedbytes.ca" = {
+        extraConfig = ''
+          reverse_proxy http://localhost:2323
+        '';
+      };
       ":443" = {
         extraConfig = ''
           respond "Not Found" 404
