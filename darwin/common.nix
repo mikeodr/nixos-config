@@ -43,6 +43,7 @@
     casks = [
       "1password-cli"
       "flameshot"
+      "ghostty"
       "tailscale" # Installs the pkg from pkgs.tailscale.com
     ];
 
