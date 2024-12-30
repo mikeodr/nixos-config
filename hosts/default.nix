@@ -1,4 +1,5 @@
 {
+  disko,
   nixpkgs,
   nixpkgs-unstable,
   home-manager,
@@ -82,6 +83,7 @@ in {
     };
     modules = [
       ./tachi
+      disko.nixosModules.disko
       home-manager.nixosModules.home-manager
       sops-nix.nixosModules.sops
     ];

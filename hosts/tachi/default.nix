@@ -6,6 +6,7 @@
   ...
 }: {
   imports = [
+    ./disk-config.nix
     ./hardware-configuration.nix
     ../../modules/server.nix
   ];
@@ -16,9 +17,14 @@
   ip_forward_interfaces = ["enp0s6"];
 
   boot = {
-    loader.grub.device = "/dev/sda";
     tmp.cleanOnBoot = true;
-    loader.grub.configurationLimit = 1;
+    # loader.grub.configurationLimit = 1;
+    loader.grub = {
+      # no need to set devices, disko will add all devices that have a EF02 partition to the list already
+      # devices = [ ];
+      efiSupport = true;
+      efiInstallAsRemovable = true;
+    };
   };
 
   zramSwap.enable = true;
