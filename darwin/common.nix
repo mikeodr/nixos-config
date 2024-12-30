@@ -59,11 +59,6 @@
     onActivation.upgrade = true;
   };
 
-  fonts.packages = [
-    # Fix alacritty warning about missing fonts
-    (pkgs.nerdfonts.override {fonts = ["JetBrainsMono"];})
-  ];
-
   system.keyboard = {
     enableKeyMapping = true;
     remapCapsLockToControl = true;
