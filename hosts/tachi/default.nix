@@ -42,6 +42,9 @@
   # from https://github.com/NixOS/nixpkgs/blob/6afb255d976f85f3359e4929abd6f5149c323a02/nixos/modules/services/monitoring/uptime-kuma.nix#L50
   systemd.services.uptime-kuma.path = [pkgs.unixtools.ping pkgs-unstable.tailscale] ++ lib.optional config.services.uptime-kuma.appriseSupport pkgs.apprise;
 
+  # The contents of this for mounting a taildrive with the
+  # systemd mount below is as follows:
+  # http://100.100.100.100:8080 guest guest
   sops.secrets."webdav" = {
     sopsFile = ./secrets.yaml;
     mode = "0600";
