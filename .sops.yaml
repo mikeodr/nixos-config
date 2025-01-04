@@ -26,6 +26,11 @@ creation_rules:
           - *luna
           - *sherlock
           - *darwin
+  - path_regex: hosts/tachi/secrets.yaml$
+    key_groups:
+      - age:
+          - *tachi
+          - *darwin
   - path_regex: modules/tailscale_key.yaml$
     key_groups:
       - age:
