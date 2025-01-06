@@ -55,12 +55,13 @@ in {
         enable = true;
         theme = "robbyrussell";
         plugins = [
+          "1password"
           "command-not-found"
           "direnv"
           "git"
           "golang"
-          "rust"
           "pass"
+          "rust"
           "sudo"
         ];
       };
