@@ -8,6 +8,9 @@
     modules = {
       http_2xx = {
         prober = "http";
+        http = {
+          preferred_ip_protocol = "ip4";
+        };
       };
     };
   };
