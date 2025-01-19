@@ -73,7 +73,7 @@
         {
           source_match.severity = "critical";
           target_match.severity = "warning";
-          equal = ["alertname" "dev" "instnace"];
+          equal = ["alertname" "dev" "instance"];
         }
       ];
     };
