@@ -9,6 +9,7 @@
     ./disk-config.nix
     ./hardware-configuration.nix
     ../../modules/server.nix
+    ./signal.nix
   ];
 
   autoUpdate.enable = true;
@@ -41,30 +42,6 @@
   # Override the path to include tailscale
   # from https://github.com/NixOS/nixpkgs/blob/6afb255d976f85f3359e4929abd6f5149c323a02/nixos/modules/services/monitoring/uptime-kuma.nix#L50
   systemd.services.uptime-kuma.path = [pkgs.unixtools.ping pkgs-unstable.tailscale] ++ lib.optional config.services.uptime-kuma.appriseSupport pkgs.apprise;
-
-  # The contents of this for mounting a taildrive with the
-  # systemd mount below is as follows:
-  # http://100.100.100.100:8080 guest guest
-  sops.secrets."webdav" = {
-    sopsFile = ./secrets.yaml;
-    mode = "0600";
-    path = "/etc/davfs2/secrets";
-  };
-
-  systemd.mounts = [
-    {
-      enable = true;
-      description = "Mountpoint for borg backup";
-      after = ["network-online.target"];
-      wants = ["network-online.target"];
-
-      what = "http://100.100.100.100:8080";
-      where = "/mnt/borgbackup";
-      options = "uid=1000,gid=1000,file_mode=0664,dir_mode=2775";
-      type = "davfs";
-      mountConfig.TimeoutSec = 15;
-    }
-  ];
 
   services = {
     davfs2 = {
@@ -120,6 +97,26 @@
   networking.firewall = {
     enable = true;
     allowedTCPPorts = [80 443];
+  };
+
+  sops.secrets."borgbackup_key" = {
+    sopsFile = ./secrets.yaml;
+  };
+
+  services.borgbackup.jobs = {
+    # for a local backup
+    uptimekuma = {
+      paths = "/var/lib/private/uptime-kuma";
+      repo = "ssh://cubxc6s9@cubxc6s9.repo.borgbase.com/./repo";
+      compression = "auto,lzma";
+      startAt = "daily";
+      doInit = true;
+      encryption = {
+        mode = "repokey-blake2";
+        passCommand = "cat ${config.sops.secrets.borgbackup_key.path}";
+      };
+      preHook = "# To add excluded paths at runtime\nextraCreateArgs=\"$extraCreateArgs --exclude /some/path\"\n";
+    };
   };
 
   system.stateVersion = "23.05";
