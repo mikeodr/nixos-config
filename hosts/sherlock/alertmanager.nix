@@ -6,12 +6,6 @@
       sopsFile = ./secrets.yaml;
     };
 
-    pagerdutyServiceKey = {
-      owner = "prometheus";
-      mode = "444";
-      sopsFile = ./secrets.yaml;
-    };
-
     hcPingUrl = {
       owner = "prometheus";
       mode = "444";
@@ -41,7 +35,7 @@
           }
           {
             match_re.severity = "critical|error";
-            receiver = "pd_receiver";
+            receiver = "warning_receiver";
           }
           {
             match_re.severity = "warning";
@@ -57,22 +51,6 @@
             {
               send_resolved = true;
               title = "Blackhole Alert";
-            }
-          ];
-          pagerduty_configs = [
-            {
-              severity = "{{.Labels.severity}}";
-              service_key_file = config.sops.secrets.pagerdutyServiceKey.path;
-            }
-          ];
-        }
-        {
-          name = "pd_receiver";
-          slack_configs = [{send_resolved = true;}];
-          pagerduty_configs = [
-            {
-              severity = "{{.Labels.severity}}";
-              service_key_file = config.sops.secrets.pagerdutyServiceKey.path;
             }
           ];
         }
