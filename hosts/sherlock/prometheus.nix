@@ -34,8 +34,6 @@ in {
       openFirewall = true;
     };
 
-    exporters.tc4400_exporter.enable = true;
-
     exporters.blackbox = {
       enable = true;
       openFirewall = true;
@@ -68,17 +66,6 @@ in {
               "reactor02.unusedbytes.ca:9100"
               "luna.unusedbytes.ca:9100"
               "thor.unusedbytes.ca:9100"
-            ];
-          }
-        ];
-      }
-      {
-        job_name = "tc4400 scrape";
-        scrape_timeout = "60s";
-        static_configs = [
-          {
-            targets = [
-              "localhost:9623"
             ];
           }
         ];
