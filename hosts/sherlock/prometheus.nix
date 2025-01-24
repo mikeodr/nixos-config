@@ -63,7 +63,6 @@ in {
               "localhost:${toString config.services.prometheus.exporters.node.port}"
               "opnsense.unusedbytes.ca:9100"
               "reactor01.unusedbytes.ca:9100"
-              "reactor02.unusedbytes.ca:9100"
               "luna.unusedbytes.ca:9100"
               "thor.unusedbytes.ca:9100"
             ];
@@ -101,8 +100,9 @@ in {
               "https://radarr.unusedbytes.ca"
               "https://nzbget.unusedbytes.ca"
               "https://cryo01.unusedbytes.ca:5001"
+              "https://fusion01.unusedbytes.ca:8006"
               "https://reactor01.unusedbytes.ca:8006"
-              "https://reactor02.unusedbytes.ca:8006"
+              "https://titan.unusedbytes.ca:8007"
               "https://hass.unusedbytes.ca"
             ];
           }
