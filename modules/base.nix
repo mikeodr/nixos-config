@@ -52,6 +52,7 @@
     nixpkgs-fmt
     nh
     nmap
+    pciutils
     rsync
     sops
     tcpdump
