@@ -5,7 +5,7 @@ groups:
         expr: vector(1)
 
       - alert: Hass Low Battery On Device
-        expr: hass_sensor_battery_percent{friendly_name!~".*iPhone.*|.*Mac.*|Backupsxs1300G.*|tesla.*|.*[bB]ackup [rR]eserve"} < 25
+        expr: hass_sensor_battery_percent{friendly_name!~".*iPhone.*|.*Mac.*|Backupsxs1300G.*|tesla.*|.*[bB]ackup [rR]eserve|Merry and Viv.*"} < 25
         for: 1d
         labels:
           severity: warning
