@@ -9,6 +9,7 @@
     ../../modules/server.nix
     ./containers.nix
     ./golink.nix
+    ./tsidp.nix
     ./obsidian.nix
     ./wireguard.nix
   ];
@@ -34,6 +35,7 @@
   ip_forwarding.enable = true;
 
   services.golink.enable = true;
+  services.tsidp.enable = true;
 
   # Jellyfin Media Mounts
   fileSystems."/mnt/media" = {
@@ -51,6 +53,11 @@
       enable = true;
       openFirewall = true;
       package = pkgs-unstable.jellyfin;
+    };
+    audiobookshelf = {
+      enable = true;
+      package = pkgs-unstable.audiobookshelf;
+      port = 8081;
     };
   };
 
@@ -150,6 +157,11 @@
           reverse_proxy http://localhost:2323
         '';
       };
+      "audiobookshelf.unusedbytes.ca" = {
+        extraConfig = ''
+          reverse_proxy http://localhost:8081
+        '';
+      };
       ":443" = {
         extraConfig = ''
           respond "Not Found" 404
@@ -160,10 +172,11 @@
   };
 
   services.borgbackup.jobs = {
-    jellyfin = {
+    services = {
       paths = [
         "/var/lib/jellyfin/config"
         "/var/lib/jellyfin/data"
+        "/var/lib/audiobookshelf/"
       ];
       doInit = false;
       encryption.mode = "none";
