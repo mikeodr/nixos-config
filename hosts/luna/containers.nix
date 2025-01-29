@@ -18,7 +18,7 @@ in {
         environment = {
           BASE_URL = "freshrss.unusedbytes.ca";
           TZ = "America/Toronto";
-          CRON_MIN = "*/15";
+          CRON_MIN = "*/10";
         };
         ports = [
           "8080:80"
