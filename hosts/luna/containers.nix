@@ -30,7 +30,7 @@ in {
       };
 
       mealie = {
-        image = "ghcr.io/mealie-recipes/mealie:v2.2.0";
+        image = "ghcr.io/mealie-recipes/mealie:v2.5.0";
         autoStart = true;
         volumes = ["/var/lib/pods/mealie/data:/app/data"];
         environmentFiles = [
