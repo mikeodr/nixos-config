@@ -43,6 +43,13 @@ in {
           ALLOW_SIGNUP = "false";
           DB_ENGINE = "sqlite";
           BASE_URL = "mealie.unusedbytes.ca";
+          OIDC_AUTH_ENABLED = "true";
+          OIDC_CONFIGURATION_URL = "https://idp.cerberus-basilisk.ts.net/.well-known/openid-configuration";
+          OIDC_AUTO_REDIRECT = "true";
+          OIDC_CLIENT_ID = "unused";
+          OIDC_CLIENT_SECRET = "unused";
+          OIDC_PROVIDER_NAME = "Tailscale";
+          OIDC_NAME_CLAIM = "username";
         };
         ports = ["9000:9000/tcp"];
       };
