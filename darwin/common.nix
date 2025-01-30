@@ -21,6 +21,7 @@
     nixd
     nmap
     sops
+    tmux
     watch
     wget
     zoxide
