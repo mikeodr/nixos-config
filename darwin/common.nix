@@ -26,6 +26,8 @@
     zoxide
   ];
 
+  security.pam.enableSudoTouchIdAuth = true;
+
   nix-homebrew = {
     # Install Homebrew under the default prefix
     enable = true;
