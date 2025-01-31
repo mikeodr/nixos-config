@@ -12,6 +12,10 @@
       SSH_AUTH_SOCK = "${cfg.homeDir}/Library/Group Containers/2BUA8C4S2C.com.1password/t/agent.sock";
     }
     else {};
+
+  envs = {
+    TERM = "xterm";
+  };
 in {
   options = {
     zshConfig = {
@@ -49,7 +53,7 @@ in {
         clean = "clear";
       };
 
-      sessionVariables = lib.mkMerge [sshSessionVariables cfg.extraEnvVars];
+      sessionVariables = lib.mkMerge [envs sshSessionVariables cfg.extraEnvVars];
 
       oh-my-zsh = {
         enable = true;

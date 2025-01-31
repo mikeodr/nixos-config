@@ -42,6 +42,7 @@ in {
         pushb = "push -u origin";
         cob = "checkout -b";
         fpush = "push --force-with-lease";
+        autosq = "rebase -i --autosquash";
       };
 
       extraConfig = {
