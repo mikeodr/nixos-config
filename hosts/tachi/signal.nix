@@ -23,8 +23,11 @@ in {
         ports = [
           "127.0.0.1:8080:8080"
         ];
+        environment = {
+          MODE = "json-rpc";
+        };
         volumes = [
-          "/root/.signal:/var/lib/signal"
+          "/var/lib/signal:/home/.local/share/signal-cli"
         ];
       };
     };

@@ -50,6 +50,7 @@
 
     uptime-kuma = {
       enable = true;
+      appriseSupport = true;
     };
 
     caddy = {
