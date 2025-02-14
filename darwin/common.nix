@@ -47,6 +47,7 @@
       "flameshot"
       "ghostty"
       "tailscale" # Installs the pkg from pkgs.tailscale.com
+      "wireshark"
     ];
 
     brews = [

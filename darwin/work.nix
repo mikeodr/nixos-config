@@ -19,8 +19,8 @@ in {
     ansible
     awscli2
     direnv
-    python312Packages.boto3
-    python312Packages.botocore
+    flamegraph
+    go
     utm
   ];
 }
