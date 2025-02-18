@@ -71,6 +71,8 @@ in {
       enable = true;
       description = "golink server";
       wants = ["network-online.target"];
+      after = ["network-online.target"];
+      wantedBy = ["multi-user.target"];
 
       environment = {
         HOME = cfg.dataDir;

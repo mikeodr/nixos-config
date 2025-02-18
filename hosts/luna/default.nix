@@ -41,7 +41,7 @@
   fileSystems."/mnt/media" = {
     device = "172.16.0.3:/volume2/Media";
     fsType = "nfs4";
-    options = ["auto"];
+    options = ["auto" "x-systemd.after=network-online.target"];
   };
 
   environment.systemPackages = with pkgs; [
@@ -58,6 +58,12 @@
       enable = true;
       package = pkgs-unstable.audiobookshelf;
       port = 8081;
+    };
+  };
+
+  systemd.services = {
+    "jellyfin" = {
+      after = ["mnt-media.mount"];
     };
   };
 
@@ -205,9 +211,17 @@
 
   networking = {
     hostName = "luna";
+    defaultGateway = "172.16.0.1";
+    nameservers = ["172.16.0.1"];
     interfaces = {
       "ens18" = {
-        useDHCP = true;
+        useDHCP = false;
+        ipv4.addresses = [
+          {
+            address = "172.16.0.11";
+            prefixLength = 24;
+          }
+        ];
       };
     };
   };

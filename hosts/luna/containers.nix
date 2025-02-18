@@ -144,4 +144,16 @@ in {
       };
     };
   };
+
+  systemd.services = {
+    "docker-nzbget" = {
+      after = ["mnt-media.mount"];
+    };
+    "docker-sonarr" = {
+      after = ["mnt-media.mount"];
+    };
+    "docker-radarr" = {
+      after = ["mnt-media.mount"];
+    };
+  };
 }
