@@ -168,6 +168,11 @@
           reverse_proxy http://localhost:8081
         '';
       };
+      "pdf.unusedbytes.ca" = {
+        extraConfig = ''
+          reverse_proxy http://localhost:8082
+        '';
+      };
       ":443" = {
         extraConfig = ''
           respond "Not Found" 404

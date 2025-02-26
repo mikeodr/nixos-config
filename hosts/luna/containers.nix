@@ -142,6 +142,22 @@ in {
           "/var/lib/watchstate/config"
         ];
       };
+
+      stirlingpdf = {
+        autoStart = true;
+        image = "frooodle/s-pdf:latest";
+        ports = ["127.0.0.1:8082:8080"];
+        volumes = [
+          "/var/stirlingpdf/trainingData:/usr/share/tessdata" # Required for extra OCR languages
+          "/var/stirlingpdf/extraConfigs:/configs"
+          "/var/stirlingpdf/customFiles:/customFiles/"
+          "/var/stirlingpdf/logs:/logs/"
+          "/var/stirlingpdf/pipeline:/pipeline/"
+        ];
+        environment = {
+          LANGS = "en_CA";
+        };
+      };
     };
   };
 
