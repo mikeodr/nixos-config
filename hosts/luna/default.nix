@@ -12,6 +12,7 @@
     ./tsidp.nix
     ./obsidian.nix
     ./wireguard.nix
+    ../../modules/immich
   ];
 
   boot = {
@@ -38,10 +39,17 @@
   services.tsidp.enable = true;
 
   # Jellyfin Media Mounts
-  fileSystems."/mnt/media" = {
-    device = "172.16.0.3:/volume2/Media";
-    fsType = "nfs4";
-    options = ["auto" "x-systemd.after=network-online.target"];
+  fileSystems = {
+    "/mnt/media" = {
+      device = "172.16.0.3:/volume2/Media";
+      fsType = "nfs4";
+      options = ["auto" "x-systemd.after=network-online.target"];
+    };
+    "/mnt/immich" = {
+      device = "172.16.0.3:/volume2/immich";
+      fsType = "nfs4";
+      options = ["auto" "x-systemd.after=network-online.target"];
+    };
   };
 
   environment.systemPackages = with pkgs; [
@@ -171,6 +179,11 @@
       "pdf.unusedbytes.ca" = {
         extraConfig = ''
           reverse_proxy http://localhost:8082
+        '';
+      };
+      "photos.unusedbytes.ca" = {
+        extraConfig = ''
+          reverse_proxy http://localhost:3001
         '';
       };
       ":443" = {
