@@ -1,5 +1,6 @@
 {
   config,
+  inputs,
   pkgs,
   pkgs-unstable,
   ...
@@ -8,11 +9,11 @@
     ./hardware-configuration.nix
     ../../modules/server.nix
     ./containers.nix
-    ./golink.nix
     ./tsidp.nix
     ./obsidian.nix
     ./wireguard.nix
     ../../modules/immich
+    inputs.tailscale-golink.nixosModules.default
   ];
 
   boot = {
@@ -35,7 +36,17 @@
   # Custom module enable UDP GRO forwarding and IP forwarding
   ip_forwarding.enable = true;
 
-  services.golink.enable = true;
+  sops.secrets.golink = {
+    owner = config.services.golink.user;
+    group = config.services.golink.group;
+    mode = "440";
+    sopsFile = ./secrets.yaml;
+  };
+
+  services.golink = {
+    enable = true;
+    tailscaleAuthKeyFile = "/run/secrets/golink";
+  };
   services.tsidp.enable = true;
 
   # Jellyfin Media Mounts
