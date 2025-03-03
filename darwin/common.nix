@@ -82,6 +82,8 @@
       AppleICUForce24HourTime = true;
       # Allow press and hold for vim keys to move around
       ApplePressAndHoldEnabled = false;
+      # Mode 3 enables full keyboard control, tab menu selection etc
+      AppleKeyboardUIMode = 3;
     };
 
     finder = {
