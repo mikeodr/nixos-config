@@ -19,6 +19,8 @@ in {
     ansible
     awscli2
     direnv
+    gh
+    graphviz
     flamegraph
     go
     utm
