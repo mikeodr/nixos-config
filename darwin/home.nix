@@ -18,8 +18,4 @@ in {
       "macfuse"
     ];
   };
-
-  homeConfig.additionalPkgs = with pkgs; [
-    terraform
-  ];
 }

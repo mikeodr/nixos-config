@@ -52,6 +52,7 @@
 
     brews = [
       "mas"
+      "python"
     ];
 
     masApps = {

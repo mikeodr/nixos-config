@@ -16,13 +16,12 @@ in {
   homeConfig.extraEnvVars = {};
 
   homeConfig.additionalPkgs = with pkgs; [
-    ansible
     awscli2
     direnv
-    gh
-    graphviz
     flamegraph
+    gh
     go
+    graphviz
     utm
   ];
 }
