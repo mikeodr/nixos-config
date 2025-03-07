@@ -47,6 +47,7 @@
       "1password-cli"
       "flameshot"
       "ghostty"
+      "netnewswire"
       "tailscale" # Installs the pkg from pkgs.tailscale.com
       "wireshark"
     ];
