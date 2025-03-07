@@ -5,20 +5,21 @@
   ...
 }: {
   environment.systemPackages = with pkgs; [
-    arping
     alejandra
+    arping
     colima
     colmena
     docker
     du-dust
     fastfetch
     fzf
+    go
     jq
     mkalias
     mtr
     neovim
-    nixpkgs-fmt
     nixd
+    nixpkgs-fmt
     nmap
     sops
     tmux
