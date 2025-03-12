@@ -28,21 +28,23 @@ in {
       userName = "Mike O'Driscoll";
       userEmail = cfg.userEmail;
       aliases = {
-        st = "status -sb -uall";
-        cm = "commit";
+        amend = "commit --amend";
+        autosq = "rebase -i --autosquash";
         br = "branch";
+        cdiff = "diff --cached";
+        cm = "commit";
         co = "checkout";
+        cob = "checkout -b";
         com = "!f() { git checkout main 2>/dev/null || git checkout master; }; f";
+        credit = "commit --amend --author \"$1 <$2>\" -C HEAD";
+        fpush = "push --force-with-lease";
         lg = "log -p";
         lsd = "log --graph --decorate --pretty=oneline --abbrev-commit --all";
-        unstage = "reset HEAD";
-        undo = "reset --soft HEAD^";
-        credit = "commit --amend --author \"$1 <$2>\" -C HEAD";
-        amend = "commit --amend";
+        ol = "log --oneline -n 1";
         pushb = "push -u origin";
-        cob = "checkout -b";
-        fpush = "push --force-with-lease";
-        autosq = "rebase -i --autosquash";
+        st = "status -sb -uall";
+        undo = "reset --soft HEAD^";
+        unstage = "reset HEAD";
       };
 
       extraConfig = {
