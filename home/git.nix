@@ -40,7 +40,7 @@ in {
         fpush = "push --force-with-lease";
         lg = "log -p";
         lsd = "log --graph --decorate --pretty=oneline --abbrev-commit --all";
-        ol = "log --oneline -n 1";
+        ol = "log --oneline";
         pushb = "push -u origin";
         st = "status -sb -uall";
         undo = "reset --soft HEAD^";
