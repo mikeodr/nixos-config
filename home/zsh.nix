@@ -13,6 +13,30 @@
     }
     else {};
 
+  extraShellAliases =
+    if pkgs.system == "x86_64-darwin" || pkgs.system == "aarch64-darwin"
+    then {
+      tailscale = "/Applications/Tailscale.app/Contents/MacOS/Tailscale";
+    }
+    else {};
+
+  shellAliases = {
+    cp = "cp -v";
+    df = "df -h";
+    du = "dust";
+    mv = "mv -v";
+    rm = "rm -i";
+    pgrep = "pgrep -l";
+    top = "htop";
+
+    vim = "nvim";
+    ls = "ls --color";
+    ctrl-l = "clear";
+    C-l = "ctrl-l";
+    control-l = "clear";
+    clean = "clear";
+  };
+
   envs = {
     TERM = "xterm";
   };
@@ -36,22 +60,7 @@ in {
 
       history.size = 10000;
 
-      shellAliases = {
-        cp = "cp -v";
-        df = "df -h";
-        du = "dust";
-        mv = "mv -v";
-        rm = "rm -i";
-        pgrep = "pgrep -l";
-        top = "htop";
-
-        vim = "nvim";
-        ls = "ls --color";
-        ctrl-l = "clear";
-        C-l = "ctrl-l";
-        control-l = "clear";
-        clean = "clear";
-      };
+      shellAliases = lib.mkMerge [shellAliases extraShellAliases];
 
       sessionVariables = lib.mkMerge [envs sshSessionVariables cfg.extraEnvVars];
 
