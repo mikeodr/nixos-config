@@ -63,6 +63,7 @@ in {
               "localhost:${toString config.services.prometheus.exporters.node.port}"
               "opnsense.unusedbytes.ca:9100"
               "reactor01.unusedbytes.ca:9100"
+              "reactor02.unusedbytes.ca:9100"
               "fusion01.unusedbytes.ca:9100"
               "titan.unusedbytes.ca:9100"
               "luna.unusedbytes.ca:9100"
