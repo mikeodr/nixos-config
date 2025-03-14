@@ -99,6 +99,7 @@ in {
               "https://fusion01.unusedbytes.ca:8006"
               "https://go.cerberus-basilisk.ts.net"
               "https://hass.unusedbytes.ca"
+              "https://luna.cerberus-basilisk.ts.net/web"
               "https://nzbget.unusedbytes.ca"
               "https://opnsense.unusedbytes.ca"
               "https://radarr.unusedbytes.ca"

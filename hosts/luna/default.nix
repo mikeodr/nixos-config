@@ -89,9 +89,15 @@
   # Ensure cert renewals reload caddy
   security.acme.certs."unusedbytes.ca".reloadServices = ["caddy"];
 
+  services.tailscale.permitCertUid = "caddy";
   services.caddy = {
     enable = true;
     virtualHosts = {
+      "luna.cerberus-basilisk.ts.net" = {
+        extraConfig = ''
+          reverse_proxy http://localhost:8096
+        '';
+      };
       "jellyfin.unusedbytes.ca" = {
         extraConfig = ''
           reverse_proxy http://localhost:8096
@@ -201,7 +207,6 @@
         extraConfig = ''
           respond "Not Found" 404
         '';
-        useACMEHost = "unusedbytes.ca";
       };
     };
   };
