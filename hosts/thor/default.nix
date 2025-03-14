@@ -55,6 +55,20 @@
         "0 5 * * * rm -r  /var/lib/plex/Plex\ Media\ Server/Cache/PhotoTranscoder"
       ];
     };
+
+    tailscale.permitCertUid = "caddy";
+
+    caddy = {
+      enable = true;
+
+      virtualHosts = {
+        "thor.cerberus-basilisk.ts.net" = {
+          extraConfig = ''
+            reverse_proxy http://thor:32400
+          '';
+        };
+      };
+    };
   };
 
   systemd.services = {
