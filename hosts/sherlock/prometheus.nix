@@ -107,6 +107,8 @@ in {
               "https://reactor01.unusedbytes.ca:8006"
               "https://titan.unusedbytes.ca:8007"
               "https://hass.unusedbytes.ca"
+              "https://go.cerberus-basilisk.ts.net"
+              "https://thor.cerberus-basilisk.ts.net"
             ];
           }
         ];
