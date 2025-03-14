@@ -104,7 +104,7 @@ in {
               "https://radarr.unusedbytes.ca"
               "https://reactor01.unusedbytes.ca:8006"
               "https://sonarr.unusedbytes.ca"
-              "https://thor.cerberus-basilisk.ts.net"
+              "https://thor.cerberus-basilisk.ts.net/web/index.html"
               "https://titan.unusedbytes.ca:8007"
               "https://unifi.unusedbytes.ca"
               "https://unifi.unusedbytes.ca/network"
