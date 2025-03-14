@@ -95,20 +95,20 @@ in {
         static_configs = [
           {
             targets = [
-              "https://opnsense.unusedbytes.ca"
-              "https://unifi.unusedbytes.ca/protect"
-              "https://unifi.unusedbytes.ca/network"
-              "https://unifi.unusedbytes.ca"
-              "https://sonarr.unusedbytes.ca"
-              "https://radarr.unusedbytes.ca"
-              "https://nzbget.unusedbytes.ca"
               "https://cryo01.unusedbytes.ca:5001"
               "https://fusion01.unusedbytes.ca:8006"
-              "https://reactor01.unusedbytes.ca:8006"
-              "https://titan.unusedbytes.ca:8007"
-              "https://hass.unusedbytes.ca"
               "https://go.cerberus-basilisk.ts.net"
+              "https://hass.unusedbytes.ca"
+              "https://nzbget.unusedbytes.ca"
+              "https://opnsense.unusedbytes.ca"
+              "https://radarr.unusedbytes.ca"
+              "https://reactor01.unusedbytes.ca:8006"
+              "https://sonarr.unusedbytes.ca"
               "https://thor.cerberus-basilisk.ts.net"
+              "https://titan.unusedbytes.ca:8007"
+              "https://unifi.unusedbytes.ca"
+              "https://unifi.unusedbytes.ca/network"
+              "https://unifi.unusedbytes.ca/protect"
             ];
           }
         ];
