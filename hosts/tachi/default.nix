@@ -95,9 +95,12 @@
     };
   };
 
-  networking.firewall = {
-    enable = true;
-    allowedTCPPorts = [80 443];
+  networking = {
+    nameservers = ["1.1.1.1" "1.0.0.1"];
+    firewall = {
+      enable = true;
+      allowedTCPPorts = [80 443];
+    };
   };
 
   sops.secrets."borgbackup_key" = {
