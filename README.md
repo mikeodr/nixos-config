@@ -45,6 +45,12 @@ Please see [Vimjoyer's Excellent Video](https://www.youtube.com/watch?v=G5f6GC7S
   - `nix-shell -p sops --run "sops updatekeys secrets/secrets.yaml"`
   - `nix-shell -p sops --run "sops updatekeys modules/tailscale_key.yaml"`
 
+### Infecting other hosts
+
+```bash
+nix run nixpkgs#nixos-anywhere -- --flake .#<host> --generate-hardware-config nixos-generate-config ./hosts/<hosts>/hardware-configuration.nix --build-on-remote root@<ip>
+```
+
 #### Credits
 
 [BonusPlay/sysconf](https://github.com/BonusPlay/sysconf), a random repo I found that had a nice layout, and used colmena for managing multiple hosts.
