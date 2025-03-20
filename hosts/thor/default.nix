@@ -38,7 +38,7 @@
       chown acme:plex plex.pkfx
       chmod 640 plex.pkfx
     '';
-    reloadServices = ["plex"];
+    reloadServices = ["plex" "caddy"];
   };
 
   services = {

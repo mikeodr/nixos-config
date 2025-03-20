@@ -37,7 +37,7 @@
   acmeCertGeneration.enable = true;
 
   # Ensure cert renewals reload caddy
-  # security.acme.certs."unusedbytes.ca".reloadServices = ["caddy"];
+  security.acme.certs."unusedbytes.ca".reloadServices = ["caddy"];
 
   # Override the path to include tailscale
   # from https://github.com/NixOS/nixpkgs/blob/6afb255d976f85f3359e4929abd6f5149c323a02/nixos/modules/services/monitoring/uptime-kuma.nix#L50

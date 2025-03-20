@@ -38,6 +38,8 @@ in {
     permitCertUid = "caddy";
   };
 
+  security.acme.certs."unusedbytes.ca".reloadServices = ["caddy"];
+
   services.caddy = {
     enable = true;
     virtualHosts = {
