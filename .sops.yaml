@@ -5,6 +5,7 @@ keys:
   - &knox age1mjg69pwlyg9l7afvmpjadx5s3u4gnwfa0mjpchaqka9k9uwtpfes2s5f6u
   - &darwin age10x9vw80j88c47sr9nc96nen2ft30jg2p9u5a7ec5nl4cw3znduksedq5uu
   - &tachi age1qajz2uu85t5u3ptuzhphp0439kg8jw0cxa0c5nqw4qkpr402vetsxw9wrl
+  - &dauntless age1yj88d45sjqz4y8kg0rhs2m4ek3cdvhvnqa88edkfs4ekd3wyzduq4pps3n
 creation_rules:
   - path_regex: secrets/secrets.yaml$
     key_groups:
@@ -15,6 +16,7 @@ creation_rules:
           - *tachi
           - *knox
           - *darwin
+          - *dauntless
   - path_regex: hosts/luna/secrets.yaml$
     key_groups:
       - age:
@@ -30,13 +32,4 @@ creation_rules:
     key_groups:
       - age:
           - *tachi
-          - *darwin
-  - path_regex: modules/tailscale_key.yaml$
-    key_groups:
-      - age:
-          - *luna
-          - *thor
-          - *sherlock
-          - *tachi
-          - *knox
           - *darwin

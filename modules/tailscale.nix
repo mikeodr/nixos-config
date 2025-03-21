@@ -8,7 +8,7 @@
   ];
 
   sops.secrets.tailscaleAuthKey = {
-    sopsFile = ./tailscale_key.yaml;
+    sopsFile = ../secrets/secrets.yaml;
   };
 
   services = {

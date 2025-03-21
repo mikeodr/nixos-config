@@ -122,6 +122,11 @@
           buildOnTarget = true;
         };
 
+        dauntless.deployment = {
+          tags = ["vm" "vps"];
+          buildOnTarget = true;
+        };
+
         knox.deployment = {
           tags = ["vm" "server"];
           buildOnTarget = true;
