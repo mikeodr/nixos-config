@@ -44,6 +44,7 @@ Please see [Vimjoyer's Excellent Video](https://www.youtube.com/watch?v=G5f6GC7S
 - Update secrets/secrets.yaml with new keys:  
   - `nix-shell -p sops --run "sops updatekeys secrets/secrets.yaml"`
   - `nix-shell -p sops --run "sops updatekeys modules/tailscale_key.yaml"`
+  - `nix-shell -p sops --run "sops updatekeys hosts/tachi/secrets.yaml"`
 
 ### Infecting other hosts
 
