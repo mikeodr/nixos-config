@@ -1,7 +1,6 @@
 {
   config,
   pkgs,
-  sops,
   ...
 }: let
   blackboxConfig = {
