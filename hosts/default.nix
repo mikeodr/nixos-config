@@ -105,4 +105,21 @@ in {
       sops-nix.nixosModules.sops
     ];
   };
+
+  ghost = nixpkgs.lib.nixosSystem {
+    specialArgs = {
+      pkgs-unstable = import nixpkgs-unstable {
+        inherit system;
+        config.allowUnfree = true;
+      };
+      inherit inputs;
+      inherit system;
+    };
+    modules = [
+      ./ghost
+      disko.nixosModules.disko
+      home-manager.nixosModules.home-manager
+      sops-nix.nixosModules.sops
+    ];
+  };
 }

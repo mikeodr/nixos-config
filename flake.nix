@@ -131,6 +131,11 @@
           tags = ["vm" "server"];
           buildOnTarget = true;
         };
+
+        ghost.deployment = {
+          tags = ["vm" "server"];
+          buildOnTarget = true;
+        };
       };
   };
 }

@@ -7,8 +7,6 @@
 
   autoUpdate.enable = true;
   isVM = true;
-  ip_forwarding.enable = true;
-  ip_forward_interfaces = ["enp0s6"];
 
   boot = {
     tmp.cleanOnBoot = true;
@@ -21,13 +19,12 @@
     };
   };
 
-  services.tailscale.useRoutingFeatures = "both";
-
   zramSwap.enable = true;
-  networking.hostName = "dauntless";
+  networking.hostName = "ghost";
   networking.domain = "";
   services.openssh.enable = true;
 
+  services.tailscale.useRoutingFeatures = "client";
   # Generate ACME Certs in custom module
   # acmeCertGeneration.enable = true;
 
