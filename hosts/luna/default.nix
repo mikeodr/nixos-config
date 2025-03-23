@@ -245,19 +245,6 @@
 
   networking = {
     hostName = "luna";
-    defaultGateway = "172.16.0.1";
-    nameservers = ["172.16.0.1"];
-    interfaces = {
-      "ens18" = {
-        useDHCP = false;
-        ipv4.addresses = [
-          {
-            address = "172.16.0.11";
-            prefixLength = 24;
-          }
-        ];
-      };
-    };
   };
 
   services.prometheus.exporters.node.openFirewall = true;
