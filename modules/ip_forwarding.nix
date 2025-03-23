@@ -14,7 +14,7 @@
     };
   };
 
-  config = lib.mkIf config.ip_forwarding.enable rec {
+  config = lib.mkIf config.ip_forwarding.enable {
     environment.systemPackages = with pkgs; [
       ethtool
     ];
