@@ -107,6 +107,16 @@
     sopsFile = ./secrets.yaml;
   };
 
+  sops.secrets."borg_ssh_key" = {
+    sopsFile = ./secrets.yaml;
+    owner = "root";
+    path = "/root/.ssh/id_ed25519";
+  };
+
+  programs.ssh.knownHosts = {
+    "cubxc6s9.repo.borgbase.com".publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMS3185JdDy7ffnr0nLWqVy8FaAQeVh1QYUSiNpW5ESq";
+  };
+
   services.borgbackup.jobs = {
     # for a local backup
     uptimekuma = {
