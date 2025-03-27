@@ -6,7 +6,7 @@ keys:
   - &darwin age10x9vw80j88c47sr9nc96nen2ft30jg2p9u5a7ec5nl4cw3znduksedq5uu
   - &tachi age1qajz2uu85t5u3ptuzhphp0439kg8jw0cxa0c5nqw4qkpr402vetsxw9wrl
   - &dauntless age1yj88d45sjqz4y8kg0rhs2m4ek3cdvhvnqa88edkfs4ekd3wyzduq4pps3n
-  - &ghost age1qfwu8g523x849ted36pvu7zjkhse6ry52xxtmznsm7mjgm9rsdrsuflprp
+  - &ghost age1wtecvfxxjk38uj438rzv8xxayjxthl0l2v5usk2yxxm34ggmpp4s32qwnh
 creation_rules:
   - path_regex: secrets/secrets.yaml$
     key_groups:
