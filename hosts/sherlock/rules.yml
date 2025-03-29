@@ -97,3 +97,21 @@ groups:
         annotations:
           summary: "Proxmox storage on {{ $labels.instance }} is high"
           description: "{{ $labels.instance }} is experiencing high disk usage on {{ $labels.id}}"
+
+      - alert: Disk Unmounted Thor
+        expr: absent(node_filesystem_readonly{fstype="nfs4", instance=~"thor.+"})
+        for: 30m
+        labels:
+          severity: warning
+        annotations:
+          summary: "Disk is unmounted - Metrics Missing"
+          description: "{{ $labels.instance }} is missing disk metrics, it may be unmounted {{ $labels.id }}"
+
+      - alert: Disk Unmounted Luna
+        expr: absent(node_filesystem_readonly{fstype="nfs4", instance=~"luna.+"})
+        for: 30m
+        labels:
+          severity: warning
+        annotations:
+          summary: "Disk is unmounted - Metrics Missing"
+          description: "{{ $labels.instance }} is missing disk metrics, it may be unmounted {{ $labels.id }}"
