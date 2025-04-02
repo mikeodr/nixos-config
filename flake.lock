@@ -235,7 +235,7 @@
     "tailscale-golink": {
       "inputs": {
         "nixpkgs": [
-          "nixpkgs"
+          "nixpkgs-unstable"
         ],
         "parts": "parts",
         "systems": "systems"
