@@ -19,11 +19,9 @@
 
   networking = {
     hostName = "sherlock";
-    interfaces = {
-      "ens18" = {
-        useDHCP = true;
-      };
-    };
+    useDHCP = true;
+    dhcpcd.IPv6rs = true;
+    dhcpcd.wait = "ipv4";
   };
 
   networking.firewall = {
