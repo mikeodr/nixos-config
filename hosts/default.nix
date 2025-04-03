@@ -2,6 +2,7 @@
   disko,
   nixpkgs,
   nixpkgs-unstable,
+  nix-bitcoin,
   home-manager,
   sops-nix,
   ...
@@ -119,6 +120,7 @@ in {
       ./ghost
       disko.nixosModules.disko
       home-manager.nixosModules.home-manager
+      nix-bitcoin.nixosModules.default
       sops-nix.nixosModules.sops
     ];
   };

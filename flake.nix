@@ -34,19 +34,24 @@
 
     tailscale-golink = {
       url = "github:tailscale/golink";
-      inputs = {
-        nixpkgs.follows = "nixpkgs-unstable";
-      };
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
+    };
+
+    nix-bitcoin = {
+      url = "github:fort-nix/nix-bitcoin/release";
+      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.nixpkgs-unstable.follows = "nixpkgs-unstable";
     };
   };
 
   outputs = {
     self,
     disko,
-    nixpkgs,
+    home-manager,
+    nix-bitcoin,
     nix-darwin,
     nix-homebrew,
-    home-manager,
+    nixpkgs,
     ...
   } @ inputs: let
     lib = nixpkgs.lib;
