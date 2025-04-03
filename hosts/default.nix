@@ -124,4 +124,21 @@ in {
       sops-nix.nixosModules.sops
     ];
   };
+
+  beaker = nixpkgs.lib.nixosSystem {
+    specialArgs = {
+      pkgs-unstable = import nixpkgs-unstable {
+        inherit system;
+        config.allowUnfree = true;
+      };
+      inherit inputs;
+      inherit system;
+    };
+    modules = [
+      ./beaker
+      disko.nixosModules.disko
+      home-manager.nixosModules.home-manager
+      sops-nix.nixosModules.sops
+    ];
+  };
 }

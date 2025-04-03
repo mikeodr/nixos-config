@@ -145,6 +145,11 @@
           tags = ["vm" "server"];
           buildOnTarget = true;
         };
+
+        beaker.deployment = {
+          tags = ["vm" "server"];
+          buildOnTarget = true;
+        };
       };
   };
 }
