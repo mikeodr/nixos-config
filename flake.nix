@@ -5,6 +5,7 @@
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-24.11";
     nixos-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixpkgs-unstable";
+    systems.url = "github:nix-systems/default";
 
     disko = {
       url = "github:nix-community/disko";
@@ -35,12 +36,14 @@
     tailscale-golink = {
       url = "github:tailscale/golink";
       inputs.nixpkgs.follows = "nixpkgs-unstable";
+      inputs.systems.follows = "systems";
     };
 
     nix-bitcoin = {
       url = "github:fort-nix/nix-bitcoin/release";
       inputs.nixpkgs.follows = "nixpkgs";
       inputs.nixpkgs-unstable.follows = "nixpkgs-unstable";
+      inputs.flake-utils.inputs.systems.follows = "systems";
     };
   };
 

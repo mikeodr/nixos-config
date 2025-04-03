@@ -76,9 +76,8 @@
         "type": "github"
       },
       "original": {
-        "owner": "numtide",
-        "repo": "flake-utils",
-        "type": "github"
+        "id": "flake-utils",
+        "type": "indirect"
       }
     },
     "home-manager": {
@@ -265,6 +264,7 @@
         "nixpkgs": "nixpkgs",
         "nixpkgs-unstable": "nixpkgs-unstable",
         "sops-nix": "sops-nix",
+        "systems": "systems_2",
         "tailscale-golink": "tailscale-golink"
       }
     },
@@ -324,7 +324,9 @@
           "nixpkgs-unstable"
         ],
         "parts": "parts",
-        "systems": "systems_2"
+        "systems": [
+          "systems"
+        ]
       },
       "locked": {
         "lastModified": 1743563737,
