@@ -28,7 +28,7 @@
     virtualHosts = {
       "beaker.cerberus-basilisk.ts.net" = {
         extraConfig = ''
-          reverse_proxy http://immich-ml.ktz.ts.net:3003/
+          reverse_proxy http://immich-ml.ktz.ts.net:3003
         '';
       };
     };
