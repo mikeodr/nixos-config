@@ -67,6 +67,8 @@ in {
               "titan.unusedbytes.ca:9100"
               "luna.unusedbytes.ca:9100"
               "thor.unusedbytes.ca:9100"
+              "tachi.cerberus-basilisk.ts.net:9100"
+              "dauntless.cerberus-basilisk.ts.net:9100"
             ];
           }
         ];
