@@ -8,6 +8,12 @@
     autoUpdate.enable =
       lib.mkEnableOption "Enable automatic updates of the system";
     default = false;
+
+    autoUpdate.allowReboot = lib.mkOption {
+      type = lib.types.bool;
+      default = true;
+      description = "Allow automatic reboots after updates";
+    };
   };
 
   config = lib.mkIf config.autoUpdate.enable {

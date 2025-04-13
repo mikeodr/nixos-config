@@ -15,6 +15,7 @@
 
   # Custom module settings
   autoUpdate.enable = true;
+  autoUpdate.allowReboot = false;
   isVM = true;
   intelAcceleration.enable = true;
   acmeCertGeneration.enable = true;
