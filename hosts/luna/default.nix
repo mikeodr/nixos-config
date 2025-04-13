@@ -188,7 +188,7 @@
           reverse_proxy http://localhost:2323
         '';
       };
-      "audiobookshelf.unusedbytes.ca" = {
+      "abs.unusedbytes.ca" = {
         extraConfig = ''
           reverse_proxy http://localhost:8081
         '';
