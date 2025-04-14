@@ -20,7 +20,6 @@ in {
     direnv
     flamegraph
     gh
-    go
     graphviz
     utm
   ];

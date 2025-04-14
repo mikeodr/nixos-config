@@ -55,9 +55,11 @@
     nix-darwin,
     nix-homebrew,
     nixpkgs,
+    nixpkgs-unstable,
     ...
   } @ inputs: let
     lib = nixpkgs.lib;
+    darwin-unstable = nixpkgs-unstable.legacyPackages.aarch64-darwin;
   in {
     nixosConfigurations = import ./hosts inputs;
 
@@ -70,6 +72,7 @@
       specialArgs = {
         inherit inputs;
         inherit self;
+        inherit darwin-unstable;
       };
     };
 
@@ -83,6 +86,7 @@
       specialArgs = {
         inherit inputs;
         inherit self;
+        inherit darwin-unstable;
       };
     };
 

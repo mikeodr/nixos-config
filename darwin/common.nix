@@ -1,32 +1,36 @@
 {
   config,
   pkgs,
+  darwin-unstable,
   self,
   ...
 }: {
-  environment.systemPackages = with pkgs; [
-    alejandra
-    arping
-    colima
-    colmena
-    docker
-    du-dust
-    fastfetch
-    fzf
-    go
-    jq
-    mkalias
-    mtr
-    neovim
-    nixd
-    nixpkgs-fmt
-    nmap
-    sops
-    tmux
-    watch
-    wget
-    zoxide
-  ];
+  environment.systemPackages =
+    (with pkgs; [
+      alejandra
+      arping
+      colima
+      colmena
+      docker
+      du-dust
+      fastfetch
+      fzf
+      jq
+      mkalias
+      mtr
+      neovim
+      nixd
+      nixpkgs-fmt
+      nmap
+      sops
+      tmux
+      watch
+      wget
+      zoxide
+    ])
+    ++ (with darwin-unstable; [
+      go
+    ]);
 
   security.pam.enableSudoTouchIdAuth = true;
 
