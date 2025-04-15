@@ -84,6 +84,7 @@ in {
         xdg.enable = true;
         xdg.configFile =
           {
+            "nix/nix.conf".text = "foo";
           }
           // (
             if isDarwin

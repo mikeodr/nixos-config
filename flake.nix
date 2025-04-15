@@ -5,7 +5,8 @@
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-24.11";
     nixos-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixpkgs-unstable";
-    systems.url = "github:nix-systems/default";
+    nixpkgs-darwin.url = "github:NixOS/nixpkgs/nixpkgs-24.11-darwin";
+    nix-systems.url = "github:nix-systems/default";
 
     disko = {
       url = "github:nix-community/disko";
@@ -14,7 +15,7 @@
 
     nix-darwin = {
       url = "github:LnL7/nix-darwin/nix-darwin-24.11";
-      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.nixpkgs.follows = "nixpkgs-darwin";
     };
 
     nix-homebrew = {
@@ -36,14 +37,14 @@
     tailscale-golink = {
       url = "github:tailscale/golink";
       inputs.nixpkgs.follows = "nixpkgs-unstable";
-      inputs.systems.follows = "systems";
+      inputs.systems.follows = "nix-systems";
     };
 
     nix-bitcoin = {
       url = "github:fort-nix/nix-bitcoin/release";
       inputs.nixpkgs.follows = "nixpkgs";
       inputs.nixpkgs-unstable.follows = "nixpkgs-unstable";
-      inputs.flake-utils.inputs.systems.follows = "systems";
+      inputs.flake-utils.inputs.systems.follows = "nix-systems";
     };
   };
 

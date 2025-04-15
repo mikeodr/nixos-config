@@ -21,6 +21,7 @@ in {
   homebrew = {
     casks = [
       "macfuse"
+      "syncthing"
     ];
   };
 }
