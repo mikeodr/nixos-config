@@ -5,6 +5,8 @@
   ...
 }: let
   cfg = config.homeConfig;
+  isDarwin = pkgs.stdenv.isDarwin;
+  isLinux = pkgs.stdenv.isLinux;
 in {
   options = {
     homeConfig = {
@@ -78,6 +80,26 @@ in {
           neovim = import ../home/neovim.nix {};
           zoxide = import ../home/zoxide.nix {inherit pkgs;};
         };
+
+        xdg.enable = true;
+        xdg.configFile =
+          {
+          }
+          // (
+            if isDarwin
+            then {
+              # Rectangle.app. This has to be imported manually using the app.
+              "rectangle/RectangleConfig.json".text = builtins.readFile ./RectangleConfig.json;
+              "ghostty/config".text = builtins.readFile ./ghostty.darwin;
+            }
+            else {}
+          )
+          // (
+            if isLinux
+            then {
+            }
+            else {}
+          );
       };
     };
   };

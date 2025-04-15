@@ -52,6 +52,8 @@
       "flameshot"
       "ghostty"
       "netnewswire"
+      "rectangle"
+      "slack"
       "wireshark"
     ];
 
