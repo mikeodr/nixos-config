@@ -53,6 +53,7 @@
       "ghostty"
       "netnewswire"
       "rectangle"
+      "obsidian"
       "slack"
       "wireshark"
     ];
@@ -127,11 +128,24 @@
   services.nix-daemon.enable = true;
   # nix.package = pkgs.nix;
 
+  sops.secrets.github_token = {};
+
+  sops.templates = {
+    nix-access-token-github = {
+      content = ''
+        access-tokens = github.com=${config.sops.placeholder.github_token}
+      '';
+      owner = "mikeodr";
+    };
+  };
+
   # Necessary for using flakes on this system.
   nix = {
     gc.automatic = true;
     optimise.automatic = true;
-
+    extraOptions = ''
+      !include ${config.sops.templates.nix-access-token-github.path}
+    '';
     settings = {
       experimental-features = ["nix-command" "flakes"];
       warn-dirty = false;

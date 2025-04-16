@@ -8,6 +8,14 @@ in {
     ../home
   ];
 
+  sops = {
+    defaultSopsFile = ../secrets/secrets.yaml;
+    defaultSopsFormat = "yaml";
+
+    # age.keyFile = "/Users/mikeodr/Library/ApplicationSupport/sops/age/keys.txt";
+    age.keyFile = "/Users/${userName}/.config/sops/age/keys.txt";
+  };
+
   homeConfig.homeUser = userName;
   homeConfig.homeDir = "/Users/${userName}";
   homeConfig.gitEmail = "mike@unusedbytes.ca";
@@ -20,8 +28,11 @@ in {
 
   homebrew = {
     casks = [
+      "discord"
       "macfuse"
+      "signal"
       "syncthing"
+      "tailscale"
     ];
   };
 }

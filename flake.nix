@@ -49,14 +49,15 @@
   };
 
   outputs = {
-    self,
     disko,
     home-manager,
     nix-bitcoin,
     nix-darwin,
     nix-homebrew,
-    nixpkgs,
     nixpkgs-unstable,
+    nixpkgs,
+    self,
+    sops-nix,
     ...
   } @ inputs: let
     lib = nixpkgs.lib;
@@ -69,6 +70,7 @@
         ./darwin/home.nix
         nix-homebrew.darwinModules.nix-homebrew
         home-manager.darwinModules.home-manager
+        sops-nix.darwinModules.sops
       ];
       specialArgs = {
         inherit inputs;
@@ -83,6 +85,7 @@
         ./darwin/work.nix
         nix-homebrew.darwinModules.nix-homebrew
         home-manager.darwinModules.home-manager
+        sops-nix.darwinModules.sops
       ];
       specialArgs = {
         inherit inputs;
