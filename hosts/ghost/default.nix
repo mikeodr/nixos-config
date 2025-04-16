@@ -49,10 +49,7 @@
     nameservers = ["1.1.1.1" "1.0.0.1" "2606:4700:4700::1111" "2606:4700:4700::1001"];
     firewall = {
       enable = true;
-      allowedTCPPorts = [
-        8333 # Bitcoin Core
-        # 9735 # LND
-      ];
+      allowedTCPPorts = [config.services.bitcoind.port config.services.lnd.port];
     };
   };
 
@@ -64,7 +61,10 @@
     listen = true;
     extraConfig = ''
       dbcache=4096
+      bind=::
     '';
+    tor.enforce = false;
+    tor.proxy = false;
   };
   nix-bitcoin.operator = {
     enable = true;
