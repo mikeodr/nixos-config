@@ -19,7 +19,6 @@ in {
     awscli2
     direnv
     flamegraph
-    gh
     graphviz
     utm
   ];

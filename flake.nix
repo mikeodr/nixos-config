@@ -61,22 +61,27 @@
     ...
   } @ inputs: let
     lib = nixpkgs.lib;
-    darwin-unstable = nixpkgs-unstable.legacyPackages.aarch64-darwin;
+
+    overlays = [
+      (final: prev: {
+        gh = inputs.nixpkgs-unstable.legacyPackages.${prev.system}.gh;
+        go = inputs.nixpkgs-unstable.legacyPackages.${prev.system}.go;
+      })
+    ];
+
+    mkSystem = import ./lib/mksystem.nix {
+      inherit inputs;
+      inherit nixpkgs;
+      inherit overlays;
+      inherit self;
+    };
   in {
     nixosConfigurations = import ./hosts inputs;
 
-    darwinConfigurations."Michaels-MacBook-Air" = nix-darwin.lib.darwinSystem {
-      modules = [
-        ./darwin/home.nix
-        nix-homebrew.darwinModules.nix-homebrew
-        home-manager.darwinModules.home-manager
-        sops-nix.darwinModules.sops
-      ];
-      specialArgs = {
-        inherit inputs;
-        inherit self;
-        inherit darwin-unstable;
-      };
+    darwinConfigurations.Michaels-MacBook-Air = mkSystem "Michaels-MacBook-Air" {
+      system = "aarch64-darwin";
+      user = "mikeodr";
+      darwin = true;
     };
 
     darwinConfigurations."Michaels-MacBook-Pro" = nix-darwin.lib.darwinSystem {
@@ -90,12 +95,8 @@
       specialArgs = {
         inherit inputs;
         inherit self;
-        inherit darwin-unstable;
       };
     };
-
-    # Expose the package set, including overlays, for convenience.
-    darwinPackages = self.darwinConfigurations."Michaels-MacBook-Air".pkgs;
 
     colmena =
       lib.recursiveUpdate

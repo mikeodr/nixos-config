@@ -1,36 +1,43 @@
 {
   config,
   pkgs,
-  darwin-unstable,
   self,
+  currentSystemUser,
   ...
 }: {
-  environment.systemPackages =
-    (with pkgs; [
-      alejandra
-      arping
-      colima
-      colmena
-      docker
-      du-dust
-      fastfetch
-      fzf
-      jq
-      mkalias
-      mtr
-      neovim
-      nixd
-      nixpkgs-fmt
-      nmap
-      sops
-      tmux
-      watch
-      wget
-      zoxide
-    ])
-    ++ (with darwin-unstable; [
-      go
-    ]);
+  sops = {
+    defaultSopsFile = ../secrets/secrets.yaml;
+    defaultSopsFormat = "yaml";
+
+    age.keyFile = "/Users/${currentSystemUser}/.config/sops/age/keys.txt";
+  };
+
+  environment.systemPackages = with pkgs; [
+    alejandra
+    arping
+    colima
+    colmena
+    direnv
+    docker
+    du-dust
+    fastfetch
+    fzf
+    gh
+    go
+    jq
+    mkalias
+    mtr
+    neovim
+    nixd
+    nixpkgs-fmt
+    nmap
+    sops
+    terraform
+    tmux
+    watch
+    wget
+    zoxide
+  ];
 
   security.pam.enableSudoTouchIdAuth = true;
 
@@ -41,13 +48,14 @@
     # Apple Silicon Only: Also install Homebrew under the default Intel prefix for Rosetta 2
     enableRosetta = true;
 
-    user = config.homeConfig.homeUser;
+    user = currentSystemUser;
   };
 
   homebrew = {
     enable = true;
 
     casks = [
+      "1password"
       "1password-cli"
       "flameshot"
       "ghostty"
