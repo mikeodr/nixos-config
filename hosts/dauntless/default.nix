@@ -30,9 +30,6 @@ in {
   networking.domain = "";
   services.openssh.enable = true;
 
-  # Generate ACME Certs in custom module
-  # acmeCertGeneration.enable = true;
-
   networking = {
     nameservers = ["1.1.1.1" "1.0.0.1"];
     firewall = {
