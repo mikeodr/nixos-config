@@ -6,8 +6,9 @@
   ...
 }: name: {
   system,
-  user,
+  user ? "specter",
   darwin ? false,
+  btc ? false,
 }: let
   machineConfig = ../hosts/${name};
   userHMConfig = ../home-manager;
@@ -33,7 +34,14 @@ in
       // (
         if darwin
         then {inherit darwin-unstable;}
-        else {}
+        else {
+          pkgs-unstable = import inputs.nixpkgs-unstable {
+            inherit system;
+            config.allowUnfree = true;
+          };
+          inherit inputs;
+          inherit system;
+        }
       );
 
     modules =
@@ -76,6 +84,17 @@ in
           inputs.nix-homebrew.darwinModules.nix-homebrew
           inputs.home-manager.darwinModules.home-manager
           inputs.sops-nix.darwinModules.sops
+        ]
+        else [
+          inputs.disko.nixosModules.disko
+          inputs.home-manager.nixosModules.home-manager
+          inputs.sops-nix.nixosModules.sops
+        ]
+      )
+      ++ (
+        if btc
+        then [
+          inputs.nix-bitcoin.nixosModules.default
         ]
         else []
       );

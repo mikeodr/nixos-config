@@ -76,7 +76,7 @@
       inherit self;
     };
   in {
-    nixosConfigurations = import ./hosts inputs;
+    # nixosConfigurations = import ./hosts inputs;
 
     darwinConfigurations.Michaels-MacBook-Air = mkSystem "Michaels-MacBook-Air" {
       system = "aarch64-darwin";
@@ -88,6 +88,41 @@
       system = "aarch64-darwin";
       user = "mikeodr";
       darwin = true;
+    };
+
+    nixosConfigurations = {
+      beaker = mkSystem "beaker" {
+        system = "x86_64-linux";
+      };
+
+      dauntless = mkSystem "dauntless" {
+        system = "aarch64-linux";
+      };
+
+      ghost = mkSystem "ghost" {
+        system = "x86_64-linux";
+        btc = true;
+      };
+
+      knox = mkSystem "knox" {
+        system = "x86_64-linux";
+      };
+
+      luna = mkSystem "luna" {
+        system = "x86_64-linux";
+      };
+
+      sherlock = mkSystem "sherlock" {
+        system = "x86_64-linux";
+      };
+
+      tachi = mkSystem "tachi" {
+        system = "aarch64-linux";
+      };
+
+      thor = mkSystem "thor" {
+        system = "x86_64-linux";
+      };
     };
 
     colmena =
@@ -110,47 +145,8 @@
         };
 
         defaults.deployment.targetUser = "specter";
-
-        luna.deployment = {
-          tags = ["vm" "server"];
-          allowLocalDeployment = true;
-          buildOnTarget = true;
-        };
-
-        thor.deployment = {
-          tags = ["vm" "server"];
-          buildOnTarget = true;
-        };
-
-        sherlock.deployment = {
-          tags = ["vm" "server" "monitoring"];
-          buildOnTarget = true;
-        };
-
-        tachi.deployment = {
-          tags = ["vm" "vps"];
-          buildOnTarget = true;
-        };
-
-        dauntless.deployment = {
-          tags = ["vm" "vps"];
-          buildOnTarget = true;
-        };
-
-        knox.deployment = {
-          tags = ["vm" "server"];
-          buildOnTarget = true;
-        };
-
-        ghost.deployment = {
-          tags = ["vm" "server"];
-          buildOnTarget = true;
-        };
-
-        beaker.deployment = {
-          tags = ["vm" "server"];
-          buildOnTarget = true;
-        };
+        defaults.deployment.buildOnTarget = true;
+        defaults.deployment.allowLocalDeployment = true;
       };
   };
 }
