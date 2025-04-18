@@ -90,20 +90,6 @@
       darwin = true;
     };
 
-    # darwinConfigurations."Michaels-MacBook-Pro" = nix-darwin.lib.darwinSystem {
-    #   system = "aarch64-darwin";
-    #   modules = [
-    #     ./darwin/work.nix
-    #     nix-homebrew.darwinModules.nix-homebrew
-    #     home-manager.darwinModules.home-manager
-    #     sops-nix.darwinModules.sops
-    #   ];
-    #   specialArgs = {
-    #     inherit inputs;
-    #     inherit self;
-    #   };
-    # };
-
     colmena =
       lib.recursiveUpdate
       (builtins.mapAttrs (k: v: {imports = v._module.args.modules;}) self.nixosConfigurations)
