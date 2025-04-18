@@ -18,11 +18,7 @@ Please see [Vimjoyer's Excellent Video](https://www.youtube.com/watch?v=G5f6GC7S
 
 ## Running
 
-### Deploying locally on a machine
-
-[Nix Helper](https://github.com/viperML/nh) makes running flake updates quick. `nh os switch`. Setting the flake in the config makes executing it direct. No need to specify the flake path. Read the [example config](https://github.com/viperML/nh?tab=readme-ov-file#nixos-module) for details.
-
-### Deploying to multiple machines
+### Deploying
 
 [colmena](https://github.com/zhaofengli/colmena) is used to deploy to multiple machines either individually by host or by group of tags.
 

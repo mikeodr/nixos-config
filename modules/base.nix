@@ -62,13 +62,6 @@
     zstd
   ];
 
-  programs = {
-    nh = {
-      enable = true;
-      flake = "/home/specter/nixos-config";
-    };
-  };
-
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
   programs.mtr.enable = true;
