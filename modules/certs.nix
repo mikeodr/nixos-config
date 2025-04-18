@@ -9,7 +9,16 @@
   };
 
   config = lib.mkIf config.acmeCertGeneration.enable {
-    sops.secrets."security/acme/cloudflare_dns_api_token" = {};
+    sops = {
+      secrets."security/acme/cloudflare_dns_api_token" = {};
+      templates = {
+        cloudflare-dns-api-token = {
+          content = ''
+            CLOUDFLARE_DNS_API_TOKEN='${config.sops.placeholder."security/acme/cloudflare_dns_api_token"}'
+          '';
+        };
+      };
+    };
 
     security.acme = {
       acceptTerms = true;
@@ -20,7 +29,7 @@
         extraDomainNames = ["*.unusedbytes.ca"];
         dnsProvider = "cloudflare";
         dnsPropagationCheck = true;
-        credentialsFile = /var/run/secrets/security/acme/cloudflare_dns_api_token;
+        credentialsFile = config.sops.templates.cloudflare-dns-api-token.path;
       };
     };
   };
