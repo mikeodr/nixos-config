@@ -9,19 +9,10 @@
   user,
   darwin ? false,
 }: let
-  # isDarwin = pxkgs.stdenv.isDarwin;
-  # True if Linux, which is a heuristic for not being Darwin.
-  # The config files for this system.
   machineConfig = ../hosts/${name};
-  # Config =
-  #   ../users/${user}/${
-  #     if darwin
-  #     then "darwin"
-  #     else "nixos"
-  #   }.nix;
   userHMConfig = ../home-manager;
 
-  # NixOS vs nix-darwin functionst
+  # NixOS vs nix-darwin functions
   systemFunc =
     if darwin
     then inputs.nix-darwin.lib.darwinSystem

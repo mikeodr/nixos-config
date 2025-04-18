@@ -1,4 +1,4 @@
-{...}: let
+{pkgs, ...}: let
 in {
   # Used for backwards compatibility, please read the changelog before changing.
   # $ darwin-rebuild changelog
@@ -10,13 +10,11 @@ in {
     ../../modules/darwin.nix
   ];
 
-  homebrew = {
-    casks = [
-      "discord"
-      "macfuse"
-      "signal"
-      "syncthing"
-      "tailscale"
-    ];
-  };
+  environment.systemPackages = with pkgs; [
+    awscli2
+    direnv
+    flamegraph
+    graphviz
+    utm
+  ];
 }
