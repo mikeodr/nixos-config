@@ -87,6 +87,7 @@
     darwinConfigurations.Michaels-MacBook-Pro = mkSystem "Michaels-MacBook-Pro" {
       system = "aarch64-darwin";
       user = "mikeodr";
+      email = "mikeo@tailscale.com";
       darwin = true;
     };
 

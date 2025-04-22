@@ -9,6 +9,7 @@
   user ? "specter",
   darwin ? false,
   btc ? false,
+  email ? "mike@unusedbytes.ca",
 }: let
   machineConfig = ../hosts/${name};
   userHMConfig = ../home-manager;
@@ -64,6 +65,7 @@ in
           home-manager.users.${user} = import userHMConfig {
             inputs = inputs;
             user = user;
+            email = email;
           };
         }
 

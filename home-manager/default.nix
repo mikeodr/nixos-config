@@ -1,7 +1,7 @@
 {
   inputs,
   user,
-  email ? "mike@unusedbytes.ca",
+  email,
   ...
 }: {
   config,
@@ -99,7 +99,7 @@ in {
       # Sign all commits using ssh key
       commit.gpgsign = true;
       gpg.format = "ssh";
-      user.signingkey = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQCjcdyNE+47rLaNLHKsGMTmfaat+DZxt3rUaidtV+aXWICuUvpeZcdgKYiuvDsolqt1uLPVLBczp1M+zrCvB2YjAI9hTgcXscIKmx4zeMowkhQAWQ3m8AA9LcFrv5j+XOtTZlw9FVkaxJf1Yn38/HsazqG2GlP9chyZkl1saxpX2uZon1h49A5HKejR0XpSwZgXTMigjZX1U0o+fHEsUJvgbNjgO9TVS60mA00/HOZGFLeNCe3iP/n4ROfIbJgf4ua41ZkJW4nhqxGyuG/9O2cj5McSf1Y8GIubLUSIzJ5ngvAi+pGB7hcYpivEHaS0mwpTSeo1BM7GhcKMV+5gjZHiV4wVmrAPK+sGKGV3HiXWDehdvio/m8lxCLwYkFIGV6/ykQh9ukmVq7PMFSMv7pyU0MxOarTZxXaSdt7pzQaPxxGpt7LnV5CBET6dzEpMCEWrl/7SNjvq2l1qwERSiCtb928TrygJRjk02sLVawWQWq6LMSVIEAh3fEhpSP4iERs=";
+      user.signingkey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBU0iEDDQKTyGr91x3hK93fG79WIARtg8XgvDWbSg0LT";
       push.autoSetupRemote = true;
     };
   };
