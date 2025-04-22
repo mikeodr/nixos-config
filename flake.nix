@@ -88,6 +88,7 @@
       system = "aarch64-darwin";
       user = "mikeodr";
       email = "mikeo@tailscale.com";
+      signingkey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBU0iEDDQKTyGr91x3hK93fG79WIARtg8XgvDWbSg0LT";
       darwin = true;
     };
 

@@ -10,6 +10,7 @@
   darwin ? false,
   btc ? false,
   email ? "mike@unusedbytes.ca",
+  signingkey ? "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILOkkbCny2gXw85T1CEUdMIyizGrmDx9CqxzyLCu9WLk",
 }: let
   machineConfig = ../hosts/${name};
   userHMConfig = ../home-manager;
@@ -66,6 +67,7 @@ in
             inputs = inputs;
             user = user;
             email = email;
+            signingkey = signingkey;
           };
         }
 

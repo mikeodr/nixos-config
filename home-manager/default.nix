@@ -2,6 +2,7 @@
   inputs,
   user,
   email,
+  signingkey,
   ...
 }: {
   config,
@@ -99,7 +100,7 @@ in {
       # Sign all commits using ssh key
       commit.gpgsign = true;
       gpg.format = "ssh";
-      user.signingkey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBU0iEDDQKTyGr91x3hK93fG79WIARtg8XgvDWbSg0LT";
+      user.signingkey = signingkey;
       push.autoSetupRemote = true;
     };
   };
