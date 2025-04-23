@@ -312,11 +312,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1745344230,
-        "narHash": "sha256-bdZ6MpEjYBuavfC1POO3/6dfFqiaL7huoU8NdSIqKXc=",
+        "lastModified": 1745414688,
+        "narHash": "sha256-aLRO4mdGEPxCB+IkmID1Stdoc0+Re6+iV5uSXcUOINs=",
         "owner": "tailscale",
         "repo": "golink",
-        "rev": "bfae094d60d871a5e2d07a82aa7e60e9fa756772",
+        "rev": "7646755c2e049abfeb65015115964c0bd3b2c887",
         "type": "github"
       },
       "original": {
