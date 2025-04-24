@@ -15,6 +15,7 @@ in {
     direnv
     flamegraph
     graphviz
+    lnav
     utm
   ];
 }
