@@ -1,11 +1,9 @@
 {
-  inputs,
   user,
   email,
   signingkey,
   ...
 }: {
-  config,
   pkgs,
   lib,
   ...
