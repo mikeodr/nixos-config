@@ -15,6 +15,7 @@ in {
       "discord"
       "macfuse"
       "signal"
+      "steam"
       "syncthing"
       "tailscale"
     ];
