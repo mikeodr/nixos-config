@@ -55,14 +55,15 @@
     enable = true;
 
     casks = [
-      "1password"
       "1password-cli"
+      "1password"
       "flameshot"
       "ghostty"
       "netnewswire"
-      "rectangle"
       "obsidian"
+      "rectangle"
       "slack"
+      "visual-studio-code"
       "wireshark"
     ];
 
