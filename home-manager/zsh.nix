@@ -38,6 +38,8 @@
   envs = {
     TERM = "xterm";
   };
+
+  pathJoin = builtins.concatStringsSep ":";
 in {
   enable = true;
 
@@ -45,7 +47,11 @@ in {
 
   shellAliases = lib.mkMerge [shellAliases extraShellAliases];
 
-  sessionVariables = lib.mkMerge [envs sshSessionVariables];
+  sessionVariables = lib.mkMerge [
+    envs
+    sshSessionVariables
+    {PATH = pathJoin ["${homeDir}/go/bin" "$PATH"];}
+  ];
 
   oh-my-zsh = {
     enable = true;
