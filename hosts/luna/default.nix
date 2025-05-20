@@ -245,13 +245,17 @@
 
   networking = {
     hostName = "luna";
+    nat = {
+      enable = true;
+      internalInterfaces = ["ve-+"];
+      externalInterface = "ens18";
+    };
+    firewall = {
+      enable = true;
+      allowedTCPPorts = [80 443];
+    };
   };
 
   services.prometheus.exporters.node.openFirewall = true;
-  networking.firewall = {
-    enable = true;
-    allowedTCPPorts = [80 443];
-  };
-
   system.stateVersion = "24.05";
 }

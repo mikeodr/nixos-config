@@ -1,11 +1,65 @@
-{config, ...}: let
+{
+  config,
+  pkgs-unstable,
+  ...
+}: let
   dataDir = "/var/lib/freshrss";
+  unstable = pkgs-unstable;
 in {
   sops.secrets.mealie = {
     sopsFile = ./secrets.yaml;
     owner = config.users.users.specter.name;
     group = config.users.users.nobody.group;
     mode = "0440";
+  };
+
+  containers.protect = {
+    autoStart = true;
+    privateNetwork = true;
+    enableTun = true;
+    hostAddress = "10.100.200.1";
+    localAddress = "10.100.200.2";
+
+    config = {
+      pkgs,
+      lib,
+      ...
+    }: {
+      system.stateVersion = "24.11";
+
+      services.tailscale = {
+        enable = true;
+        package = unstable.tailscale;
+        openFirewall = true;
+        extraUpFlags = ["--ssh"];
+        permitCertUid = "caddy";
+      };
+
+      services.caddy = {
+        enable = true;
+        virtualHosts."protect.cerberus-basilisk.ts.net" = {
+          extraConfig = ''
+            reverse_proxy https://unifi.unusedbytes.ca
+          '';
+        };
+        virtualHosts."protect.cerberus-basilisk.ts.net:7443" = {
+          extraConfig = ''
+            reverse_proxy https://unifi.unusedbytes.ca:7443
+          '';
+        };
+      };
+
+      networking = {
+        firewall = {
+          enable = true;
+          allowedTCPPorts = [80 443 7443];
+        };
+        nameservers = ["172.16.0.1"];
+        useHostResolvConf = lib.mkForce false;
+      };
+
+      services.resolved.enable = true;
+    };
   };
 
   virtualisation = {
