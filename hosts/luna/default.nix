@@ -45,7 +45,7 @@
 
   services.golink = {
     enable = true;
-    tailscaleAuthKeyFile = "/run/secrets/golink";
+    tailscaleAuthKeyFile = config.sops.secrets.golink.path;
   };
   services.tsidp.enable = true;
 
