@@ -53,9 +53,12 @@ in {
     {PATH = pathJoin ["${homeDir}/go/bin" "$PATH"];}
   ];
 
+  initExtra = ''
+    eval "$(starship init zsh)"
+  '';
+
   oh-my-zsh = {
     enable = true;
-    theme = "robbyrussell";
     plugins = [
       "1password"
       "command-not-found"
