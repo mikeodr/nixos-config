@@ -5,6 +5,7 @@
 }: let
   dataDir = "/var/lib/freshrss";
   unstable = pkgs-unstable;
+  tsAuthKeyPath = config.sops.secrets.tailscaleAuthKey.path;
 in {
   sops.secrets.mealie = {
     sopsFile = ./secrets.yaml;
@@ -13,36 +14,39 @@ in {
     mode = "0440";
   };
 
-  containers.protect = {
+  containers.unifi = {
     autoStart = true;
     privateNetwork = true;
     enableTun = true;
-    hostAddress = "10.100.200.1";
-    localAddress = "10.100.200.2";
+    hostAddress = "10.20.30.1";
+    localAddress = "10.20.30.2";
 
-    config = {
-      pkgs,
-      lib,
-      ...
-    }: {
+    bindMounts = {
+      "${tsAuthKeyPath}" = {
+        hostPath = tsAuthKeyPath;
+      };
+    };
+
+    config = {lib, ...}: {
       system.stateVersion = "24.11";
 
       services.tailscale = {
         enable = true;
         package = unstable.tailscale;
         openFirewall = true;
-        extraUpFlags = ["--ssh"];
+        extraUpFlags = ["--ssh" "--accept-dns=false" "--advertise-tags=tag:unifi,tag:server"];
+        authKeyFile = tsAuthKeyPath;
         permitCertUid = "caddy";
       };
 
       services.caddy = {
         enable = true;
-        virtualHosts."protect.cerberus-basilisk.ts.net" = {
+        virtualHosts."unifi.cerberus-basilisk.ts.net" = {
           extraConfig = ''
             reverse_proxy https://unifi.unusedbytes.ca
           '';
         };
-        virtualHosts."protect.cerberus-basilisk.ts.net:7443" = {
+        virtualHosts."unifi.cerberus-basilisk.ts.net:7443" = {
           extraConfig = ''
             reverse_proxy https://unifi.unusedbytes.ca:7443
           '';
@@ -52,7 +56,7 @@ in {
       networking = {
         firewall = {
           enable = true;
-          allowedTCPPorts = [80 443 7443];
+          allowedTCPPorts = [80 443];
         };
         nameservers = ["172.16.0.1"];
         useHostResolvConf = lib.mkForce false;
