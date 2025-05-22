@@ -25,6 +25,7 @@ in {
     git
     jq
     mtr
+    nerdfonts
     zsh
   ];
 
@@ -47,6 +48,13 @@ in {
     enableZshIntegration = true;
     enableFishIntegration = true;
     options = ["--cmd cd"];
+  };
+
+  programs.starship = {
+    enable = true;
+    enableBashIntegration = true;
+    enableZshIntegration = true;
+    settings = pkgs.lib.importTOML ./starship/starship.toml;
   };
 
   xdg.enable = true;
