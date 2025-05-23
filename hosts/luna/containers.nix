@@ -14,18 +14,12 @@ in {
     mode = "0440";
   };
 
-  containers.unifi = {
+  containers.ntfy = {
     autoStart = true;
     privateNetwork = true;
     enableTun = true;
-    hostAddress = "10.20.30.1";
-    localAddress = "10.20.30.2";
-
-    bindMounts = {
-      "${tsAuthKeyPath}" = {
-        hostPath = tsAuthKeyPath;
-      };
-    };
+    hostAddress = "10.30.30.1";
+    localAddress = "10.30.30.2";
 
     config = {lib, ...}: {
       system.stateVersion = "24.11";
@@ -34,8 +28,63 @@ in {
         enable = true;
         package = unstable.tailscale;
         openFirewall = true;
-        extraUpFlags = ["--ssh" "--accept-dns=false" "--advertise-tags=tag:unifi,tag:server"];
-        authKeyFile = tsAuthKeyPath;
+        permitCertUid = "caddy";
+      };
+
+      services.caddy = {
+        enable = true;
+        virtualHosts."ntfy.cerberus-basilisk.ts.net" = {
+          extraConfig = ''
+            reverse_proxy 127.0.0.1:8080
+            # Redirect HTTP to HTTPS, but only for GET topic addresses, since we want
+            # it to work with curl without the annoying https:// prefix
+            @httpget {
+                protocol http
+                method GET
+                path_regexp ^/([-_a-z0-9]{0,64}$|docs/|static/)
+            }
+            redir @httpget https://{host}{uri}
+          '';
+        };
+      };
+
+      services.ntfy-sh = {
+        enable = true;
+        package = unstable.ntfy-sh;
+        settings = {
+          listen-http = ":8080";
+          behind-proxy = true;
+          base-url = "https://ntfy.cerberus-basilisk.ts.net";
+          upstream-base-url = "https://ntfy.sh";
+        };
+      };
+
+      networking = {
+        firewall = {
+          enable = true;
+          allowedTCPPorts = [80 443];
+        };
+        nameservers = ["172.16.0.1"];
+        useHostResolvConf = lib.mkForce false;
+      };
+      services.resolved.enable = true;
+    };
+  };
+
+  containers.unifi = {
+    autoStart = true;
+    privateNetwork = true;
+    enableTun = true;
+    hostAddress = "10.20.30.1";
+    localAddress = "10.20.30.2";
+
+    config = {lib, ...}: {
+      system.stateVersion = "24.11";
+
+      services.tailscale = {
+        enable = true;
+        package = unstable.tailscale;
+        openFirewall = true;
         permitCertUid = "caddy";
       };
 
