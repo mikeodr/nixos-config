@@ -53,7 +53,7 @@ in {
     {PATH = pathJoin ["${homeDir}/go/bin" "$PATH"];}
   ];
 
-  initExtra = ''
+  initContent = ''
     eval "$(starship init zsh)"
   '';
 

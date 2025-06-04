@@ -25,7 +25,6 @@ in {
     git
     jq
     mtr
-    nerdfonts
     zsh
   ];
 
