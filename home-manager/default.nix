@@ -22,6 +22,7 @@ in {
   home.stateVersion = "24.05";
 
   home.packages = with pkgs; [
+    direnv
     git
     jq
     mtr
