@@ -78,6 +78,16 @@
       package = pkgs-unstable.audiobookshelf;
       port = 8081;
     };
+    ntfy-sh = {
+      enable = true;
+      package = pkgs-unstable.ntfy-sh;
+      settings = {
+        listen-http = ":8888";
+        behind-proxy = true;
+        base-url = "https://ntfy.unusedbytes.ca";
+        upstream-base-url = "https://ntfy.sh";
+      };
+    };
   };
 
   systemd.services = {
@@ -202,6 +212,22 @@
         extraConfig = ''
           reverse_proxy http://localhost:3001
         '';
+      };
+      "ntfy.unusedbytes.ca" = {
+        serverAliases = ["ntfy.cerberus-basilisk.ts.net"];
+        extraConfig = ''
+          reverse_proxy http://localhost:8888
+
+          # Redirect HTTP to HTTPS, but only for GET topic addresses, since we want
+          # it to work with curl without the annoying https:// prefix
+          @httpget {
+              protocol http
+              method GET
+              path_regexp ^/([-_a-z0-9]{0,64}$|docs/|static/)
+          }
+          redir @httpget https://{host}{uri}
+        '';
+        useACMEHost = "unusedbytes.ca";
       };
       ":443" = {
         extraConfig = ''
