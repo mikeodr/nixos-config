@@ -53,6 +53,17 @@
       appriseSupport = true;
     };
 
+    ntfy-sh = {
+      enable = true;
+      package = pkgs-unstable.ntfy-sh;
+      settings = {
+        listen-http = ":8888";
+        behind-proxy = true;
+        base-url = "http://tachi.cerberus-basilisk.ts.net:8888";
+        upstream-base-url = "https://ntfy.sh";
+      };
+    };
+
     caddy = {
       enable = true;
       virtualHosts."jf.unusedbytes.ca" = {
