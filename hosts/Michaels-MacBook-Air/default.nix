@@ -6,6 +6,8 @@ in {
 
   nixpkgs.config.allowUnfree = true;
 
+  ids.gids.nixbld = 30000;
+
   imports = [
     ../../modules/darwin.nix
   ];
