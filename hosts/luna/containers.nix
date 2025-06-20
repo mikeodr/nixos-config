@@ -132,17 +132,6 @@ in {
         ];
       };
 
-      watchstate = {
-        autoStart = true;
-        image = "ghcr.io/arabcoders/watchstate:latest";
-        ports = ["127.0.0.1:2323:8080"];
-        environment = {
-        };
-        volumes = [
-          "/var/lib/watchstate/config"
-        ];
-      };
-
       stirlingpdf = {
         autoStart = true;
         image = "frooodle/s-pdf:latest";

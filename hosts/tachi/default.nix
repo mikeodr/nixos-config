@@ -140,7 +140,6 @@
         mode = "repokey-blake2";
         passCommand = "cat ${config.sops.secrets.borgbackup_key.path}";
       };
-      preHook = "# To add excluded paths at runtime\nextraCreateArgs=\"$extraCreateArgs --exclude /some/path\"\n";
     };
   };
 

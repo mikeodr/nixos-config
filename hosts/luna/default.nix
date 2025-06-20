@@ -193,11 +193,6 @@
           reverse_proxy http://localhost:5055
         '';
       };
-      "watchstate.unusedbytes.ca" = {
-        extraConfig = ''
-          reverse_proxy http://localhost:2323
-        '';
-      };
       "abs.unusedbytes.ca" = {
         extraConfig = ''
           reverse_proxy http://localhost:8081
@@ -240,27 +235,30 @@
   services.borgbackup.jobs = {
     services = {
       paths = [
+        "/var/lib/audiobookshelf/metadata/backups"
+        "/var/lib/couchdb"
+        "/var/lib/freshrss"
+        "/var/lib/golink"
+        "/var/lib/immich"
         "/var/lib/jellyfin/config"
         "/var/lib/jellyfin/data"
-        "/var/lib/audiobookshelf/"
-      ];
-      doInit = false;
-      encryption.mode = "none";
-      repo = "/mnt/media/borgBackup/jellyfin";
-      compression = "auto,zstd";
-      startAt = "daily";
-      environment = {
-        BORG_UNKNOWN_UNENCRYPTED_REPO_ACCESS_IS_OK = "yes";
-      };
-    };
-    freshrss = {
-      paths = [
-        "/var/lib/freshrss"
+        "/var/lib/nzbget"
+        "/var/lib/overseerr"
         "/var/lib/pods/mealie/data"
+        "/var/lib/prowlarr"
+        "/var/lib/radarr"
+        "/var/lib/sonarr"
+        "/var/lib/private/ntfy-sh"
       ];
+      preHook = ''
+        systemctl stop jellyfin.service
+      '';
+      postHook = ''
+        systemctl start jellyfin.service
+      '';
       doInit = false;
       encryption.mode = "none";
-      repo = "/mnt/media/borgBackup/freshrss";
+      repo = "/mnt/media/borgBackup/luna";
       compression = "auto,zstd";
       startAt = "daily";
       environment = {
@@ -279,5 +277,5 @@
     allowedTCPPorts = [80 443];
   };
 
-  system.stateVersion = "24.05";
+  system.stateVersion = "25.05";
 }
