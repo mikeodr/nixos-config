@@ -24,8 +24,10 @@ in {
   home.packages = with pkgs; [
     direnv
     git
+    hack-font
     jq
     mtr
+    nerd-fonts.hack
     zsh
   ];
 
@@ -41,6 +43,16 @@ in {
     defaultEditor = true;
     viAlias = true;
     vimAlias = true;
+
+    extraConfig = ''
+      let mapleader = ","
+      let maplocalleader = ","
+    '';
+
+    plugins = with pkgs.vimPlugins; [
+      nerdtree
+      vim-easymotion
+    ];
   };
 
   programs.zoxide = {
