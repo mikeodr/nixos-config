@@ -68,19 +68,19 @@
       enable = true;
       virtualHosts."jf.unusedbytes.ca" = {
         extraConfig = ''
-          reverse_proxy http://luna:8096
+          reverse_proxy http://luna.cerberus-basilisk.ts.net:8096
         '';
         useACMEHost = "unusedbytes.ca";
       };
       virtualHosts."plex.unusedbytes.ca" = {
         extraConfig = ''
-          reverse_proxy http://thor:32400
+          reverse_proxy http://thor.cerberus-basilisk.ts.net:32400
         '';
         useACMEHost = "unusedbytes.ca";
       };
       virtualHosts."oink.unusedbytes.ca" = {
         extraConfig = ''
-          reverse_proxy http://luna:5055
+          reverse_proxy http://luna.cerberus-basilisk.ts.net:5055
         '';
         useACMEHost = "unusedbytes.ca";
       };
