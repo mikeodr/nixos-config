@@ -60,7 +60,6 @@ in {
           {
             targets = [
               "localhost:${toString config.services.prometheus.exporters.node.port}"
-              "opnsense.unusedbytes.ca:9100"
               "reactor01.unusedbytes.ca:9100"
               "reactor02.unusedbytes.ca:9100"
               "fusion01.unusedbytes.ca:9100"
@@ -101,7 +100,6 @@ in {
               "https://go.cerberus-basilisk.ts.net"
               "https://hass.unusedbytes.ca"
               "https://nzbget.unusedbytes.ca"
-              "https://opnsense.unusedbytes.ca"
               "https://radarr.unusedbytes.ca"
               "https://reactor01.unusedbytes.ca:8006"
               "https://sonarr.unusedbytes.ca"

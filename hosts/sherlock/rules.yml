@@ -27,7 +27,7 @@ groups:
           severity: warning
 
       - alert: Out of Memory
-        expr: ((node_memory_MemAvailable_bytes{instance!="opnsense:9100"} / node_memory_MemTotal_bytes) * 100) <= 10
+        expr: ((node_memory_MemAvailable_bytes{} / node_memory_MemTotal_bytes) * 100) <= 10
         for: 5m
         labels:
           severity: warning
@@ -36,7 +36,7 @@ groups:
           description: "Node memory is filling up (< 10% left)\n  VALUE = {{ $value }}\n  LABELS: {{ $labels }}"
 
       - alert: Out of Memory
-        expr: ((node_memory_free_bytes{instance!="opnsense:9100"} / node_memory_size_bytes) * 100) <= 5
+        expr: ((node_memory_free_bytes{} / node_memory_size_bytes) * 100) <= 5
         for: 30m
         labels:
           severity: warning
@@ -63,7 +63,7 @@ groups:
           description: "SSL certificate has expired already\n  VALUE = {{ $value }}\n  LABELS: {{ $labels }}"
 
       - alert: Critical Services are down
-        expr: probe_success{instance=~".*plex.*|.*hass.*|.*unifi.*|.*cryo01.*|.*opnsense.*|.*reactor01.*"} == 0
+        expr: probe_success{instance=~".*plex.*|.*hass.*|.*unifi.*|.*cryo01.*|.*reactor01.*"} == 0
         for: 15m
         labels:
           severity: critical
@@ -72,7 +72,7 @@ groups:
           description: "{{ $labels.instance }} of job {{ $labels.job }}"
 
       - alert: Trinity Service Down
-        expr: probe_success{instance!~".*hass.*|.*unifi.*|.*cryo01.*|.*opnsense.*|.*reactor01.*|.*plex.*"} == 0
+        expr: probe_success{instance!~".*hass.*|.*unifi.*|.*cryo01.*|.*reactor01.*|.*plex.*"} == 0
         for: 15m
         labels:
           severity: warning
