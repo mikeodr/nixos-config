@@ -11,7 +11,6 @@
     ./containers.nix
     ./tsidp.nix
     ./obsidian.nix
-    ./wireguard.nix
     ../../modules/immich
     inputs.tailscale-golink.nixosModules.default
   ];
