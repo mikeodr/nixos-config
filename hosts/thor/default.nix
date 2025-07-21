@@ -54,7 +54,7 @@
       enable = true;
       systemCronJobs = [
         # 5am daily clear out plex transcoder folder for storage saving
-        "0 5 * * * rm -r  /var/lib/plex/Plex\ Media\ Server/Cache/PhotoTranscoder"
+        "0 5 * * * rm -r /var/lib/plex/Plex\ Media\ Server/Cache/PhotoTranscoder"
       ];
     };
 
