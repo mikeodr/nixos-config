@@ -66,7 +66,7 @@ in {
         extraOptions = ["--pull=always"];
         volumes = [
           "/var/lib/nzbget:/config"
-          "/mnt/media/downloads:/downloads"
+          "/home/specter/downloads:/downloads"
         ];
       };
 
@@ -83,7 +83,7 @@ in {
         volumes = [
           "/var/lib/sonarr:/config"
           "/mnt/media/TV:/tv"
-          "/mnt/media/downloads:/downloads"
+          "/home/specter/downloads:/downloads"
         ];
       };
 
@@ -100,7 +100,7 @@ in {
         volumes = [
           "/var/lib/radarr:/config"
           "/mnt/media/Movies:/movies"
-          "/mnt/media/downloads:/downloads"
+          "/home/specter/downloads:/downloads"
         ];
       };
 
