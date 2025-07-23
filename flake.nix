@@ -90,10 +90,6 @@
     };
 
     nixosConfigurations = {
-      beaker = mkSystem "beaker" {
-        system = "x86_64-linux";
-      };
-
       dauntless = mkSystem "dauntless" {
         system = "aarch64-linux";
       };

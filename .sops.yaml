@@ -7,7 +7,6 @@ keys:
   - &tachi age1qajz2uu85t5u3ptuzhphp0439kg8jw0cxa0c5nqw4qkpr402vetsxw9wrl
   - &dauntless age1yj88d45sjqz4y8kg0rhs2m4ek3cdvhvnqa88edkfs4ekd3wyzduq4pps3n
   - &ghost age1wtecvfxxjk38uj438rzv8xxayjxthl0l2v5usk2yxxm34ggmpp4s32qwnh
-  - &beaker age1khz8886q285vj7muxa384hseegyafkhef30j6dkyrk0t8sg75snq4hfug5
   - &work age1gpqqrzyg0dw9fg2s2tq3epsrh8rx4ylh7qww4rsnffuf2n4ynpqsyf87du
 creation_rules:
   - path_regex: secrets/secrets.yaml$
@@ -21,7 +20,6 @@ creation_rules:
           - *darwin
           - *dauntless
           - *ghost
-          - *beaker
           - *work
   - path_regex: hosts/luna/secrets.yaml$
     key_groups:
