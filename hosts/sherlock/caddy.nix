@@ -1,4 +1,4 @@
-{...}: {
+{config, ...}: {
   acmeCertGeneration.enable = true;
 
   security.acme.certs."unusedbytes.ca".reloadServices = ["caddy"];

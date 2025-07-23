@@ -1,4 +1,4 @@
-{...}: {
+{config, ...}: {
   imports = [
     ./hardware-configuration.nix
     ../../modules/server.nix
@@ -26,6 +26,18 @@
 
   networking.firewall = {
     enable = true;
+  };
+
+  # sops.secrets."security/acme/plex_pkcs12_pass" = {};
+  sops.secrets."nix/cache_priv_key" = {
+    mode = "640";
+    group = "nix-serve";
+    sopsFile = ../../secrets/secrets.yaml;
+  };
+
+  services.nix-serve = {
+    enable = true;
+    secretKeyFile = config.sops.secrets."nix/cache_priv_key".path;
   };
 
   system.stateVersion = "24.05"; # Did you read the comment?
