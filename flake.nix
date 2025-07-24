@@ -23,12 +23,18 @@
 
     home-manager = {
       url = "github:nix-community/home-manager/release-25.05";
-      inputs.nixpkgs.follows = "nixpkgs-unstable";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
 
     sops-nix = {
       url = "github:Mic92/sops-nix";
       inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    tailscale = {
+      url = "github:tailscale/tailscale/mikeodr/update-flake";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
+      inputs.systems.follows = "nix-systems";
     };
 
     tailscale-golink = {
@@ -55,6 +61,7 @@
     nixpkgs,
     self,
     sops-nix,
+    tailscale,
     ...
   } @ inputs: let
     lib = nixpkgs.lib;
