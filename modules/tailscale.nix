@@ -1,6 +1,7 @@
 {
   config,
-  pkgs-unstable,
+  inputs,
+  pkgs,
   ...
 }: {
   imports = [
@@ -14,7 +15,7 @@
   services = {
     tailscale = {
       enable = true;
-      package = pkgs-unstable.tailscale;
+      package = inputs.tailscale.packages."${pkgs.system}".default;
       openFirewall = true;
       extraUpFlags = ["--ssh"];
       authKeyFile = config.sops.secrets.tailscaleAuthKey.path;
