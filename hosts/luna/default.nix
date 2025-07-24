@@ -67,11 +67,11 @@
   ];
 
   services = {
-    # jellyfin = {
-    #   enable = true;
-    #   openFirewall = true;
-    #   package = pkgs-unstable.jellyfin;
-    # };
+    jellyfin = {
+      enable = true;
+      openFirewall = true;
+      package = pkgs-unstable.jellyfin;
+    };
     audiobookshelf = {
       enable = true;
       package = pkgs-unstable.audiobookshelf;
@@ -89,11 +89,11 @@
     };
   };
 
-  # systemd.services = {
-  #   "jellyfin" = {
-  #     after = ["mnt-media.mount"];
-  #   };
-  # };
+  systemd.services = {
+    "jellyfin" = {
+      after = ["mnt-media.mount"];
+    };
+  };
 
   # Ensure cert renewals reload caddy
   security.acme.certs."unusedbytes.ca".reloadServices = ["caddy"];
@@ -107,12 +107,12 @@
           reverse_proxy http://localhost:8096
         '';
       };
-      # "jellyfin.unusedbytes.ca" = {
-      #   extraConfig = ''
-      #     reverse_proxy http://localhost:8096
-      #   '';
-      #   useACMEHost = "unusedbytes.ca";
-      # };
+      "jellyfin.unusedbytes.ca" = {
+        extraConfig = ''
+          reverse_proxy http://localhost:8096
+        '';
+        useACMEHost = "unusedbytes.ca";
+      };
       "oink.unusedbytes.ca" = {
         extraConfig = ''
           reverse_proxy https://overseerr.unusedbytes.ca {
