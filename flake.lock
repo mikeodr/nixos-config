@@ -307,16 +307,16 @@
         ]
       },
       "locked": {
-        "lastModified": 1753299826,
-        "narHash": "sha256-u2ooC7qBcu6I5VcRCoWdcZgZ+4xbpndbvKZoClzjuv4=",
+        "lastModified": 1753664373,
+        "narHash": "sha256-CCdX+FUInVo//0ypdgv6TbBPhg29MIn7R/XeYkdT4ZA=",
         "owner": "tailscale",
         "repo": "tailscale",
-        "rev": "2edad897c1fe8381e255628690f239dea5df1776",
+        "rev": "e02666061276a589912c384f0abeb53d22288d99",
         "type": "github"
       },
       "original": {
         "owner": "tailscale",
-        "ref": "mikeodr/update-flake",
+        "ref": "mikeodr/add-nixos-modules",
         "repo": "tailscale",
         "type": "github"
       }

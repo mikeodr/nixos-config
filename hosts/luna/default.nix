@@ -9,10 +9,10 @@
     ./hardware-configuration.nix
     ../../modules/server.nix
     ./containers.nix
-    ./tsidp.nix
     ./obsidian.nix
     ../../modules/immich
     inputs.tailscale-golink.nixosModules.default
+    inputs.tailscale.nixosModules.tsidp
   ];
 
   boot = {
@@ -42,11 +42,16 @@
     sopsFile = ./secrets.yaml;
   };
 
-  services.golink = {
-    enable = true;
-    tailscaleAuthKeyFile = config.sops.secrets.golink.path;
+  services = {
+    golink = {
+      enable = true;
+      tailscaleAuthKeyFile = config.sops.secrets.golink.path;
+    };
+
+    tsidp = {
+      enable = true;
+    };
   };
-  services.tsidp.enable = true;
 
   # Jellyfin Media Mounts
   fileSystems = {

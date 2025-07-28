@@ -32,7 +32,7 @@
     };
 
     tailscale = {
-      url = "github:tailscale/tailscale/mikeodr/update-flake";
+      url = "github:tailscale/tailscale/mikeodr/add-nixos-modules";
       inputs.nixpkgs.follows = "nixpkgs-unstable";
       inputs.systems.follows = "nix-systems";
     };
