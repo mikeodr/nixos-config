@@ -9,7 +9,6 @@
     ./disk-config.nix
     ./hardware-configuration.nix
     ../../modules/server.nix
-    ./signal.nix
   ];
 
   autoUpdate.enable = true;
