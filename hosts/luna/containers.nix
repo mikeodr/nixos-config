@@ -45,7 +45,7 @@ in {
           BASE_URL = "mealie.unusedbytes.ca";
           OIDC_AUTH_ENABLED = "true";
           OIDC_CONFIGURATION_URL = "https://idp.cerberus-basilisk.ts.net/.well-known/openid-configuration";
-          OIDC_AUTO_REDIRECT = "true";
+          OIDC_AUTO_REDIRECT = "false";
           OIDC_CLIENT_ID = "unused";
           OIDC_CLIENT_SECRET = "unused";
           OIDC_PROVIDER_NAME = "Tailscale";
