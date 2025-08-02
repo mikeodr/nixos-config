@@ -1,4 +1,5 @@
 keys:
+  - &cerberus age1gx7su7zme0e3fqfsgjydmnkdmmlpzumlc82fvl4syvjj9tsc6dqs8c67x4
   - &luna age1s06vgtmyp888xrfnnzc885t95cedey99ff33yds7x2n8fkdyk4pqctsddj
   - &thor age16726j7ylq4mn7fny20vs5xhxysg35ewfwqrkydmpgw78cdu3xqzs0ywcg2
   - &sherlock age1n0xlcm7h9m0644hpe89k5jv3ac9zlenkx2yx020sgs6ml3u6dfmq863vmw
@@ -12,6 +13,7 @@ creation_rules:
   - path_regex: secrets/secrets.yaml$
     key_groups:
       - age:
+          - *cerberus
           - *luna
           - *thor
           - *sherlock

@@ -31,9 +31,6 @@
     optimise.automatic = true;
   };
 
-  programs.vim.defaultEditor = true;
-  programs.vim.enable = true;
-
   environment.systemPackages = with pkgs; [
     curl
     dig
@@ -50,7 +47,6 @@
     mtr
     neovim
     nixpkgs-fmt
-    nh
     nmap
     pciutils
     rsync
