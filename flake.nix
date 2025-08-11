@@ -80,8 +80,6 @@
       inherit self;
     };
   in {
-    # nixosConfigurations = import ./hosts inputs;
-
     darwinConfigurations.Michaels-MacBook-Air = mkSystem "Michaels-MacBook-Air" {
       system = "aarch64-darwin";
       user = "mikeodr";
