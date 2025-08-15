@@ -2,7 +2,21 @@
   pkgs,
   pkgs-unstable,
   ...
-}: {
+}: let
+  plex-version = {
+    version = "1.42.1.10060-4e8b05daf";
+    sha256 = "3a822dbc6d08a6050a959d099b30dcd96a8cb7266b94d085ecc0a750aa8197f4";
+  };
+  plex-package = pkgs.plex.override {
+    plexRaw = pkgs.plexRaw.overrideAttrs (old: rec {
+      version = plex-version.version;
+      src = pkgs.fetchurl {
+        url = "https://downloads.plex.tv/plex-media-server-new/${version}/debian/plexmediaserver_${version}_amd64.deb";
+        sha256 = plex-version.sha256;
+      };
+    });
+  };
+in {
   imports = [
     ./hardware-configuration.nix
     ../../modules/server.nix
@@ -46,7 +60,7 @@
   services = {
     plex = {
       enable = true;
-      package = pkgs-unstable.plex;
+      package = plex-package;
       openFirewall = true;
     };
 
