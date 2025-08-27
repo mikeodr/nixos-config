@@ -39,3 +39,8 @@ creation_rules:
       - age:
           - *tachi
           - *darwin
+  - path_regex: hosts/cerberus/secrets.yaml$
+    key_groups:
+      - age:
+          - *cerberus
+          - *darwin
