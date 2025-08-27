@@ -19,7 +19,6 @@ in {
       "signal"
       "steam"
       "syncthing"
-      "tailscale"
     ];
   };
 }
