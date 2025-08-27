@@ -202,6 +202,11 @@
           reverse_proxy http://localhost:8081
         '';
       };
+      "abs.cerberus-basilisk.ts.net" = {
+        extraConfig = ''
+          reverse_proxy http://localhost:8081
+        '';
+      };
       "pdf.unusedbytes.ca" = {
         extraConfig = ''
           reverse_proxy http://localhost:8082
