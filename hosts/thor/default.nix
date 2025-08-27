@@ -1,8 +1,4 @@
-{
-  pkgs,
-  pkgs-unstable,
-  ...
-}: let
+{pkgs, ...}: let
   plex-version = {
     version = "1.42.1.10060-4e8b05daf";
     sha256 = "3a822dbc6d08a6050a959d099b30dcd96a8cb7266b94d085ecc0a750aa8197f4";
@@ -28,8 +24,6 @@ in {
   };
 
   # Custom module settings
-  autoUpdate.enable = true;
-  autoUpdate.allowReboot = false;
   isVM = true;
   intelAcceleration.enable = true;
   acmeCertGeneration.enable = true;

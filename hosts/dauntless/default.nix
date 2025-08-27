@@ -7,10 +7,10 @@ in {
     ../../modules/server.nix
   ];
 
-  autoUpdate.enable = true;
   isVM = true;
   ip_forwarding.enable = true;
   ip_forward_interfaces = ["enp0s6"];
+  remoteBuild.enable = true;
 
   boot = {
     tmp.cleanOnBoot = true;

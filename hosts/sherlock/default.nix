@@ -14,7 +14,6 @@
   };
 
   # Custom module settings
-  autoUpdate.enable = true;
   isVM = true;
 
   networking = {

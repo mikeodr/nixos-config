@@ -5,8 +5,6 @@
     ../../modules/server.nix
   ];
 
-  autoUpdate.enable = true;
-
   boot = {
     tmp.cleanOnBoot = true;
     loader.grub = {
