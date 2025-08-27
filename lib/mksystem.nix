@@ -11,6 +11,7 @@
   btc ? false,
   email ? "mike@unusedbytes.ca",
   signingkey ? "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILOkkbCny2gXw85T1CEUdMIyizGrmDx9CqxzyLCu9WLk",
+  enableHomeManager ? true,
 }: let
   machineConfig = ../hosts/${name};
   userHMConfig = ../home-manager;
@@ -56,21 +57,28 @@ in
         # Allow unfree packages.
         {nixpkgs.config.allowUnfree = true;}
 
+        # Import the machine configuration.
         machineConfig
-        # osConfig
-        home-manager.home-manager
-        {
-          home-manager.useGlobalPkgs = true;
-          home-manager.useUserPackages = true;
-          home-manager.verbose = true;
-          home-manager.users.${user} = import userHMConfig {
-            inputs = inputs;
-            user = user;
-            email = email;
-            signingkey = signingkey;
-          };
-        }
-
+      ]
+      ++ (
+        if enableHomeManager
+        then [
+          home-manager.home-manager
+          {
+            home-manager.useGlobalPkgs = true;
+            home-manager.useUserPackages = true;
+            home-manager.verbose = true;
+            home-manager.users.${user} = import userHMConfig {
+              inputs = inputs;
+              user = user;
+              email = email;
+              signingkey = signingkey;
+            };
+          }
+        ]
+        else []
+      )
+      ++ [
         # We expose some extra arguments so that our modules can parameterize
         # better based on these values.
         {
@@ -86,12 +94,10 @@ in
         if darwin
         then [
           inputs.nix-homebrew.darwinModules.nix-homebrew
-          inputs.home-manager.darwinModules.home-manager
           inputs.sops-nix.darwinModules.sops
         ]
         else [
           inputs.disko.nixosModules.disko
-          inputs.home-manager.nixosModules.home-manager
           inputs.sops-nix.nixosModules.sops
         ]
       )
