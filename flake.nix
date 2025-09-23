@@ -43,6 +43,12 @@
       inputs.systems.follows = "nix-systems";
     };
 
+    tsidp = {
+      url = "github:tailscale/tsidp/mikeodr/add-nix-flake";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
+      inputs.systems.follows = "nix-systems";
+    };
+
     nix-bitcoin = {
       url = "github:fort-nix/nix-bitcoin/release";
       inputs.nixpkgs.follows = "nixpkgs";

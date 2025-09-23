@@ -258,7 +258,8 @@
         "nixpkgs-unstable": "nixpkgs-unstable",
         "sops-nix": "sops-nix",
         "tailscale": "tailscale",
-        "tailscale-golink": "tailscale-golink"
+        "tailscale-golink": "tailscale-golink",
+        "tsidp": "tsidp"
       }
     },
     "sops-nix": {
@@ -307,11 +308,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1757979928,
-        "narHash": "sha256-cWcz4OpkvVPVkVYh9L83KoOrzNlvsbGymp6/wYGoxRw=",
+        "lastModified": 1758635354,
+        "narHash": "sha256-9vsjMhtdvxEfs3NspG/tbjaX8Ggif69mRjOmFwNKE9o=",
         "owner": "tailscale",
         "repo": "tailscale",
-        "rev": "9481399377539646189bfcf819be09e8c0d2a170",
+        "rev": "5edabb81ec8119fcc8c9b55acd94907385e543e4",
         "type": "github"
       },
       "original": {
@@ -341,6 +342,30 @@
       "original": {
         "owner": "tailscale",
         "repo": "golink",
+        "type": "github"
+      }
+    },
+    "tsidp": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs-unstable"
+        ],
+        "systems": [
+          "nix-systems"
+        ]
+      },
+      "locked": {
+        "lastModified": 1758635266,
+        "narHash": "sha256-Ygo0p3rsUYhpvFJAdZD9W+v+Ne41GWEcF6yZh5N8zmc=",
+        "owner": "tailscale",
+        "repo": "tsidp",
+        "rev": "e9058077eb78ee7bfd5edef4d3a869c99d89a0ba",
+        "type": "github"
+      },
+      "original": {
+        "owner": "tailscale",
+        "ref": "mikeodr/add-nix-flake",
+        "repo": "tsidp",
         "type": "github"
       }
     }

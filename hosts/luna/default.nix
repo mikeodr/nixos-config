@@ -12,7 +12,7 @@
     ./obsidian.nix
     ../../modules/immich
     inputs.tailscale-golink.nixosModules.default
-    inputs.tailscale.nixosModules.tsidp
+    inputs.tsidp.nixosModules.default
   ];
 
   boot = {
