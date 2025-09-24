@@ -355,16 +355,15 @@
         ]
       },
       "locked": {
-        "lastModified": 1758635266,
-        "narHash": "sha256-Ygo0p3rsUYhpvFJAdZD9W+v+Ne41GWEcF6yZh5N8zmc=",
+        "lastModified": 1758647524,
+        "narHash": "sha256-o5EXbEn20Z9auhT9NrKK/NGGtiDXN13OYpAwD9c+bfM=",
         "owner": "tailscale",
         "repo": "tsidp",
-        "rev": "e9058077eb78ee7bfd5edef4d3a869c99d89a0ba",
+        "rev": "615d4dc0d489ff3b7199df65ac55192d06a3a2e9",
         "type": "github"
       },
       "original": {
         "owner": "tailscale",
-        "ref": "mikeodr/add-nix-flake",
         "repo": "tsidp",
         "type": "github"
       }

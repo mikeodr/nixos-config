@@ -44,7 +44,7 @@
     };
 
     tsidp = {
-      url = "github:tailscale/tsidp/mikeodr/add-nix-flake";
+      url = "github:tailscale/tsidp";
       inputs.nixpkgs.follows = "nixpkgs-unstable";
       inputs.systems.follows = "nix-systems";
     };
