@@ -1,7 +1,11 @@
-{pkgs, ...}: let
+{
+  inputs,
+  pkgs,
+  ...
+}: let
   plex-version = {
-    version = "1.42.1.10060-4e8b05daf";
-    sha256 = "3a822dbc6d08a6050a959d099b30dcd96a8cb7266b94d085ecc0a750aa8197f4";
+    version = "1.42.2.10156-f737b826c";
+    sha256 = "sha256-1ieh7qc1UBTorqQTKUQgKzM96EtaKZZ8HYq9ILf+X3M=";
   };
   plex-package = pkgs.plex.override {
     plexRaw = pkgs.plexRaw.overrideAttrs (old: rec {
@@ -16,6 +20,7 @@ in {
   imports = [
     ./hardware-configuration.nix
     ../../modules/server.nix
+    inputs.intel-gpu-exporter.nixosModules.default
   ];
 
   boot = {
@@ -52,6 +57,11 @@ in {
   };
 
   services = {
+    intel-gpu-exporter = {
+      enable = true;
+      openFirewall = true;
+    };
+
     plex = {
       enable = true;
       package = plex-package;

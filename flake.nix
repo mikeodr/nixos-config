@@ -49,6 +49,12 @@
       inputs.systems.follows = "nix-systems";
     };
 
+    intel-gpu-exporter = {
+      url = "github:mikeodr/intel-gpu-exporter-go";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
+      inputs.systems.follows = "nix-systems";
+    };
+
     nix-bitcoin = {
       url = "github:fort-nix/nix-bitcoin/release";
       inputs.nixpkgs.follows = "nixpkgs";
