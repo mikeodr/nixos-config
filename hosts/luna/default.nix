@@ -55,12 +55,12 @@
     "/mnt/media" = {
       device = "172.16.0.3:/volume2/Media";
       fsType = "nfs4";
-      options = ["auto" "x-systemd.after=network-online.target"];
+      options = ["auto" "x-systemd.automount" "_netdev"];
     };
     "/mnt/immich" = {
       device = "172.16.0.3:/volume2/immich";
       fsType = "nfs4";
-      options = ["auto" "x-systemd.after=network-online.target"];
+      options = ["auto" "x-systemd.automount" "_netdev"];
     };
   };
 

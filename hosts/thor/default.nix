@@ -40,7 +40,7 @@ in {
   fileSystems."/mnt/media" = {
     device = "172.16.0.3:/volume2/Media";
     fsType = "nfs4";
-    options = ["auto"];
+    options = ["auto" "x-systemd.automount" "_netdev"];
   };
 
   sops.secrets."security/acme/plex_pkcs12_pass" = {};
