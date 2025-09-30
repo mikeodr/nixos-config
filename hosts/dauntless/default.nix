@@ -9,7 +9,6 @@ in {
 
   ip_forwarding.enable = true;
   ip_forward_interfaces = ["enp0s6"];
-  remoteBuild.enable = true;
 
   boot = {
     tmp.cleanOnBoot = true;
@@ -24,7 +23,6 @@ in {
 
   services.tailscale.useRoutingFeatures = "both";
 
-  zramSwap.enable = true;
   networking.hostName = "dauntless";
   networking.domain = "";
   services.openssh.enable = true;

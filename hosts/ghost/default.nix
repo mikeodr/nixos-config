@@ -15,7 +15,6 @@
     };
   };
 
-  zramSwap.enable = true;
   networking.hostName = "ghost";
   networking.domain = "";
   services.openssh.enable = true;

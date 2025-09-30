@@ -16,7 +16,6 @@
 
   boot = {
     tmp.cleanOnBoot = true;
-    # loader.grub.configurationLimit = 1;
     loader.grub = {
       # no need to set devices, disko will add all devices that have a EF02 partition to the list already
       # devices = [ ];
@@ -25,7 +24,6 @@
     };
   };
 
-  zramSwap.enable = true;
   networking.hostName = "tachi";
   networking.domain = "";
   services.openssh.enable = true;

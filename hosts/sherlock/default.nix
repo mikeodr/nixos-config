@@ -1,4 +1,4 @@
-{config, ...}: {
+{...}: {
   imports = [
     ./hardware-configuration.nix
     ../../modules/server.nix
@@ -12,8 +12,6 @@
     loader.grub.device = "/dev/sda";
     tmp.cleanOnBoot = true;
   };
-
-  services.qemuGuest.enable = true;
 
   networking = {
     hostName = "sherlock";

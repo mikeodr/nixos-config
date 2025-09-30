@@ -26,8 +26,6 @@
   # Enable Dynamic Downloaded Binary linking in custom module
   ldDynamicLink.enable = true;
 
-  services.qemuGuest.enable = true;
-
   # Generate ACME Certs in custom module
   acmeCertGeneration.enable = true;
 

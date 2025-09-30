@@ -5,8 +5,6 @@
     ../../modules/server.nix
   ];
 
-  services.qemuGuest.enable = true;
-
   boot = {
     tmp.cleanOnBoot = true;
     loader.grub = {

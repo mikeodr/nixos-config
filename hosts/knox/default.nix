@@ -10,8 +10,6 @@
     tmp.cleanOnBoot = true;
   };
 
-  services.qemuGuest.enable = true;
-
   # Generate ACME Certs in custom module
   acmeCertGeneration.enable = true;
 
