@@ -47,7 +47,10 @@ in {
           OIDC_AUTO_REDIRECT = "false";
           OIDC_PROVIDER_NAME = "Tailscale";
           OIDC_NAME_CLAIM = "email";
-          # OIDC secrets in env file
+          # OIDC secrets expected in env file (config.sops.secrets.mealie.path):
+          # OIDC_CLIENT_ID
+          # OIDC_CLIENT_SECRET
+          # OIDC_DISCOVERY_URL
         };
         ports = ["9000:9000/tcp"];
       };

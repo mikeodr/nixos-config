@@ -18,18 +18,12 @@
       default = true;
       description = "Enable VM configs";
     };
-
-    zram.enable = lib.mkOption {
-      type = lib.types.bool;
-      default = true;
-      description = "Enable zram swap";
-    };
   };
 
   config = {
     services.qemuGuest.enable = config.isVM;
 
-    zramSwap.enable = config.zram.enable;
+    zramSwap.enable = true;
 
     programs.zsh.enable = true;
 
