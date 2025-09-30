@@ -32,13 +32,25 @@
     };
 
     tailscale = {
-      url = "github:tailscale/tailscale/mikeodr/update-flake";
+      url = "github:tailscale/tailscale/mikeodr/add-nixos-modules";
       inputs.nixpkgs.follows = "nixpkgs-unstable";
       inputs.systems.follows = "nix-systems";
     };
 
     tailscale-golink = {
       url = "github:tailscale/golink";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
+      inputs.systems.follows = "nix-systems";
+    };
+
+    tsidp = {
+      url = "github:tailscale/tsidp";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
+      inputs.systems.follows = "nix-systems";
+    };
+
+    intel-gpu-exporter = {
+      url = "github:mikeodr/intel-gpu-exporter-go";
       inputs.nixpkgs.follows = "nixpkgs-unstable";
       inputs.systems.follows = "nix-systems";
     };
@@ -52,16 +64,8 @@
   };
 
   outputs = {
-    disko,
-    home-manager,
-    nix-bitcoin,
-    nix-darwin,
-    nix-homebrew,
-    nixpkgs-unstable,
     nixpkgs,
     self,
-    sops-nix,
-    tailscale,
     ...
   } @ inputs: let
     lib = nixpkgs.lib;
@@ -80,8 +84,6 @@
       inherit self;
     };
   in {
-    # nixosConfigurations = import ./hosts inputs;
-
     darwinConfigurations.Michaels-MacBook-Air = mkSystem "Michaels-MacBook-Air" {
       system = "aarch64-darwin";
       user = "mikeodr";
@@ -97,8 +99,13 @@
     };
 
     nixosConfigurations = {
+      cerberus = mkSystem "cerberus" {
+        system = "x86_64-linux";
+      };
+
       dauntless = mkSystem "dauntless" {
         system = "aarch64-linux";
+        enableHomeManager = false;
       };
 
       ghost = mkSystem "ghost" {
@@ -120,6 +127,7 @@
 
       tachi = mkSystem "tachi" {
         system = "aarch64-linux";
+        enableHomeManager = false;
       };
 
       thor = mkSystem "thor" {
@@ -132,6 +140,7 @@
       (builtins.mapAttrs (k: v: {imports = v._module.args.modules;}) self.nixosConfigurations)
       {
         meta = {
+          machinesFile = /etc/nix/machines;
           nixpkgs = import nixpkgs {
             system = "x86_64-linux";
             overlays = [];

@@ -5,8 +5,6 @@
     ../../modules/server.nix
   ];
 
-  autoUpdate.enable = true;
-
   boot = {
     tmp.cleanOnBoot = true;
     loader.grub = {
@@ -17,7 +15,6 @@
     };
   };
 
-  zramSwap.enable = true;
   networking.hostName = "ghost";
   networking.domain = "";
   services.openssh.enable = true;

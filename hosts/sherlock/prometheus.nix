@@ -59,14 +59,15 @@ in {
         static_configs = [
           {
             targets = [
-              "localhost:${toString config.services.prometheus.exporters.node.port}"
-              "reactor02.unusedbytes.ca:9100"
-              "fusion01.unusedbytes.ca:9100"
-              "titan.unusedbytes.ca:9100"
-              "luna.unusedbytes.ca:9100"
-              "thor.unusedbytes.ca:9100"
-              "tachi.cerberus-basilisk.ts.net:9100"
               "dauntless.cerberus-basilisk.ts.net:9100"
+              "fusion01.unusedbytes.ca:9100"
+              "fusion02.unusedbytes.ca:9100"
+              "localhost:${toString config.services.prometheus.exporters.node.port}"
+              "luna.unusedbytes.ca:9100"
+              "reactor02.unusedbytes.ca:9100"
+              "tachi.cerberus-basilisk.ts.net:9100"
+              "thor.unusedbytes.ca:9100"
+              "titan.unusedbytes.ca:9100"
             ];
           }
         ];
@@ -96,10 +97,12 @@ in {
             targets = [
               "https://cryo01.unusedbytes.ca:5001"
               "https://fusion01.unusedbytes.ca:8006"
+              "https://fusion02.unusedbytes.ca:8006"
               "https://go.cerberus-basilisk.ts.net"
               "https://hass.unusedbytes.ca"
               "https://nzbget.unusedbytes.ca"
               "https://radarr.unusedbytes.ca"
+              "https://reactor02.unusedbytes.ca:8006"
               "https://sonarr.unusedbytes.ca"
               "https://thor.cerberus-basilisk.ts.net/web/index.html"
               "https://titan.unusedbytes.ca:8007"

@@ -44,12 +44,13 @@ in {
           DB_ENGINE = "sqlite";
           BASE_URL = "mealie.unusedbytes.ca";
           OIDC_AUTH_ENABLED = "true";
-          OIDC_CONFIGURATION_URL = "https://idp.cerberus-basilisk.ts.net/.well-known/openid-configuration";
-          OIDC_AUTO_REDIRECT = "true";
-          OIDC_CLIENT_ID = "unused";
-          OIDC_CLIENT_SECRET = "unused";
+          OIDC_AUTO_REDIRECT = "false";
           OIDC_PROVIDER_NAME = "Tailscale";
-          OIDC_NAME_CLAIM = "username";
+          OIDC_NAME_CLAIM = "email";
+          # OIDC secrets expected in env file (config.sops.secrets.mealie.path):
+          # OIDC_CLIENT_ID
+          # OIDC_CLIENT_SECRET
+          # OIDC_DISCOVERY_URL
         };
         ports = ["9000:9000/tcp"];
       };

@@ -10,8 +10,6 @@
     tmp.cleanOnBoot = true;
   };
 
-  isVM = true;
-
   # Generate ACME Certs in custom module
   acmeCertGeneration.enable = true;
 

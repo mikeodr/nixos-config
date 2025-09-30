@@ -1,8 +1,12 @@
-{pkgs, ...}: {
+{
+  config,
+  pkgs,
+  ...
+}: {
   imports = [
     ./auto_update.nix
-    ./qemu_guest.nix
     ./ld_link.nix
+    ./remotebuild.nix
   ];
 
   sops = {
@@ -18,9 +22,20 @@
 
   nix = {
     settings = {
+      auto-optimise-store = true;
       experimental-features = ["nix-command" "flakes"];
-      trusted-users = ["specter"];
+      trusted-users = ["specter" "remotebuild"];
       warn-dirty = false;
+
+      builders-use-substitutes = true;
+      substituters = [
+        "https://mikeodr.cachix.org"
+        "https://nix-community.cachix.org"
+      ];
+      trusted-public-keys = [
+        "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
+        "mikeodr.cachix.org-1:ZiNRnrFQikas3IRc+q9xdAvcZTSiKZ4gyLrRufOlHsM="
+      ];
     };
 
     gc = {
@@ -30,9 +45,6 @@
     };
     optimise.automatic = true;
   };
-
-  programs.vim.defaultEditor = true;
-  programs.vim.enable = true;
 
   environment.systemPackages = with pkgs; [
     curl
@@ -50,7 +62,6 @@
     mtr
     neovim
     nixpkgs-fmt
-    nh
     nmap
     pciutils
     rsync
@@ -69,6 +80,7 @@
   # Enable SSH agent
   programs.ssh.startAgent = true;
 
+  sops.secrets.cachix_auth_token = {};
   services = {
     # Enable the OpenSSH daemon.
     openssh = {
@@ -78,6 +90,12 @@
         PermitRootLogin = "no";
         PasswordAuthentication = false;
       };
+    };
+
+    cachix-watch-store = {
+      enable = true;
+      cacheName = "mikeodr";
+      cachixTokenFile = config.sops.secrets.cachix_auth_token.path;
     };
   };
 }

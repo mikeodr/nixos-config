@@ -9,10 +9,10 @@
     ./hardware-configuration.nix
     ../../modules/server.nix
     ./containers.nix
-    ./tsidp.nix
     ./obsidian.nix
     ../../modules/immich
     inputs.tailscale-golink.nixosModules.default
+    inputs.tsidp.nixosModules.default
   ];
 
   boot = {
@@ -25,9 +25,6 @@
 
   # Enable Dynamic Downloaded Binary linking in custom module
   ldDynamicLink.enable = true;
-
-  # Is a VM enable QEMU guest agent in custom module
-  isVM = true;
 
   # Generate ACME Certs in custom module
   acmeCertGeneration.enable = true;
@@ -42,23 +39,28 @@
     sopsFile = ./secrets.yaml;
   };
 
-  services.golink = {
-    enable = true;
-    tailscaleAuthKeyFile = config.sops.secrets.golink.path;
+  services = {
+    golink = {
+      enable = true;
+      tailscaleAuthKeyFile = config.sops.secrets.golink.path;
+    };
+
+    tsidp = {
+      enable = true;
+    };
   };
-  services.tsidp.enable = true;
 
   # Jellyfin Media Mounts
   fileSystems = {
     "/mnt/media" = {
       device = "172.16.0.3:/volume2/Media";
       fsType = "nfs4";
-      options = ["auto" "x-systemd.after=network-online.target"];
+      options = ["auto" "x-systemd.automount" "_netdev"];
     };
     "/mnt/immich" = {
       device = "172.16.0.3:/volume2/immich";
       fsType = "nfs4";
-      options = ["auto" "x-systemd.after=network-online.target"];
+      options = ["auto" "x-systemd.automount" "_netdev"];
     };
   };
 
@@ -197,6 +199,11 @@
           reverse_proxy http://localhost:8081
         '';
       };
+      "abs.cerberus-basilisk.ts.net" = {
+        extraConfig = ''
+          reverse_proxy http://localhost:8081
+        '';
+      };
       "pdf.unusedbytes.ca" = {
         extraConfig = ''
           reverse_proxy http://localhost:8082
@@ -274,6 +281,7 @@
   networking.firewall = {
     enable = true;
     allowedTCPPorts = [80 443];
+    allowedUDPPorts = [41645];
   };
 
   system.stateVersion = "25.05";

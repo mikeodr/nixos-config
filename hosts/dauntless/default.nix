@@ -7,8 +7,6 @@ in {
     ../../modules/server.nix
   ];
 
-  autoUpdate.enable = true;
-  isVM = true;
   ip_forwarding.enable = true;
   ip_forward_interfaces = ["enp0s6"];
 
@@ -25,7 +23,6 @@ in {
 
   services.tailscale.useRoutingFeatures = "both";
 
-  zramSwap.enable = true;
   networking.hostName = "dauntless";
   networking.domain = "";
   services.openssh.enable = true;
