@@ -15,8 +15,6 @@
     };
   };
 
-  zramSwap.enable = true;
-
   networking = {
     hostName = "cerberus";
   };
