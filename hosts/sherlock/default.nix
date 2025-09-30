@@ -13,8 +13,7 @@
     tmp.cleanOnBoot = true;
   };
 
-  # Custom module settings
-  isVM = true;
+  services.qemuGuest.enable = true;
 
   networking = {
     hostName = "sherlock";

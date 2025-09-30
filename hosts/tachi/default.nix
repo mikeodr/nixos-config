@@ -11,7 +11,6 @@
     ../../modules/server.nix
   ];
 
-  isVM = true;
   ip_forwarding.enable = true;
   ip_forward_interfaces = ["enp0s6"];
 

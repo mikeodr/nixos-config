@@ -26,8 +26,7 @@
   # Enable Dynamic Downloaded Binary linking in custom module
   ldDynamicLink.enable = true;
 
-  # Is a VM enable QEMU guest agent in custom module
-  isVM = true;
+  services.qemuGuest.enable = true;
 
   # Generate ACME Certs in custom module
   acmeCertGeneration.enable = true;

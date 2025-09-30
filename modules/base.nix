@@ -1,7 +1,6 @@
 {pkgs, ...}: {
   imports = [
     ./auto_update.nix
-    ./qemu_guest.nix
     ./ld_link.nix
   ];
 

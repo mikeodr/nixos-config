@@ -28,8 +28,9 @@ in {
     tmp.cleanOnBoot = true;
   };
 
+  services.qemuGuest.enable = true;
+
   # Custom module settings
-  isVM = true;
   intelAcceleration.enable = true;
   acmeCertGeneration.enable = true;
 

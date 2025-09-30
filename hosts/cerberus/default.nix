@@ -5,7 +5,7 @@
     ../../modules/server.nix
   ];
 
-  isVM = true;
+  services.qemuGuest.enable = true;
 
   boot = {
     tmp.cleanOnBoot = true;
