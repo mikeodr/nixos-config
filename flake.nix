@@ -64,16 +64,8 @@
   };
 
   outputs = {
-    disko,
-    home-manager,
-    nix-bitcoin,
-    nix-darwin,
-    nix-homebrew,
-    nixpkgs-unstable,
     nixpkgs,
     self,
-    sops-nix,
-    tailscale,
     ...
   } @ inputs: let
     lib = nixpkgs.lib;
