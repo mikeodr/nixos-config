@@ -69,7 +69,6 @@
       "rectangle"
       "slack"
       "visual-studio-code"
-      "wireshark"
     ];
 
     brews = [
