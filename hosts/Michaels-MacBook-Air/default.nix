@@ -18,7 +18,7 @@ in {
       "macfuse"
       "signal"
       "steam"
-      "syncthing"
+      "syncthing-app"
     ];
   };
 }
