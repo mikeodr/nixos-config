@@ -1,8 +1,8 @@
-{pkgs-unstable, ...}
+{pkgs-master, ...}
 : {
   services.immich = {
     enable = true;
-    package = pkgs-unstable.immich;
+    package = pkgs-master.immich;
     openFirewall = true;
     mediaLocation = "/mnt/immich";
     port = 3001;
