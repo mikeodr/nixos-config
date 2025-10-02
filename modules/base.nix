@@ -6,7 +6,6 @@
   imports = [
     ./auto_update.nix
     ./ld_link.nix
-    ./remotebuild.nix
   ];
 
   sops = {
@@ -24,10 +23,9 @@
     settings = {
       auto-optimise-store = true;
       experimental-features = ["nix-command" "flakes"];
-      trusted-users = ["specter" "remotebuild"];
+      trusted-users = ["specter"];
       warn-dirty = false;
 
-      builders-use-substitutes = true;
       substituters = [
         "https://mikeodr.cachix.org"
       ];
