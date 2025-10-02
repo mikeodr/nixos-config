@@ -30,10 +30,8 @@
       builders-use-substitutes = true;
       substituters = [
         "https://mikeodr.cachix.org"
-        "https://nix-community.cachix.org"
       ];
       trusted-public-keys = [
-        "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
         "mikeodr.cachix.org-1:ZiNRnrFQikas3IRc+q9xdAvcZTSiKZ4gyLrRufOlHsM="
       ];
     };
