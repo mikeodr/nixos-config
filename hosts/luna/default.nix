@@ -71,7 +71,6 @@
   services = {
     jellyfin = {
       enable = true;
-      openFirewall = true;
       package = pkgs-unstable.jellyfin;
     };
     audiobookshelf = {
