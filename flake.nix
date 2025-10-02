@@ -55,6 +55,12 @@
       inputs.systems.follows = "nix-systems";
     };
 
+    prometheus-plex-exporter = {
+      url = "github:mikeodr/prometheus-plex-exporter";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
+      inputs.systems.follows = "nix-systems";
+    };
+
     nix-bitcoin = {
       url = "github:fort-nix/nix-bitcoin/release";
       inputs.nixpkgs.follows = "nixpkgs";

@@ -8,6 +8,7 @@
     ../../modules/server.nix
     ./plex.nix
     inputs.intel-gpu-exporter.nixosModules.default
+    inputs.prometheus-plex-exporter.nixosModules.default
   ];
 
   boot = {
@@ -28,53 +29,6 @@
     device = "172.16.0.3:/volume2/Media";
     fsType = "nfs4";
     options = ["auto" "x-systemd.automount" "_netdev"];
-  };
-
-  sops.secrets."security/acme/plex_pkcs12_pass" = {};
-  security.acme.certs."unusedbytes.ca" = {
-    group = "plex";
-    # Ensure renew of cert generates a plex compatible cert and reloads the service
-    postRun = ''
-      openssl pkcs12 -export -out plex.pkfx -inkey key.pem -in cert.pem -certfile fullchain.pem -passout pass:$(cat /run/secrets/security/acme/plex_pkcs12_pass)
-      chown acme:plex plex.pkfx
-      chmod 640 plex.pkfx
-    '';
-    reloadServices = ["plex" "caddy"];
-  };
-
-  services = {
-    intel-gpu-exporter = {
-      enable = true;
-      openFirewall = true;
-    };
-
-    plex = {
-      enable = true;
-      package = plex-package;
-      openFirewall = true;
-    };
-
-    cron = {
-      enable = true;
-      systemCronJobs = [
-        # 5am daily clear out plex transcoder folder for storage saving
-        "0 5 * * * rm -r /var/lib/plex/Plex\ Media\ Server/Cache/PhotoTranscoder"
-      ];
-    };
-
-    tailscale.permitCertUid = "caddy";
-
-    caddy = {
-      enable = true;
-
-      virtualHosts = {
-        "thor.cerberus-basilisk.ts.net" = {
-          extraConfig = ''
-            reverse_proxy http://thor:32400
-          '';
-        };
-      };
-    };
   };
 
   systemd.services = {

@@ -268,6 +268,29 @@
         "type": "github"
       }
     },
+    "prometheus-plex-exporter": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs-unstable"
+        ],
+        "systems": [
+          "nix-systems"
+        ]
+      },
+      "locked": {
+        "lastModified": 1759364620,
+        "narHash": "sha256-XBbn4kbmb4ppB5nY/H0apxEBUKuh8B8WTjx7njZ1z/Q=",
+        "owner": "mikeodr",
+        "repo": "prometheus-plex-exporter",
+        "rev": "f454f78dade6644dae2b6ebcd974e118a7505917",
+        "type": "github"
+      },
+      "original": {
+        "owner": "mikeodr",
+        "repo": "prometheus-plex-exporter",
+        "type": "github"
+      }
+    },
     "root": {
       "inputs": {
         "disko": "disko",
@@ -280,6 +303,7 @@
         "nixpkgs": "nixpkgs",
         "nixpkgs-darwin": "nixpkgs-darwin",
         "nixpkgs-unstable": "nixpkgs-unstable",
+        "prometheus-plex-exporter": "prometheus-plex-exporter",
         "sops-nix": "sops-nix",
         "tailscale": "tailscale",
         "tailscale-golink": "tailscale-golink",

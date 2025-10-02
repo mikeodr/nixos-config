@@ -39,8 +39,9 @@
       };
     };
 
-    services.prometheus.exporters.node = {
-      enable = true;
+    services.prometheus.exporters = {
+      node.enable = true;
+      smartctl.enable = true;
     };
   };
 }
