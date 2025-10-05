@@ -127,11 +127,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1758849970,
-        "narHash": "sha256-LM+51gyj0vl8ALpNQ8CDAPajCTHgwtroeWwBNAGcqKc=",
+        "lastModified": 1759671953,
+        "narHash": "sha256-HMQSh5E4KPas2BsWwOHKMdmfvavxpiMSxGH+63P0ya0=",
         "owner": "mikeodr",
         "repo": "intel-gpu-exporter-go",
-        "rev": "3b7dc086b445e9088800d9f14b7c9fda23008e68",
+        "rev": "a8e3a7f06bbf39c800246eaf524e2cec16b555ec",
         "type": "github"
       },
       "original": {
