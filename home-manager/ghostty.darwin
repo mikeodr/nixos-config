@@ -3,3 +3,4 @@ font-feature = -calt
 font-feature = -liga
 font-feature = -dlig
 font-family = Hack
+shell-integration-features = ssh-env

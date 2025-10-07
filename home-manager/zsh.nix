@@ -36,7 +36,6 @@
   };
 
   envs = {
-    TERM = "xterm";
   };
 
   pathJoin = builtins.concatStringsSep ":";
