@@ -127,11 +127,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1759873399,
-        "narHash": "sha256-IBQ1XFtr7t7M3td+MZB4OBWKeN2MInvc7NDbyIPwgOY=",
+        "lastModified": 1759873693,
+        "narHash": "sha256-8hS8UCo7siOuzb1Nlg5Uk/EfvfK3qjOUOgO4XuvPw/U=",
         "owner": "mikeodr",
         "repo": "intel-gpu-exporter-go",
-        "rev": "ab599ebb4170bad2f584be69639eb3945a17bf7f",
+        "rev": "c44db44557c33ce8cd659d8e115fcb30dabab983",
         "type": "github"
       },
       "original": {
@@ -270,11 +270,11 @@
     },
     "nixpkgs-unstable": {
       "locked": {
-        "lastModified": 1759386674,
-        "narHash": "sha256-wg1Lz/1FC5Q13R+mM5a2oTV9TA9L/CHHTm3/PiLayfA=",
+        "lastModified": 1759632233,
+        "narHash": "sha256-krgZxGAIIIKFJS+UB0l8do3sYUDWJc75M72tepmVMzE=",
         "owner": "nixos",
         "repo": "nixpkgs",
-        "rev": "625ad6366178f03acd79f9e3822606dd7985b657",
+        "rev": "d7f52a7a640bc54c7bb414cca603835bf8dd4b10",
         "type": "github"
       },
       "original": {
