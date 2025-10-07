@@ -62,7 +62,6 @@ in {
       "1password"
       "command-not-found"
       "direnv"
-      "git"
       "golang"
       "pass"
       "rust"
