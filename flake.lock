@@ -373,11 +373,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1759259113,
-        "narHash": "sha256-0+yTQy/OQjYqrMjEdl/214UNO+LHKsTuunQZ6Y+yx/E=",
+        "lastModified": 1760013865,
+        "narHash": "sha256-d7iERhKk1h+o2kseS0xcyQezivUj3ovuwuS8EG8BbWQ=",
         "owner": "tailscale",
         "repo": "tailscale",
-        "rev": "0339cd896e7e07456e8a4892c3653e384efff3b6",
+        "rev": "420eb617bf19272b83aadf652b3750d13256a116",
         "type": "github"
       },
       "original": {
