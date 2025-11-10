@@ -25,13 +25,6 @@
       experimental-features = ["nix-command" "flakes"];
       trusted-users = ["specter"];
       warn-dirty = false;
-
-      substituters = [
-        "https://mikeodr.cachix.org"
-      ];
-      trusted-public-keys = [
-        "mikeodr.cachix.org-1:ZiNRnrFQikas3IRc+q9xdAvcZTSiKZ4gyLrRufOlHsM="
-      ];
     };
 
     gc = {
@@ -76,7 +69,6 @@
   # Enable SSH agent
   programs.ssh.startAgent = true;
 
-  sops.secrets.cachix_auth_token = {};
   services = {
     # Enable the OpenSSH daemon.
     openssh = {
@@ -86,12 +78,6 @@
         PermitRootLogin = "no";
         PasswordAuthentication = false;
       };
-    };
-
-    cachix-watch-store = {
-      enable = true;
-      cacheName = "mikeodr";
-      cachixTokenFile = config.sops.secrets.cachix_auth_token.path;
     };
   };
 }
