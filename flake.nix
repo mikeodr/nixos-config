@@ -33,7 +33,7 @@
     };
 
     tailscale = {
-      url = "github:tailscale/tailscale/mikeodr/add-nixos-modules";
+      url = "github:tailscale/tailscale";
       inputs.nixpkgs.follows = "nixpkgs-unstable";
       inputs.systems.follows = "nix-systems";
     };
@@ -80,6 +80,7 @@
     overlays = [
       (final: prev: {
         gh = inputs.nixpkgs-unstable.legacyPackages.${prev.system}.gh;
+        tailscale = inputs.tailscale.packages."${prev.system}".default;
       })
     ];
 
