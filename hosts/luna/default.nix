@@ -280,7 +280,7 @@
   networking.firewall = {
     enable = true;
     allowedTCPPorts = [80 443];
-    allowedUDPPorts = [41645];
+    allowedUDPPorts = [41642];
   };
 
   system.stateVersion = "25.05";
