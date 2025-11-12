@@ -11,13 +11,18 @@ in {
     ../../modules/darwin.nix
   ];
 
+  homebrew = {
+    brews = [
+      "lima"
+    ];
+  };
+
   environment.systemPackages = with pkgs; [
     awscli2
     colima
     direnv
     flamegraph
     graphviz
-    lima
     lnav
   ];
 }
