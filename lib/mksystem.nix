@@ -42,10 +42,6 @@ in
             inherit system;
             config.allowUnfree = true;
           };
-          pkgs-master = import inputs.nixpkgs-master {
-            inherit system;
-            config.allowUnfree = true;
-          };
           inherit inputs;
           inherit system;
         }
