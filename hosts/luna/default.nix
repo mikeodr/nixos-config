@@ -50,10 +50,15 @@
     };
   };
 
-  # Jellyfin Media Mounts
+  # Media Mounts
   fileSystems = {
     "/mnt/media" = {
       device = "172.16.0.3:/volume2/Media";
+      fsType = "nfs4";
+      options = ["auto" "x-systemd.automount" "_netdev"];
+    };
+    "/mnt/music" = {
+      device = "172.16.0.3:/volume2/Music";
       fsType = "nfs4";
       options = ["auto" "x-systemd.automount" "_netdev"];
     };
@@ -182,6 +187,12 @@
         '';
         useACMEHost = "unusedbytes.ca";
       };
+      "lidarr.unusedbytes.ca" = {
+        extraConfig = ''
+          reverse_proxy http://localhost:8686
+        '';
+        useACMEHost = "unusedbytes.ca";
+      };
       "prowlarr.unusedbytes.ca" = {
         extraConfig = ''
           reverse_proxy http://localhost:9696
@@ -253,6 +264,7 @@
         "/var/lib/prowlarr"
         "/var/lib/radarr"
         "/var/lib/sonarr"
+        "/var/lib/lidarr"
         "/var/lib/private/ntfy-sh"
       ];
       preHook = ''

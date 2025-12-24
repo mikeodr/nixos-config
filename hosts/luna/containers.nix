@@ -120,6 +120,22 @@ in {
         ];
       };
 
+      lidarr = {
+        autoStart = true;
+        image = "lscr.io/linuxserver/lidarr:latest";
+        ports = ["8686:8686"];
+        environment = {
+          TZ = "America/Toronto";
+          PUID = "1000";
+          PGID = "100";
+        };
+        volumes = [
+          "/var/lib/lidarr:/config"
+          "/mnt/music:/music"
+          "/home/specter/downloads:/downloads"
+        ];
+      };
+
       overseerr = {
         autoStart = true;
         image = "sctx/overseerr:latest";
