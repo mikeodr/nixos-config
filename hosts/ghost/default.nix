@@ -59,6 +59,8 @@
     extraConfig = ''
       dbcache=4096
       bind=::
+      maxuploadtarget=144
+      datacarriersize=83
     '';
     tor.enforce = false;
     tor.proxy = false;
