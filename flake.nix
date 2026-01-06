@@ -119,10 +119,6 @@
         btc = true;
       };
 
-      knox = mkSystem "knox" {
-        system = "x86_64-linux";
-      };
-
       luna = mkSystem "luna" {
         system = "x86_64-linux";
       };
