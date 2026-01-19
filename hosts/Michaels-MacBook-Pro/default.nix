@@ -23,6 +23,7 @@ in {
     direnv
     flamegraph
     graphviz
+    iperf3
     lnav
   ];
 }
