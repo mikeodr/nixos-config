@@ -2,9 +2,9 @@
   description = "Nix configs for my systems, servers and macs";
 
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-25.05";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-25.11";
     nixpkgs-unstable.url = "github:nixos/nixpkgs?ref=nixos-unstable";
-    nixpkgs-darwin.url = "github:NixOS/nixpkgs/nixpkgs-25.05-darwin";
+    nixpkgs-darwin.url = "github:NixOS/nixpkgs/nixpkgs-25.11-darwin";
     nix-systems.url = "github:nix-systems/default";
 
     disko = {
@@ -13,7 +13,7 @@
     };
 
     nix-darwin = {
-      url = "github:LnL7/nix-darwin/nix-darwin-25.05";
+      url = "github:LnL7/nix-darwin/nix-darwin-25.11";
       inputs.nixpkgs.follows = "nixpkgs-darwin";
     };
 
@@ -22,7 +22,7 @@
     };
 
     home-manager = {
-      url = "github:nix-community/home-manager/release-25.05";
+      url = "github:nix-community/home-manager/release-25.11";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
@@ -44,7 +44,7 @@
     };
 
     tsidp = {
-      url = "github:tailscale/tsidp";
+      url = "github:tailscale/tsidp/mikeodr/update-for-nix-25.11";
       inputs.nixpkgs.follows = "nixpkgs-unstable";
       inputs.systems.follows = "nix-systems";
     };
@@ -78,8 +78,8 @@
 
     overlays = [
       (final: prev: {
-        gh = inputs.nixpkgs-unstable.legacyPackages.${prev.system}.gh;
-        tailscale = inputs.tailscale.packages."${prev.system}".default;
+        gh = inputs.nixpkgs-unstable.legacyPackages.${prev.stdenv.hostPlatform.system}.gh;
+        tailscale = inputs.tailscale.packages."${prev.stdenv.hostPlatform.system}".default;
       })
     ];
 

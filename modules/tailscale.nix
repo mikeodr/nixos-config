@@ -15,7 +15,7 @@
   services = {
     tailscale = {
       enable = true;
-      package = inputs.tailscale.packages."${pkgs.system}".default;
+      package = inputs.tailscale.packages."${pkgs.stdenv.hostPlatform.system}".default;
       openFirewall = true;
       extraUpFlags = ["--ssh"];
       authKeyFile = config.sops.secrets.tailscaleAuthKey.path;

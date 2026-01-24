@@ -39,7 +39,7 @@
     curl
     dig
     dua
-    du-dust
+    dust
     fastfetch
     fzf
     git

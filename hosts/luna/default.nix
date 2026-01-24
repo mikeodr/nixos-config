@@ -5,6 +5,10 @@
   pkgs-unstable,
   ...
 }: {
+  disabledModules = [
+    "services/security/tsidp.nix"
+  ];
+
   imports = [
     ./hardware-configuration.nix
     ../../modules/server.nix
@@ -73,25 +77,25 @@
     colmena
   ];
 
-  services = {
-    jellyfin = {
-      enable = true;
-      package = pkgs-unstable.jellyfin;
-    };
-    audiobookshelf = {
-      enable = true;
-      package = pkgs-unstable.audiobookshelf;
-      port = 8081;
-    };
-    ntfy-sh = {
-      enable = true;
-      package = pkgs-unstable.ntfy-sh;
-      settings = {
-        listen-http = ":8888";
-        behind-proxy = true;
-        base-url = "https://ntfy.unusedbytes.ca";
-        upstream-base-url = "https://ntfy.sh";
-      };
+  services.jellyfin = {
+    enable = true;
+    package = pkgs-unstable.jellyfin;
+  };
+
+  services.audiobookshelf = {
+    enable = true;
+    package = pkgs-unstable.audiobookshelf;
+    port = 8081;
+  };
+
+  services.ntfy-sh = {
+    enable = true;
+    package = pkgs-unstable.ntfy-sh;
+    settings = {
+      listen-http = ":8888";
+      behind-proxy = true;
+      base-url = "https://ntfy.unusedbytes.ca";
+      upstream-base-url = "https://ntfy.sh";
     };
   };
 

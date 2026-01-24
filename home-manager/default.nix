@@ -90,35 +90,51 @@ in {
 
   programs.git = {
     enable = true;
-    userName = "Mike O'Driscoll";
-    userEmail = email;
-    aliases = {
-      amend = "commit --amend";
-      autosq = "rebase -i --autosquash";
-      br = "branch";
-      cdiff = "diff --cached";
-      cm = "commit";
-      co = "checkout";
-      cob = "checkout -b";
-      com = "!f() { git checkout main 2>/dev/null || git checkout master; }; f";
-      credit = "commit --amend --author \"$1 <$2>\" -C HEAD";
-      fpush = "push --force-with-lease";
-      lg = "log -p";
-      lsd = "log --graph --decorate --pretty=oneline --abbrev-commit --all";
-      ol = "log --oneline";
-      pushb = "push -u origin";
-      st = "status -sb -uall";
-      undo = "reset --soft HEAD^";
-      unstage = "reset HEAD";
-    };
+    settings = {
+      user = {
+        name = "Mike O'Driscoll";
+        email = email;
+        signingkey = signingkey;
+      };
 
-    extraConfig = {
+      alias = {
+        amend = "commit --amend";
+        autosq = "rebase -i --autosquash";
+        br = "branch";
+        cdiff = "diff --cached";
+        cm = "commit";
+        co = "checkout";
+        cob = "checkout -b";
+        com = "!f() { git checkout main 2>/dev/null || git checkout master; }; f";
+        credit = "commit --amend --author \"$1 <$2>\" -C HEAD";
+        fpush = "push --force-with-lease";
+        lg = "log -p";
+        lsd = "log --graph --decorate --pretty=oneline --abbrev-commit --all";
+        ol = "log --oneline";
+        pushb = "push -u origin";
+        st = "status -sb -uall";
+        undo = "reset --soft HEAD^";
+        unstage = "reset HEAD";
+      };
+
       core.autocrlf = "input";
       # Sign all commits using ssh key
       commit.gpgsign = true;
       gpg.format = "ssh";
-      user.signingkey = signingkey;
       push.autoSetupRemote = true;
     };
   };
+
+  # macOS-specific targets to copy apps instead of linking
+  # See: https://github.com/nix-community/home-manager/issues/8357
+  targets =
+    {}
+    // (
+      if isDarwin
+      then {
+        darwin.copyApps.enable = true;
+        darwin.linkApps.enable = false;
+      }
+      else {}
+    );
 }
