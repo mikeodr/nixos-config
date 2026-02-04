@@ -49,7 +49,7 @@ in {
   sessionVariables = lib.mkMerge [
     envs
     sshSessionVariables
-    {PATH = pathJoin ["${homeDir}/go/bin" "$PATH"];}
+    {PATH = pathJoin ["/Applications/Wireshark.app/Contents/MacOS" "${homeDir}/go/bin" "$PATH"];}
   ];
 
   initContent = ''
