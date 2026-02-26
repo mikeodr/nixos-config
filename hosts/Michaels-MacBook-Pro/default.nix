@@ -24,6 +24,8 @@ in {
     flamegraph
     graphviz
     iperf3
+    kubectl
     lnav
+    talosctl
   ];
 }
