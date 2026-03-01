@@ -383,11 +383,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1766068170,
-        "narHash": "sha256-gsG+gYgr9GJX+RAAACK+46nWoJzcAtcrrjPZKd9mbbs=",
+        "lastModified": 1772034702,
+        "narHash": "sha256-8Q5UF0PQzMcY/zaJVssZCaXXizSBEHrecBk3qaw1al0=",
         "owner": "tailscale",
         "repo": "golink",
-        "rev": "e6795d11f3b2d7a90678e1ea471967e8137b36ef",
+        "rev": "4036fc3a9694944dfd48586ea939212360391b22",
         "type": "github"
       },
       "original": {
@@ -406,16 +406,15 @@
         ]
       },
       "locked": {
-        "lastModified": 1769266986,
-        "narHash": "sha256-864rWMtTmL3E4rR1zYcn9yxYAtOHfY2vMFCZYV6Mvlg=",
+        "lastModified": 1772212868,
+        "narHash": "sha256-3cjw6tfWtLbVIYDe7gIvOIhrpE+Sby9MreGhrpCqFK0=",
         "owner": "tailscale",
         "repo": "tsidp",
-        "rev": "135d0827c551dfe501835f2beb3b50f2f048e5fc",
+        "rev": "dd8791f1be6e864b8f281d9a9fe3a287ad649efe",
         "type": "github"
       },
       "original": {
         "owner": "tailscale",
-        "ref": "mikeodr/update-for-nix-25.11",
         "repo": "tsidp",
         "type": "github"
       }
