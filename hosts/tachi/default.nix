@@ -9,6 +9,7 @@
     ./disk-config.nix
     ./hardware-configuration.nix
     ../../modules/server.nix
+    ../../modules/ipset-firewall.nix
   ];
 
   ip_forwarding.enable = true;
@@ -99,13 +100,76 @@
         "0 5 * * * systemctl restart caddy-api.service caddy.service"
       ];
     };
+
+    ipsetFirewall = {
+      enable = true;
+      defaultDrop = true;
+      allowedSets = {
+        can_ips = {
+          uptimerobotIps = true;
+          asns = [
+            # Rogers Communications
+            "AS812" # Primary cable/internet ASN (~5.7M IPs)
+            "AS3602" # Rogers Telecom backbone
+            "AS19835" # Transit/peering ASN
+            "AS26788" # Secondary ASN
+            "AS40383" # Rogers subsidiary (RCC-CCTL)
+
+            # Shaw Communications (acquired by Rogers 2023)
+            "AS6327" # Primary Shaw ASN (~5.4M IPs)
+            "AS10482" # Now under Rogers OrgId
+            "AS19075" # Additional block
+            "AS25983" # Envision/legacy cable
+
+            # Bell Canada
+            "AS577" # Primary wireline/internet ASN (~7M IPs)
+            "AS601" # Secondary Bell ASN (BACOM4)
+            "AS855" # Legacy Bell/CANET (~1M IPs)
+            "AS6539" # Bell wireline (GT-BELL)
+            "AS684" # Formerly MTS Manitoba (acquired by Bell)
+            "AS7122" # Formerly MTS Manitoba (MTS-ASN)
+            "AS36522" # Bell Mobility wireless
+
+            # TELUS
+            "AS852" # Primary wireline/internet ASN (~21M IPs)
+            "AS14663" # TELUS Mobility wireless
+            "AS54719" # Secondary/datacenter (TACE-MCC1320)
+
+            # TekSavvy
+            "AS5645" # Primary ASN (~733K IPs)
+            "AS20375" # Western Canada operations
+
+            # Oxio (reseller over Cogeco infrastructure)
+            "AS398721" # Primary ASN (OXIO-ASN-01)
+            "AS400424" # Secondary ASN
+
+            # Cogeco Connexion (Oxio's upstream; Ontario/QC cable)
+            "AS7992" # Primary Cogeco ASN
+            "AS11290" # Secondary Cogeco ASN
+
+            # Videotron (Quebec; owns Freedom Mobile)
+            "AS5769" # Primary Videotron ASN
+
+            # Eastlink (Atlantic Canada cable)
+            "AS11260" # Primary Eastlink ASN
+
+            # Distributel (national wholesale reseller)
+            "AS11814" # Primary Distributel ASN
+
+            # Beanfield Technologies (Toronto fibre)
+            "AS21949" # Primary Beanfield ASN
+            "AS40191" # Secondary Beanfield ASN
+          ];
+        };
+      };
+    };
   };
 
   networking = {
     nameservers = ["1.1.1.1" "1.0.0.1"];
     firewall = {
       enable = true;
-      allowedTCPPorts = [80 443];
+      # allowedTCPPorts = [80 443];
     };
   };
 
