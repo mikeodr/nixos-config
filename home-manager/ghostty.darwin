@@ -4,3 +4,6 @@ font-feature = -liga
 font-feature = -dlig
 font-family = Hack
 shell-integration-features = ssh-env
+notify-on-command-finish = unfocused
+notify-on-command-finish-action = bell,notify
+notify-on-command-finish-after = 30s
