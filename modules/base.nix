@@ -50,6 +50,7 @@
     iotop
     mtr
     neovim
+    net-tools
     nixpkgs-fmt
     nmap
     pciutils
