@@ -138,7 +138,7 @@ in {
 
       overseerr = {
         autoStart = true;
-        image = "sctx/overseerr:latest";
+        image = "ghcr.io/seerr-team/seerr:latest";
         ports = ["5055:5055"];
         environment = {
           LOG_LEVEL = "info";
