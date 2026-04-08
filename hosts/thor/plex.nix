@@ -25,7 +25,6 @@ in {
   };
 
   security.acme.certs."unusedbytes.ca" = {
-    group = "plex";
     # Ensure renew of cert generates a plex compatible cert and reloads the service
     postRun = ''
       openssl pkcs12 -export -out plex.pkfx -inkey key.pem -in cert.pem -certfile fullchain.pem -passout pass:$(cat /run/secrets/security/acme/plex_pkcs12_pass)
@@ -54,12 +53,23 @@ in {
 
     caddy = {
       enable = true;
-
       virtualHosts = {
         "thor.cerberus-basilisk.ts.net" = {
           extraConfig = ''
             reverse_proxy http://thor:32400
           '';
+        };
+        "oink.unusedbytes.ca" = {
+          extraConfig = ''
+            reverse_proxy http://luna.cerberus-basilisk.ts.net:5055
+          '';
+          useACMEHost = "unusedbytes.ca";
+        };
+        "oinkts.unusedbytes.ca" = {
+          extraConfig = ''
+            reverse_proxy http://luna.cerberus-basilisk.ts.net:5055
+          '';
+          useACMEHost = "unusedbytes.ca";
         };
       };
     };
