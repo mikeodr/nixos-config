@@ -153,6 +153,9 @@
             # Beanfield Technologies (Toronto fibre)
             "AS21949" # Primary Beanfield ASN
             "AS40191" # Secondary Beanfield ASN
+
+            # Starlink
+            "AS14593"
           ];
         };
       };
