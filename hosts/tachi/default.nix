@@ -62,18 +62,6 @@
 
     caddy = {
       enable = true;
-      virtualHosts."plex.unusedbytes.ca" = {
-        extraConfig = ''
-          reverse_proxy http://thor.cerberus-basilisk.ts.net:32400
-        '';
-        useACMEHost = "unusedbytes.ca";
-      };
-      virtualHosts."oink.unusedbytes.ca" = {
-        extraConfig = ''
-          reverse_proxy http://luna.cerberus-basilisk.ts.net:5055
-        '';
-        useACMEHost = "unusedbytes.ca";
-      };
       virtualHosts."status.unusedbytes.ca" = {
         extraConfig = ''
           reverse_proxy 127.0.0.1:3001
