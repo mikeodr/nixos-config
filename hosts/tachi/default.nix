@@ -14,6 +14,8 @@
 
   ip_forwarding.enable = true;
   ip_forward_interfaces = ["enp0s6"];
+  gro_forwarding.enable = true;
+  gro_forwarding.interfaces = ["enp0s6"];
 
   boot = {
     tmp.cleanOnBoot = true;

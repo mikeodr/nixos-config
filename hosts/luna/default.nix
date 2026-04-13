@@ -35,6 +35,7 @@
 
   # Custom module enable UDP GRO forwarding and IP forwarding
   ip_forwarding.enable = true;
+  gro_forwarding.enable = true;
 
   sops.secrets.golink = {
     owner = config.services.golink.user;

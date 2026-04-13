@@ -11,6 +11,8 @@
     inputs.prometheus-plex-exporter.nixosModules.default
   ];
 
+  gro_forwarding.enable = true;
+
   boot = {
     loader.grub.device = "/dev/sda";
     tmp.cleanOnBoot = true;
