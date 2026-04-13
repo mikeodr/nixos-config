@@ -298,11 +298,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1775311555,
-        "narHash": "sha256-L2EwrG2R72VCpZ7Wd/XbHhpGsSvFWNV70VXaN6JR8So=",
+        "lastModified": 1776115968,
+        "narHash": "sha256-YqP2g0bcE2CNyApv4YWUDvx+5Qem9uVXkKSF5ze+h2E=",
         "owner": "mikeodr",
         "repo": "prometheus-plex-exporter",
-        "rev": "f271f2ee2ace3549ad2d1d2d481e734d85f69d32",
+        "rev": "991366ff00fee115654730d7f94e36773245c65f",
         "type": "github"
       },
       "original": {
