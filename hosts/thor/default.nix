@@ -24,7 +24,7 @@
 
   networking = {
     hostName = "thor";
-    enableIPv6 = false;
+    enableIPv6 = true;
   };
 
   fileSystems."/mnt/media" = {
