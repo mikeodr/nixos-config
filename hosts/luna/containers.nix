@@ -67,7 +67,7 @@ in {
         extraOptions = ["--pull=always"];
         volumes = [
           "/var/lib/nzbget:/config"
-          "/home/specter/downloads:/downloads"
+          "/data/downloads:/downloads"
         ];
       };
 
@@ -84,7 +84,7 @@ in {
         volumes = [
           "/var/lib/sonarr:/config"
           "/mnt/media/TV:/tv"
-          "/home/specter/downloads:/downloads"
+          "/data/downloads:/downloads"
         ];
       };
 
@@ -101,7 +101,7 @@ in {
         volumes = [
           "/var/lib/radarr:/config"
           "/mnt/media/Movies:/movies"
-          "/home/specter/downloads:/downloads"
+          "/data/downloads:/downloads"
         ];
       };
 
@@ -132,7 +132,7 @@ in {
         volumes = [
           "/var/lib/lidarr:/config"
           "/mnt/music:/music"
-          "/home/specter/downloads:/downloads"
+          "/data/downloads:/downloads"
         ];
       };
 
