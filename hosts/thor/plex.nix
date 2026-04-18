@@ -34,6 +34,9 @@ in {
     reloadServices = ["plex" "caddy"];
   };
 
+  users.users.plex.extraGroups = ["acme"];
+  users.users.caddy.extraGroups = ["acme"];
+
   services = {
     plex = {
       enable = true;
