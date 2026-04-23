@@ -41,9 +41,7 @@ in {
   programs.tmux = {
     enable = true;
     clock24 = true;
-    extraConfig = ''
-      set -g mouse on
-    '';
+    mouse = true;
   };
 
   programs.neovim = {
