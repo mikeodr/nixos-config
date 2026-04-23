@@ -38,6 +38,14 @@ in {
     pkgs = pkgs;
   };
 
+  programs.tmux = {
+    enable = true;
+    clock24 = true;
+    extraConfig = ''
+      set -g mouse on
+    '';
+  };
+
   programs.neovim = {
     enable = true;
     defaultEditor = true;
