@@ -5,6 +5,13 @@
   currentSystemUser,
   ...
 }: {
+  # direnv 2.37.1 fish test is killed (SIGKILL) by the macOS sandbox during build
+  nixpkgs.overlays = [
+    (final: prev: {
+      direnv = prev.direnv.overrideAttrs (_: {doCheck = false;});
+    })
+  ];
+
   system.primaryUser = "mikeodr";
   # Used for backwards compatibility, please read the changelog before changing.
   # $ darwin-rebuild changelog
@@ -20,7 +27,6 @@
   environment.systemPackages = with pkgs; [
     alejandra
     arping
-    colima
     colmena
     direnv
     docker
