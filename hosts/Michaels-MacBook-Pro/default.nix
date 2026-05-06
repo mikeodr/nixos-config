@@ -19,7 +19,6 @@ in {
 
   environment.systemPackages = with pkgs; [
     awscli2
-    colima
     direnv
     flamegraph
     graphviz
