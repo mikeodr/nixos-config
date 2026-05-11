@@ -14,6 +14,7 @@
     ../../modules/server.nix
     ./containers.nix
     ./obsidian.nix
+    ./paperless.nix
     ../../modules/immich
     inputs.tailscale-golink.nixosModules.default
     inputs.tsidp.nixosModules.default
