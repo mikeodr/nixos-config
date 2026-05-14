@@ -31,11 +31,10 @@
     upsmon = {
       # Connection
       monitor.main = {
-        system = "ups@172.16.0.1:3493";
-        powerValue = 1;
-        user = "monuser";
+        system = "ups@172.16.0.15:3493";
+        user = "observer";
         passwordFile = config.sops.secrets.ups_mon_secret.path;
-        type = "slave";
+        type = "secondary";
       };
     };
   };
