@@ -107,6 +107,10 @@ in {
         signingkey = signingkey;
       };
 
+      init = {
+        defaultBranch = "main";
+      };
+
       alias = {
         amend = "commit --amend";
         autosq = "rebase -i --autosquash";
