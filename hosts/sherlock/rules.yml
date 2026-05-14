@@ -62,8 +62,17 @@ groups:
           summary: "SSL certificate expired (instance {{ $labels.instance }})"
           description: "SSL certificate has expired already\n  VALUE = {{ $value }}\n  LABELS: {{ $labels }}"
 
+      - alert: NUT Service Down
+        expr: probe_success{job="nut_tcp"} == 0
+        for: 1m
+        labels:
+          severity: critical
+        annotations:
+          summary: "NUT upsd unreachable ({{ $labels.instance }})"
+          description: "NUT UPS daemon on {{ $labels.instance }} is not responding on TCP port 3493"
+
       - alert: Critical Services are down
-        expr: probe_success{instance=~".*plex.*|.*hass.*|.*unifi.*|.*cryo01.*|.*reactor01.*"} == 0
+        expr: probe_success{job="http_probe", instance=~".*plex.*|.*hass.*|.*unifi.*|.*cryo01.*|.*reactor01.*"} == 0
         for: 15m
         labels:
           severity: critical
@@ -72,7 +81,7 @@ groups:
           description: "{{ $labels.instance }} of job {{ $labels.job }}"
 
       - alert: Trinity Service Down
-        expr: probe_success{instance!~".*hass.*|.*unifi.*|.*cryo01.*|.*reactor01.*|.*plex.*"} == 0
+        expr: probe_success{job="http_probe", instance!~".*hass.*|.*unifi.*|.*cryo01.*|.*reactor01.*|.*plex.*"} == 0
         for: 15m
         labels:
           severity: warning

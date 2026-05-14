@@ -11,6 +11,9 @@
           preferred_ip_protocol = "ip4";
         };
       };
+      tcp_connect = {
+        prober = "tcp";
+      };
     };
   };
 in {
@@ -75,7 +78,7 @@ in {
       {
         job_name = "http_probe";
         params = {
-          modules = ["http_2xx"];
+          module = ["http_2xx"];
         };
         metrics_path = "/probe";
         relabel_configs = [
@@ -110,6 +113,32 @@ in {
               "https://unifi.unusedbytes.ca/network"
               "https://unifi.unusedbytes.ca/protect"
             ];
+          }
+        ];
+      }
+      {
+        job_name = "nut_tcp";
+        params = {
+          module = ["tcp_connect"];
+        };
+        metrics_path = "/probe";
+        relabel_configs = [
+          {
+            source_labels = ["__address__"];
+            target_label = "__param_target";
+          }
+          {
+            source_labels = ["__param_target"];
+            target_label = "instance";
+          }
+          {
+            target_label = "__address__";
+            replacement = "localhost:${toString config.services.prometheus.exporters.blackbox.port}";
+          }
+        ];
+        static_configs = [
+          {
+            targets = ["172.16.0.15:3493"];
           }
         ];
       }
