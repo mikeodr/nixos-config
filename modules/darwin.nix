@@ -78,13 +78,8 @@
     ];
 
     brews = [
-      "mas"
       "python"
     ];
-
-    masApps = {
-      "Status Clock" = 552792489;
-    };
 
     onActivation.cleanup = "zap";
     onActivation.autoUpdate = true;
