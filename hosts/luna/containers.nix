@@ -1,5 +1,5 @@
 {config, ...}: let
-  dataDir = "/var/lib/freshrss";
+  freshRSSDataDir = "/var/lib/freshrss";
 in {
   sops.secrets.mealie = {
     sopsFile = ./secrets.yaml;
@@ -24,8 +24,8 @@ in {
           "8080:80"
         ];
         volumes = [
-          "${dataDir}/data:/var/www/FreshRSS/data"
-          "${dataDir}/extensions:/var/www/FreshRSS/extensions"
+          "${freshRSSDataDir}/data:/var/www/FreshRSS/data"
+          "${freshRSSDataDir}/extensions:/var/www/FreshRSS/extensions"
         ];
       };
 
