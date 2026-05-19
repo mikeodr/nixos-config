@@ -4,8 +4,8 @@
   ...
 }: let
   plex-version = {
-    version = "1.43.1.10611-1e34174b1";
-    sha256 = "sha256-pr1+VSObX0sBl/AddeG/+2dIbNdc+EtnvCzy4nTXVn8=";
+    version = "1.43.2.10687-563d026ea";
+    sha256 = "sha256-dgkj0Uny/d0DnExgYWjxfl2cFsiattlGzb7Guzmtro4=";
   };
   plex-package = pkgs.plex.override {
     plexRaw = pkgs.plexRaw.overrideAttrs (old: rec {
