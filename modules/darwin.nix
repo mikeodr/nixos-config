@@ -34,6 +34,7 @@
     fastfetch
     fzf
     gh
+    gnupg
     go
     jq
     mkalias
