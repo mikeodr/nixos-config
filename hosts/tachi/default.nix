@@ -176,16 +176,24 @@
   };
 
   services.borgbackup.jobs = {
-    # for a local backup
     uptimekuma = {
       paths = "/var/lib/private/uptime-kuma";
       repo = "ssh://cubxc6s9@cubxc6s9.repo.borgbase.com/./repo";
       compression = "auto,lzma";
       startAt = "daily";
-      doInit = true;
+      preHook = ''
+        systemctl stop uptime-kuma.service
+      '';
+      postHook = ''
+        systemctl start uptime-kuma.service
+      '';
       encryption = {
         mode = "repokey-blake2";
         passCommand = "cat ${config.sops.secrets.borgbackup_key.path}";
+      };
+      prune.keep = {
+        daily = 3;
+        weekly = 1;
       };
     };
   };
