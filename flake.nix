@@ -103,11 +103,6 @@
     };
 
     nixosConfigurations = {
-      dauntless = mkSystem "dauntless" {
-        system = "aarch64-linux";
-        enableHomeManager = false;
-      };
-
       ghost = mkSystem "ghost" {
         system = "x86_64-linux";
         btc = true;

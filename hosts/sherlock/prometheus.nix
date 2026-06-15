@@ -62,9 +62,9 @@ in {
         static_configs = [
           {
             targets = [
-              "dauntless.cerberus-basilisk.ts.net:9100"
               "fusion01.unusedbytes.ca:9100"
               "fusion02.unusedbytes.ca:9100"
+              "fusion03.unusedbytes.ca:9100"
               "localhost:${toString config.services.prometheus.exporters.node.port}"
               "luna.unusedbytes.ca:9100"
               "reactor02.unusedbytes.ca:9100"
