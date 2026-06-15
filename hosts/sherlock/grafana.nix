@@ -14,7 +14,10 @@
         domain = "unusedbytes.ca";
         enable_gzip = true;
       };
-      security.admin_password = "$__file{${config.sops.secrets.grafanaAdminPassword.path}}";
+      security = {
+        admin_password = "$__file{${config.sops.secrets.grafanaAdminPassword.path}}";
+        secret_key = "SW2YcwTIb9zpOOhoPsMm";
+      };
     };
   };
 }
