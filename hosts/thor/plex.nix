@@ -34,7 +34,7 @@ in {
     reloadServices = ["plex" "caddy"];
   };
 
-  users.users.plex.extraGroups = ["acme"];
+  users.users.plex.extraGroups = ["acme" "render" "video"];
   users.users.caddy.extraGroups = ["acme"];
 
   services = {

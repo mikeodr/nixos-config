@@ -2,6 +2,7 @@
 # and may be overwritten by future invocations.  Please make changes
 # to /etc/nixos/configuration.nix instead.
 {
+  config,
   lib,
   modulesPath,
   ...
@@ -13,7 +14,36 @@
   boot.initrd.availableKernelModules = ["ata_piix" "uhci_hcd" "virtio_pci" "virtio_scsi" "sd_mod" "sr_mod"];
   boot.initrd.kernelModules = [];
   boot.kernelModules = [];
-  boot.extraModulePackages = [];
+  boot.kernelParams = ["xe.force_probe=46a6" "i915.force_probe=!46a6"];
+  boot.extraModulePackages = [
+    (config.boot.kernelPackages.callPackage (
+      {
+        stdenv,
+        fetchFromGitHub,
+        kernel,
+      }:
+        stdenv.mkDerivation rec {
+          name = "i915-sriov-dkms-${version}";
+          version = "2026.03.05.2";
+          src = fetchFromGitHub {
+            owner = "strongtz";
+            repo = "i915-sriov-dkms";
+            rev = version;
+            hash = "sha256-8WhfF52gXzmNhZJ7BN2C+DD89fOi/3HcszafOrXn+50=";
+          };
+          nativeBuildInputs = kernel.moduleBuildDependencies;
+          makeFlags = [
+            "-C"
+            "${kernel.dev}/lib/modules/${kernel.modDirVersion}/build"
+            "M=$(PWD)"
+            "modules"
+          ];
+          installPhase = ''
+            find . -name "*.ko" -exec install -Dm644 {} $out/lib/modules/${kernel.modDirVersion}/kernel/drivers/gpu/drm/i915/{} \;
+          '';
+        }
+    ) {})
+  ];
 
   fileSystems."/" = {
     device = "/dev/disk/by-uuid/fafb1c42-8f86-4a4f-aa88-b1a7e3322137";
