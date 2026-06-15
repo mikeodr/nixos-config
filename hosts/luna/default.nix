@@ -85,11 +85,16 @@
     package = pkgs-unstable.jellyfin;
   };
 
+  # Give jellyfin access to the GPU
+  users.users.jellyfin.extraGroups = ["render" "video"];
+
   services.audiobookshelf = {
     enable = true;
     package = pkgs-unstable.audiobookshelf;
+    host = "0.0.0.0";
     port = 8081;
   };
+  networking.firewall.interfaces.tailscale0.allowedTCPPorts = [8081];
 
   services.ntfy-sh = {
     enable = true;
