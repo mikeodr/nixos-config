@@ -108,9 +108,7 @@
   };
 
   systemd.services = {
-    "jellyfin" = {
-      after = ["mnt-media.mount"];
-    };
+    "jellyfin".unitConfig.RequiresMountsFor = ["/mnt/media"];
   };
 
   # Ensure cert renewals reload caddy

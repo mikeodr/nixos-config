@@ -42,6 +42,8 @@
         ExecStart = "/run/current-system/sw/bin/reboot";
       };
     };
+
+    "borgbackup-job-plex".unitConfig.RequiresMountsFor = ["/mnt/media"];
   };
 
   services.borgbackup.jobs = {

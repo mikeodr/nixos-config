@@ -168,14 +168,8 @@ in {
   };
 
   systemd.services = {
-    "docker-nzbget" = {
-      after = ["mnt-media.mount"];
-    };
-    "docker-sonarr" = {
-      after = ["mnt-media.mount"];
-    };
-    "docker-radarr" = {
-      after = ["mnt-media.mount"];
-    };
+    "docker-nzbget".unitConfig.RequiresMountsFor = ["/mnt/media"];
+    "docker-sonarr".unitConfig.RequiresMountsFor = ["/mnt/media"];
+    "docker-radarr".unitConfig.RequiresMountsFor = ["/mnt/media"];
   };
 }
