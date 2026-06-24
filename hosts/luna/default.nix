@@ -250,6 +250,11 @@
         '';
         useACMEHost = "unusedbytes.ca";
       };
+      "bambuddy.unusedbytes.ca" = {
+        extraConfig = ''
+          reverse_proxy http://localhost:8000
+        '';
+      };
       ":443" = {
         extraConfig = ''
           respond "Not Found" 404
@@ -299,10 +304,34 @@
   };
 
   services.prometheus.exporters.node.openFirewall = true;
+
   networking.firewall = {
     enable = true;
-    allowedTCPPorts = [80 443];
-    allowedUDPPorts = [41642];
+    allowedTCPPorts = [
+      # HTTP/HTTPS for caddy
+      80
+      443
+      # Bambuddy
+      3000
+      3002
+      8883
+      990
+      322 # Bambuddy live camera
+    ];
+    allowedTCPPortRanges = [
+      {
+        from = 2024;
+        to = 2026;
+      } # P1S proprietary (Bambuddy)
+      {
+        from = 50000;
+        to = 50009;
+      } # VP 1 passive FTP data (Bambuddy)
+    ];
+    allowedUDPPorts = [
+      2021 # SSDP (Bambuddy)
+      41642 # Peer relay for Tailscale
+    ];
   };
 
   system.stateVersion = "25.05";
