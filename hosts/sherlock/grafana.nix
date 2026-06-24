@@ -16,7 +16,7 @@
       };
       security = {
         admin_password = "$__file{${config.sops.secrets.grafanaAdminPassword.path}}";
-        secret_key = "SW2YcwTIb9zpOOhoPsMm";
+        secret_key = "SW2YcwTIb9zpOOhoPsMm"; # 26.05 update, not using any secrets in grafana, so this can be a static value.
       };
     };
   };
