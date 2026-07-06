@@ -263,40 +263,78 @@
     };
   };
 
-  services.borgbackup.jobs = {
-    services = {
-      paths = [
-        "/var/lib/audiobookshelf/metadata/backups"
-        "/var/lib/couchdb"
-        "/var/lib/freshrss"
-        "/var/lib/golink"
-        "/var/lib/immich"
-        "/var/lib/jellyfin/config"
-        "/var/lib/jellyfin/data"
-        "/var/lib/nzbget"
-        "/var/lib/overseerr"
-        "/var/lib/pods/mealie/data"
-        "/var/lib/prowlarr"
-        "/var/lib/radarr"
-        "/var/lib/sonarr"
-        "/var/lib/lidarr"
-        "/var/lib/private/ntfy-sh"
-      ];
+  programs.ssh.knownHosts = {
+    "cubxc6s9.repo.borgbase.com".publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMS3185JdDy7ffnr0nLWqVy8FaAQeVh1QYUSiNpW5ESq";
+  };
+
+  sops.secrets."borgbackup_key" = {
+    sopsFile = ./secrets.yaml;
+  };
+
+  sops.secrets."borg_ssh_key" = {
+    sopsFile = ./secrets.yaml;
+    owner = "root";
+    path = "/root/.ssh/id_ed25519";
+  };
+
+  services.borgbackup.jobs = let
+    borgPaths = [
+      "/var/lib/audiobookshelf/metadata/backups"
+      "/var/lib/couchdb"
+      "/var/lib/freshrss"
+      "/var/lib/golink"
+      "/var/lib/jellyfin/config"
+      "/var/lib/nzbget/nzbget.conf"
+      "/var/lib/overseerr"
+      "/var/lib/pods/mealie/data"
+      "/var/lib/prowlarr"
+      "/var/lib/radarr"
+      "/var/lib/sonarr"
+      "/var/lib/lidarr"
+      "/var/lib/paperless/data"
+      "/var/lib/paperless/media"
+      "/var/lib/bambuddy/data"
+    ];
+    borgHooks = {
       preHook = ''
         systemctl stop jellyfin.service
       '';
       postHook = ''
         systemctl start jellyfin.service
       '';
-      doInit = false;
-      encryption.mode = "none";
-      repo = "/mnt/media/borgBackup/luna";
-      compression = "auto,zstd";
-      startAt = "daily";
-      environment = {
-        BORG_UNKNOWN_UNENCRYPTED_REPO_ACCESS_IS_OK = "yes";
-      };
     };
+  in {
+    services =
+      borgHooks
+      // {
+        paths = borgPaths;
+        doInit = false;
+        encryption.mode = "none";
+        repo = "/mnt/media/borgBackup/luna";
+        compression = "auto,zstd";
+        startAt = "daily";
+        environment = {
+          BORG_UNKNOWN_UNENCRYPTED_REPO_ACCESS_IS_OK = "yes";
+        };
+        prune.keep = {
+          daily = 7;
+          weekly = 2;
+          monthly = 3;
+        };
+      };
+
+    services-remote =
+      borgHooks
+      // {
+        paths = borgPaths;
+        encryption = {
+          mode = "repokey-blake2";
+          passCommand = "cat ${config.sops.secrets.borgbackup_key.path}";
+        };
+        repo = "ssh://m4yi8jbz@m4yi8jbz.repo.borgbase.com/./repo";
+        compression = "auto,zstd";
+        startAt = "daily";
+      };
   };
 
   networking = {
