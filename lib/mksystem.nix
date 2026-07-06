@@ -42,6 +42,10 @@ in
             inherit system;
             config.allowUnfree = true;
           };
+          pkgs-immich = import inputs.nixpkgs-immich {
+            inherit system;
+            config.allowUnfree = true;
+          };
           inherit inputs;
           inherit system;
         }
