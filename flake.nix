@@ -132,7 +132,6 @@
       (builtins.mapAttrs (k: v: {imports = v._module.args.modules;}) self.nixosConfigurations)
       {
         meta = {
-          machinesFile = /etc/nix/machines;
           nixpkgs = import nixpkgs {
             system = "x86_64-linux";
             overlays = [];
