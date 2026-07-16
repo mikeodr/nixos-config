@@ -41,7 +41,7 @@
   pathJoin = builtins.concatStringsSep ":";
 in {
   enable = true;
-  dotDir = ".config/zsh";
+  dotDir = "${homeDir}/.config/zsh";
 
   history.size = 10000;
 
