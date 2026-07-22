@@ -47,6 +47,13 @@
     sopsFile = ./secrets.yaml;
   };
 
+  sops.secrets.pinchflat = {
+    owner = config.services.pinchflat.user;
+    group = config.services.pinchflat.group;
+    mode = "440";
+    sopsFile = ./secrets.yaml;
+  };
+
   services = {
     golink = {
       enable = true;
@@ -55,6 +62,16 @@
 
     tsidp = {
       enable = true;
+    };
+
+    pinchflat = {
+      enable = true;
+      mediaDir = "/mnt/media/PinchFlat";
+      openFirewall = true;
+      extraConfig = {
+        TZ = "America/Toronto";
+      };
+      secretsFile = config.sops.secrets.pinchflat.path;
     };
   };
 
@@ -129,20 +146,21 @@
   services.borgbackup.jobs = let
     borgPaths = [
       "/var/lib/audiobookshelf/metadata/backups"
+      "/var/lib/bambuddy/data"
       "/var/lib/couchdb"
       "/var/lib/freshrss"
       "/var/lib/golink"
       "/var/lib/jellyfin/config"
+      "/var/lib/lidarr"
       "/var/lib/nzbget/nzbget.conf"
       "/var/lib/overseerr"
+      "/var/lib/paperless/data"
+      "/var/lib/paperless/media"
+      "/var/lib/pinchflat/db"
       "/var/lib/pods/mealie/data"
       "/var/lib/prowlarr"
       "/var/lib/radarr"
       "/var/lib/sonarr"
-      "/var/lib/lidarr"
-      "/var/lib/paperless/data"
-      "/var/lib/paperless/media"
-      "/var/lib/bambuddy/data"
     ];
     borgHooks = {
       preHook = ''
