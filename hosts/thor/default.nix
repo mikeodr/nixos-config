@@ -6,6 +6,7 @@
   imports = [
     ./hardware-configuration.nix
     ../../modules/server.nix
+    ../../modules/i915_sriov_dkms.nix
     ./plex.nix
     inputs.intel-gpu-exporter.nixosModules.default
     inputs.prometheus-plex-exporter.nixosModules.default
@@ -21,6 +22,7 @@
   # Custom module settings
   intelAcceleration.enable = true;
   acmeCertGeneration.enable = true;
+  i915SriovDkms.enable = true;
 
   networking = {
     hostName = "thor";

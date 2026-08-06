@@ -13,6 +13,7 @@
     ./hardware-configuration.nix
     ../../modules/server.nix
     ../../modules/immich
+    ../../modules/i915_sriov_dkms.nix
     ./bambuddy.nix
     ./caddy.nix
     ./containers.nix
@@ -29,6 +30,9 @@
 
   # Enable intel acceleration in custom module
   intelAcceleration.enable = true;
+
+  # Enable i915 SR-IOV DKMS kernel module
+  i915SriovDkms.enable = true;
 
   # Enable Dynamic Downloaded Binary linking in custom module
   ldDynamicLink.enable = true;
