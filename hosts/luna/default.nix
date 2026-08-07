@@ -25,7 +25,10 @@
   ];
 
   boot = {
-    loader.grub.device = "/dev/sda";
+    # Use the stable by-id path rather than /dev/sda - QEMU/virtio device
+    # naming for scsi disks isn't guaranteed stable across reboots, and this
+    # has already drifted once (this is the scsi0 disk, holding root+swap).
+    loader.grub.device = "/dev/disk/by-id/scsi-0QEMU_QEMU_HARDDISK_drive-scsi0";
     tmp.cleanOnBoot = true;
   };
 
