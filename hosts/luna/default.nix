@@ -19,6 +19,7 @@
     ./containers.nix
     ./obsidian.nix
     ./paperless.nix
+    ./tailscale-relay.nix
     inputs.tailscale-golink.nixosModules.default
     inputs.tsidp.nixosModules.default
   ];
