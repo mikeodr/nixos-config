@@ -167,9 +167,23 @@ in {
     };
   };
 
-  systemd.services = {
-    "docker-nzbget".unitConfig.RequiresMountsFor = ["/mnt/media"];
-    "docker-sonarr".unitConfig.RequiresMountsFor = ["/mnt/media"];
-    "docker-radarr".unitConfig.RequiresMountsFor = ["/mnt/media"];
+  systemd.services = let
+    # /mnt/media is an NFS automount: `docker run -v /mnt/media/...` accessing
+    # its bind-mount source already triggers/blocks on the automount itself
+    # (kernel autofs semantics - confirmed no RequiresMountsFor needed), and
+    # a genuine mount failure makes `docker run` exit non-zero, a real
+    # ExecStart failure that Restart=on-failure (set by the oci-containers
+    # module) already catches. The only gap is the default restart budget
+    # (5 tries/10s) being too small for a multi-second boot-time network
+    # race, so widen it here.
+    generousRestart = {
+      startLimitIntervalSec = 300;
+      startLimitBurst = 30;
+      serviceConfig.RestartSec = "5s";
+    };
+  in {
+    "docker-nzbget" = generousRestart;
+    "docker-sonarr" = generousRestart;
+    "docker-radarr" = generousRestart;
   };
 }
