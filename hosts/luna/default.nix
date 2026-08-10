@@ -205,6 +205,11 @@
         repo = "ssh://m4yi8jbz@m4yi8jbz.repo.borgbase.com/./repo";
         compression = "auto,zstd";
         startAt = "daily";
+        prune.keep = {
+          daily = 3;
+          weekly = 2;
+          monthly = 1;
+        };
       };
   };
 
