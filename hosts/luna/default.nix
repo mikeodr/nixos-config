@@ -154,7 +154,7 @@
       "/var/lib/couchdb"
       "/var/lib/freshrss"
       "/var/lib/golink"
-      # "/var/lib/jellyfin/config"
+      "/var/lib/jellyfin/config"
       "/var/lib/lidarr"
       "/var/lib/nzbget/nzbget.conf"
       "/var/lib/overseerr"
@@ -188,9 +188,9 @@
           BORG_UNKNOWN_UNENCRYPTED_REPO_ACCESS_IS_OK = "yes";
         };
         prune.keep = {
-          daily = 5;
-          weekly = 1;
-          monthly = 1;
+          daily = 7;
+          weekly = 2;
+          monthly = 3;
         };
       };
 
