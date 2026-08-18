@@ -110,7 +110,7 @@ in {
     repositoryFile = config.sops.secrets."restic/luna/repository".path;
     passwordFile = config.sops.secrets."restic/luna/password".path;
     environmentFile = config.sops.secrets."restic/bucket_access".path;
-    initialize = true;
+    initialize = false;
     backupPrepareCommand = "systemctl stop jellyfin.service";
     backupCleanupCommand = "systemctl start jellyfin.service";
     timerConfig = {
