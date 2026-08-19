@@ -8,6 +8,7 @@
     ../../modules/server.nix
     ../../modules/i915_sriov_dkms.nix
     ./plex.nix
+    ./backup.nix
     inputs.intel-gpu-exporter.nixosModules.default
     inputs.prometheus-plex-exporter.nixosModules.default
   ];

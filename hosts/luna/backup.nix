@@ -22,12 +22,30 @@
     "/var/lib/radarr"
     "/var/lib/sonarr"
   ];
+
+  # Pings this job's uptime-kuma push monitor. $SERVICE_RESULT is set by
+  # systemd on the ExecStopPost process that `backupCleanupCommand` becomes,
+  # so it reflects whether the job's backup/prune/check commands all
+  # succeeded.
+  uptimeKumaPing = job: ''
+    uri="$(cat ${config.sops.secrets."restic/luna/uptimeuri/${job}".path})"
+    if [ "$SERVICE_RESULT" = success ]; then
+      ${pkgs.curl}/bin/curl -fsS "$uri?status=up" >/dev/null
+    else
+      ${pkgs.curl}/bin/curl -fsS "$uri?status=down&msg=${job}" >/dev/null
+    fi
+  '';
 in {
   sops.secrets."restic/bucket_access" = {};
   sops.secrets."restic/immich/repository" = {};
   sops.secrets."restic/immich/password" = {};
   sops.secrets."restic/luna/repository" = {};
   sops.secrets."restic/luna/password" = {};
+  sops.secrets."restic/luna/uptimeuri/immich" = {};
+  sops.secrets."restic/luna/uptimeuri/immich-check" = {};
+  sops.secrets."restic/luna/uptimeuri/services" = {};
+  sops.secrets."restic/luna/uptimeuri/services-remote" = {};
+  sops.secrets."restic/luna/uptimeuri/services-remote-check" = {};
 
   # Immich's docs (docs.immich.app/administration/backup-and-restore) list
   # upload/ and library/ as the directories holding original assets that
@@ -43,6 +61,7 @@ in {
     repositoryFile = config.sops.secrets."restic/immich/repository".path;
     passwordFile = config.sops.secrets."restic/immich/password".path;
     environmentFile = config.sops.secrets."restic/bucket_access".path;
+    backupCleanupCommand = uptimeKumaPing "immich";
     timerConfig = {
       OnCalendar = "daily";
       Persistent = true;
@@ -69,6 +88,7 @@ in {
     repositoryFile = config.sops.secrets."restic/immich/repository".path;
     passwordFile = config.sops.secrets."restic/immich/password".path;
     environmentFile = config.sops.secrets."restic/bucket_access".path;
+    backupCleanupCommand = uptimeKumaPing "immich-check";
     initialize = false;
     runCheck = true;
     extraOptions = [
@@ -90,7 +110,11 @@ in {
     repository = "/mnt/media/resticBackup/luna";
     passwordFile = config.sops.secrets."restic/luna/password".path;
     backupPrepareCommand = "systemctl stop jellyfin.service";
-    backupCleanupCommand = "systemctl start jellyfin.service";
+    backupCleanupCommand =
+      ''
+        systemctl start jellyfin.service
+      ''
+      + uptimeKumaPing "services";
     timerConfig = {
       OnCalendar = "daily";
       Persistent = true;
@@ -112,7 +136,11 @@ in {
     environmentFile = config.sops.secrets."restic/bucket_access".path;
     initialize = false;
     backupPrepareCommand = "systemctl stop jellyfin.service";
-    backupCleanupCommand = "systemctl start jellyfin.service";
+    backupCleanupCommand =
+      ''
+        systemctl start jellyfin.service
+      ''
+      + uptimeKumaPing "services-remote";
     timerConfig = {
       OnCalendar = "daily";
       Persistent = true;
@@ -134,6 +162,7 @@ in {
     repositoryFile = config.sops.secrets."restic/luna/repository".path;
     passwordFile = config.sops.secrets."restic/luna/password".path;
     environmentFile = config.sops.secrets."restic/bucket_access".path;
+    backupCleanupCommand = uptimeKumaPing "services-remote-check";
     initialize = false;
     runCheck = true;
     extraOptions = [
