@@ -72,11 +72,13 @@ in {
     extraBackupArgs = [
       "--pack-size 64"
       "--no-scan"
+      "--retry-lock 3h"
     ];
     pruneOpts = [
       "--keep-daily 7"
       "--keep-weekly 4"
       "--keep-monthly 6"
+      "--retry-lock 3h"
     ];
   };
 
@@ -96,9 +98,10 @@ in {
     ];
     checkOpts = [
       "--read-data-subset=5%"
+      "--retry-lock 3h"
     ];
     timerConfig = {
-      OnCalendar = "weekly";
+      OnCalendar = "Mon *-*-* 05:00:00";
       Persistent = true;
     };
   };
@@ -150,11 +153,13 @@ in {
     ];
     extraBackupArgs = [
       "--pack-size 64"
+      "--retry-lock 3h"
     ];
     pruneOpts = [
       "--keep-daily 3"
       "--keep-weekly 2"
       "--keep-monthly 1"
+      "--retry-lock 3h"
     ];
   };
 
@@ -170,9 +175,10 @@ in {
     ];
     checkOpts = [
       "--read-data-subset=5%"
+      "--retry-lock 3h"
     ];
     timerConfig = {
-      OnCalendar = "weekly";
+      OnCalendar = "Mon *-*-* 05:00:00";
       Persistent = true;
     };
   };
