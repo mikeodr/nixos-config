@@ -40,7 +40,7 @@
 
     tailscale-golink = {
       url = "github:tailscale/golink";
-      inputs.nixpkgs.follows = "nixpkgs-unstable";
+      inputs.nixpkgs.follows = "nixpkgs";
       inputs.systems.follows = "nix-systems";
     };
 
