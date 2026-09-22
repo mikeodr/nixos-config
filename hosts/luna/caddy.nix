@@ -75,7 +75,7 @@
       };
       "sonarr.unusedbytes.ca" = {
         extraConfig = ''
-          reverse_proxy http://localhost:8989
+          reverse_proxy http://127.0.0.1:8989
         '';
         useACMEHost = "unusedbytes.ca";
       };
