@@ -5,12 +5,12 @@
 }:
 stdenv.mkDerivation rec {
   name = "i915-sriov-dkms-${version}";
-  version = "2026.08.12.1";
+  version = "2026.09.16";
   src = fetchFromGitHub {
     owner = "strongtz";
     repo = "i915-sriov-dkms";
-    rev = "d52b7023ce6eefc8c7128cdc7ea931a056703c1c";
-    hash = "sha256-pSah4/69DUCizibWlRJr7iXZIWg2y7hMs2fqWE3hsdk=";
+    rev = "b42c0f87643c07e06b4f53bbedfb3b728da222e1";
+    hash = "sha256-MJDR3r/OeCo0Uc4yrk7G2jlzVy5p7JMsJh7E2j74hJw=";
   };
   nativeBuildInputs = kernel.moduleBuildDependencies;
   makeFlags = [
