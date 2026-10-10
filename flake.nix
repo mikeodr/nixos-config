@@ -59,13 +59,6 @@
       url = "github:mikeodr/prometheus-plex-exporter";
       inputs.systems.follows = "nix-systems";
     };
-
-    nix-bitcoin = {
-      url = "github:fort-nix/nix-bitcoin/release";
-      inputs.nixpkgs.follows = "nixpkgs";
-      inputs.nixpkgs-unstable.follows = "nixpkgs-unstable";
-      inputs.flake-utils.inputs.systems.follows = "nix-systems";
-    };
   };
 
   outputs = {
@@ -104,11 +97,6 @@
     };
 
     nixosConfigurations = {
-      ghost = mkSystem "ghost" {
-        system = "x86_64-linux";
-        btc = true;
-      };
-
       luna = mkSystem "luna" {
         system = "x86_64-linux";
       };
