@@ -97,6 +97,7 @@ in
       ++ (
         if darwin
         then [
+          inputs.determinate.darwinModules.default
           inputs.nix-homebrew.darwinModules.nix-homebrew
           inputs.sops-nix.darwinModules.sops
         ]

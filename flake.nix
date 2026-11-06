@@ -8,6 +8,10 @@
     nixpkgs-darwin.url = "github:NixOS/nixpkgs/nixpkgs-26.05-darwin";
     nix-systems.url = "github:nix-systems/default";
 
+    determinate = {
+      url = "https://flakehub.com/f/DeterminateSystems/determinate/3";
+    };
+
     disko = {
       url = "github:nix-community/disko";
       inputs.nixpkgs.follows = "nixpkgs";

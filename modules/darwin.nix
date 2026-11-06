@@ -122,26 +122,33 @@
   sops.secrets.github_token = {};
 
   sops.templates = {
-    nix-access-token-github = {
+    nix-netrc-github = {
       content = ''
-        access-tokens = github.com=${config.sops.placeholder.github_token}
+        machine github.com
+        login mikeodr
+        password ${config.sops.placeholder.github_token}
       '';
       owner = "mikeodr";
     };
   };
 
+  determinateNix.determinateNixd.authentication.additionalNetrcSources = [
+    config.sops.templates.nix-netrc-github.path
+  ];
+
   # Necessary for using flakes on this system.
-  nix = {
-    gc.automatic = true;
-    optimise.automatic = true;
-    extraOptions = ''
-      !include ${config.sops.templates.nix-access-token-github.path}
-    '';
-    settings = {
-      experimental-features = ["nix-command" "flakes"];
+  determinateNix = {
+    enable = true; # also sets nix.enable = false for you
+
+    # replaces nix.settings.warn-dirty
+    customSettings = {
       warn-dirty = false;
+      auto-optimise-store = true;
     };
   };
+
+  # replaces nix.gc.automatic — determinate-nixd collects garbage itself
+  determinateNix.determinateNixd.garbageCollector.strategy = "automatic";
 
   # Create /etc/zshrc that loads the nix-darwin environment.
   programs.zsh.enable = true; # default shell on catalina
