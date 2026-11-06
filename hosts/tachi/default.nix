@@ -50,6 +50,7 @@
     uptime-kuma = {
       enable = true;
       appriseSupport = true;
+      package = pkgs-unstable.uptime-kuma;
     };
 
     ntfy-sh = {
