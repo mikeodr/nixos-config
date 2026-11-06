@@ -43,10 +43,6 @@
   systemd.services.uptime-kuma.path = [pkgs.unixtools.ping pkgs-unstable.tailscale] ++ lib.optional config.services.uptime-kuma.appriseSupport pkgs.apprise;
 
   services = {
-    davfs2 = {
-      enable = true;
-    };
-
     uptime-kuma = {
       enable = true;
       appriseSupport = true;
