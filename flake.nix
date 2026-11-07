@@ -12,6 +12,11 @@
       url = "https://flakehub.com/f/DeterminateSystems/determinate/3";
     };
 
+    deploy-rs = {
+      url = "github:serokell/deploy-rs";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     disko = {
       url = "github:nix-community/disko";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -121,28 +126,34 @@
       };
     };
 
-    colmena =
-      lib.recursiveUpdate
-      (builtins.mapAttrs (k: v: {imports = v._module.args.modules;}) self.nixosConfigurations)
-      {
-        meta = {
-          nixpkgs = import nixpkgs {
-            system = "x86_64-linux";
-            overlays = [];
-          };
-          nodeNixpkgs =
-            builtins.mapAttrs
-            (_: v: v.pkgs)
-            self.nixosConfigurations;
-          nodeSpecialArgs =
-            builtins.mapAttrs
-            (_: v: v._module.specialArgs)
-            self.nixosConfigurations;
+    # Deploy over LAN OpenSSH where possible: restarting tailscaled during
+    # activation kills Tailscale SSH sessions and triggers a rollback.
+    deploy.nodes = let
+      lanHosts = ["luna" "sherlock" "thor"];
+      # SSH aliases defined in ~/.ssh/config (keeps public IPs out of the repo)
+      overrides = {tachi = "tachi-deploy";};
+    in
+      builtins.mapAttrs (name: cfg: {
+        hostname =
+          overrides.${
+            name
+          } or (
+            if builtins.elem name lanHosts
+            then "${name}.unusedbytes.ca"
+            else name
+          );
+        sshUser = "specter";
+        remoteBuild = true;
+        profiles.system = {
+          user = "root";
+          path = inputs.deploy-rs.lib.${cfg.pkgs.stdenv.hostPlatform.system}.activate.nixos cfg;
         };
+      })
+      self.nixosConfigurations;
 
-        defaults.deployment.targetUser = "specter";
-        defaults.deployment.buildOnTarget = true;
-        defaults.deployment.allowLocalDeployment = true;
-      };
+    checks =
+      builtins.mapAttrs
+      (_: deployLib: deployLib.deployChecks self.deploy)
+      (lib.filterAttrs (system: _: lib.hasSuffix "-linux" system) inputs.deploy-rs.lib);
   };
 }

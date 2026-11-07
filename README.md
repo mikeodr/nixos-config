@@ -20,12 +20,15 @@ Please see [Vimjoyer's Excellent Video](https://www.youtube.com/watch?v=G5f6GC7S
 
 ### Deploying
 
-[colmena](https://github.com/zhaofengli/colmena) is used to deploy to multiple machines either individually by host or by group of tags.
+[deploy-rs](https://github.com/serokell/deploy-rs) is used to deploy to the NixOS hosts. Builds happen on the target host, and failed activations are rolled back automatically.
 
-- `colmena apply switch --on <host>`
-- `colmena apply switch --on @tag`
+- `deploy .#<host>`: deploy one host
+- `deploy .`: deploy all hosts
+- `deploy --skip-checks .#<host>`: skip `nix flake check` for a faster deploy
 
-### Adding a new host via colmena
+### Adding a new host via deploy-rs
+
+Every entry in `nixosConfigurations` becomes a deploy node automatically.
 
 - Host should have a user set
 - SSH key should be set
@@ -50,4 +53,4 @@ nix run nixpkgs#nixos-anywhere -- --flake .#<host> --generate-hardware-config ni
 
 #### Credits
 
-[BonusPlay/sysconf](https://github.com/BonusPlay/sysconf), a random repo I found that had a nice layout, and used colmena for managing multiple hosts.
+[BonusPlay/sysconf](https://github.com/BonusPlay/sysconf), a random repo I found that had a nice layout, and originally inspired the multi-host setup.

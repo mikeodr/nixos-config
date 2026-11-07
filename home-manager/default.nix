@@ -17,6 +17,10 @@
 in {
   programs.home-manager.enable = true;
 
+  # Manpage generation builds options.json in a way that triggers a
+  # "derivation without a proper context" warning on every evaluation.
+  manual.manpages.enable = false;
+
   home.username = user;
   home.homeDirectory = lib.mkForce homeDir;
   home.stateVersion = "24.05";

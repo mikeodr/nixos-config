@@ -27,7 +27,7 @@
   environment.systemPackages = with pkgs; [
     alejandra
     arping
-    colmena
+    deploy-rs
     direnv
     docker
     dust
@@ -144,6 +144,9 @@
     customSettings = {
       warn-dirty = false;
       auto-optimise-store = true;
+      # Lets deploy-rs remote builds pass --store without
+      # "not a trusted user" warnings from the local daemon.
+      trusted-users = ["root" "mikeodr"];
     };
   };
 

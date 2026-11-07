@@ -104,7 +104,7 @@
   };
 
   environment.systemPackages = with pkgs; [
-    colmena
+    deploy-rs
   ];
 
   services.jellyfin = {
