@@ -604,11 +604,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1792590200,
-        "narHash": "sha256-oL+WH5iFVRd0erh3KfJrvUMIpZraomHoRzo5sh3duu0=",
+        "lastModified": 1794065593,
+        "narHash": "sha256-IjNBJhHsx1BhNMnBsST06ZpL6vgAacqNs3nQiOUoeY4=",
         "owner": "tailscale",
         "repo": "tsidp",
-        "rev": "4047a40f7f20afcac6fbf37c33f929035c9c509e",
+        "rev": "43c68a646380fe4f027c7cf430784ab1875360dd",
         "type": "github"
       },
       "original": {
