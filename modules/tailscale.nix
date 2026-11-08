@@ -1,8 +1,7 @@
-{
-  config,
-  inputs,
-  pkgs,
-  ...
+{ config
+, inputs
+, pkgs
+, ...
 }: {
   imports = [
     ./ip_forwarding.nix
@@ -17,7 +16,7 @@
       enable = true;
       package = inputs.tailscale.packages."${pkgs.stdenv.hostPlatform.system}".default;
       openFirewall = true;
-      extraUpFlags = ["--ssh"];
+      extraUpFlags = [ "--ssh" ];
       authKeyFile = config.sops.secrets.tailscaleAuthKey.path;
     };
   };

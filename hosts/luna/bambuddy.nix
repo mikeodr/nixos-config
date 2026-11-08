@@ -1,6 +1,8 @@
-{...}: let
+{ ... }:
+let
   dataDir = "/var/lib/bambuddy";
-in {
+in
+{
   virtualisation.oci-containers.containers = {
     bambuddy-app = {
       image = "ghcr.io/maziggy/bambuddy:latest";
@@ -14,7 +16,7 @@ in {
         # Set to the Docker host IP if virtual printer FTP passive transfers fail.
         VIRTUAL_PRINTER_PASV_ADDRESS = "172.16.0.11";
       };
-      extraOptions = ["--network=host"];
+      extraOptions = [ "--network=host" ];
       volumes = [
         "${dataDir}/data:/app/data"
         "${dataDir}/logs:/app/logs"

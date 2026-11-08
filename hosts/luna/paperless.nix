@@ -1,8 +1,8 @@
-{
-  config,
-  pkgs,
-  ...
-}: let
+{ config
+, pkgs
+, ...
+}:
+let
   dataDir = "/var/lib/paperless";
   tsServeConfig = pkgs.writeText "ts-serve.json" ''
     {
@@ -11,7 +11,8 @@
       "AllowFunnel": {"''${TS_CERT_DOMAIN}:443": false}
     }
   '';
-in {
+in
+{
   sops.secrets.paperless-tailscale = {
     sopsFile = ./secrets.yaml;
     mode = "0440";
@@ -29,9 +30,9 @@ in {
 
   systemd.services.init-paperless-network = {
     description = "Create paperless docker network";
-    after = ["docker.service"];
-    requires = ["docker.service"];
-    wantedBy = ["multi-user.target"];
+    after = [ "docker.service" ];
+    requires = [ "docker.service" ];
+    wantedBy = [ "multi-user.target" ];
     serviceConfig = {
       Type = "oneshot";
       RemainAfterExit = true;
@@ -44,16 +45,16 @@ in {
 
   # Containers directly attached to the paperless network must wait for it to exist
   systemd.services."docker-paperless-tailscale" = {
-    after = ["init-paperless-network.service"];
-    requires = ["init-paperless-network.service"];
+    after = [ "init-paperless-network.service" ];
+    requires = [ "init-paperless-network.service" ];
   };
   systemd.services."docker-paperless-db" = {
-    after = ["init-paperless-network.service"];
-    requires = ["init-paperless-network.service"];
+    after = [ "init-paperless-network.service" ];
+    requires = [ "init-paperless-network.service" ];
   };
   systemd.services."docker-paperless-broker" = {
-    after = ["init-paperless-network.service"];
-    requires = ["init-paperless-network.service"];
+    after = [ "init-paperless-network.service" ];
+    requires = [ "init-paperless-network.service" ];
   };
 
   virtualisation.oci-containers.containers = {
@@ -70,14 +71,14 @@ in {
         TS_AUTH_ONCE = "true";
       };
       # Expects: TS_AUTHKEY
-      environmentFiles = [config.sops.secrets.paperless-tailscale.path];
+      environmentFiles = [ config.sops.secrets.paperless-tailscale.path ];
       volumes = [
         "${tsServeConfig}:/config/serve.json:ro"
         "${dataDir}/ts/state:/var/lib/tailscale"
       ];
-      devices = ["/dev/net/tun:/dev/net/tun"];
-      capabilities = {NET_ADMIN = true;};
-      networks = ["paperless"];
+      devices = [ "/dev/net/tun:/dev/net/tun" ];
+      capabilities = { NET_ADMIN = true; };
+      networks = [ "paperless" ];
       extraOptions = [
         "--health-cmd=wget --spider -q http://127.0.0.1:41234/healthz"
         "--health-interval=1m"
@@ -90,7 +91,7 @@ in {
     paperless-app = {
       image = "ghcr.io/paperless-ngx/paperless-ngx:latest";
       autoStart = true;
-      dependsOn = ["paperless-tailscale" "paperless-db" "paperless-broker"];
+      dependsOn = [ "paperless-tailscale" "paperless-db" "paperless-broker" ];
       environment = {
         PUID = "1000";
         PGID = "1000";
@@ -105,7 +106,7 @@ in {
       };
       # Expects: PAPERLESS_TIME_ZONE, PAPERLESS_OCR_LANGUAGE, PAPERLESS_SECRET_KEY,
       #          PAPERLESS_ADMIN_USER, PAPERLESS_ADMIN_PASSWORD
-      environmentFiles = [config.sops.secrets.paperless-app.path];
+      environmentFiles = [ config.sops.secrets.paperless-app.path ];
       volumes = [
         "${dataDir}/data:/usr/src/paperless/data"
         "${dataDir}/media:/usr/src/paperless/media"
@@ -133,11 +134,11 @@ in {
         POSTGRES_DB = "paperless";
       };
       # Expects: POSTGRES_USER, POSTGRES_PASSWORD
-      environmentFiles = [config.sops.secrets.paperless-db.path];
+      environmentFiles = [ config.sops.secrets.paperless-db.path ];
       volumes = [
         "${dataDir}/pgdata:/var/lib/postgresql"
       ];
-      networks = ["paperless"];
+      networks = [ "paperless" ];
       extraOptions = [
         "--health-cmd=pg_isready -d paperless -U $POSTGRES_USER"
         "--health-interval=1m"
@@ -158,7 +159,7 @@ in {
       volumes = [
         "${dataDir}/redisdata:/data"
       ];
-      networks = ["paperless"];
+      networks = [ "paperless" ];
     };
   };
 }

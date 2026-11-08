@@ -1,9 +1,8 @@
-{
-  config,
-  lib,
-  pkgs,
-  pkgs-unstable,
-  ...
+{ config
+, lib
+, pkgs
+, pkgs-unstable
+, ...
 }: {
   imports = [
     ./disk-config.nix
@@ -14,9 +13,9 @@
   ];
 
   ip_forwarding.enable = true;
-  ip_forward_interfaces = ["enp0s6"];
+  ip_forward_interfaces = [ "enp0s6" ];
   gro_forwarding.enable = true;
-  gro_forwarding.interfaces = ["enp0s6"];
+  gro_forwarding.interfaces = [ "enp0s6" ];
 
   boot = {
     tmp.cleanOnBoot = true;
@@ -36,11 +35,11 @@
   acmeCertGeneration.enable = true;
 
   # Ensure cert renewals reload caddy
-  security.acme.certs."unusedbytes.ca".reloadServices = ["caddy"];
+  security.acme.certs."unusedbytes.ca".reloadServices = [ "caddy" ];
 
   # Override the path to include tailscale
   # from https://github.com/NixOS/nixpkgs/blob/6afb255d976f85f3359e4929abd6f5149c323a02/nixos/modules/services/monitoring/uptime-kuma.nix#L50
-  systemd.services.uptime-kuma.path = [pkgs.unixtools.ping pkgs-unstable.tailscale] ++ lib.optional config.services.uptime-kuma.appriseSupport pkgs.apprise;
+  systemd.services.uptime-kuma.path = [ pkgs.unixtools.ping pkgs-unstable.tailscale ] ++ lib.optional config.services.uptime-kuma.appriseSupport pkgs.apprise;
 
   services = {
     uptime-kuma = {
@@ -151,7 +150,7 @@
   };
 
   networking = {
-    nameservers = ["1.1.1.1" "1.0.0.1"];
+    nameservers = [ "1.1.1.1" "1.0.0.1" ];
     firewall = {
       enable = true;
       # allowedTCPPorts = [80 443];

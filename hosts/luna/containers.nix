@@ -1,6 +1,8 @@
-{config, ...}: let
+{ config, ... }:
+let
   freshRSSDataDir = "/var/lib/freshrss";
-in {
+in
+{
   sops.secrets.mealie = {
     sopsFile = ./secrets.yaml;
     owner = config.users.users.specter.name;
@@ -32,7 +34,7 @@ in {
       mealie = {
         image = "ghcr.io/mealie-recipes/mealie:v2.5.0";
         autoStart = true;
-        volumes = ["/var/lib/pods/mealie/data:/app/data"];
+        volumes = [ "/var/lib/pods/mealie/data:/app/data" ];
         environmentFiles = [
           config.sops.secrets.mealie.path
         ];
@@ -52,19 +54,19 @@ in {
           # OIDC_CLIENT_SECRET
           # OIDC_DISCOVERY_URL
         };
-        ports = ["9000:9000/tcp"];
+        ports = [ "9000:9000/tcp" ];
       };
 
       nzbget = {
         autoStart = true;
         image = "lscr.io/linuxserver/nzbget:latest";
-        ports = ["127.0.0.1:6789:6789"];
+        ports = [ "127.0.0.1:6789:6789" ];
         environment = {
           TZ = "America/Toronto";
           PUID = "1000";
           PGID = "100";
         };
-        extraOptions = ["--pull=always"];
+        extraOptions = [ "--pull=always" ];
         volumes = [
           "/var/lib/nzbget:/config"
           "/data/downloads:/downloads"
@@ -74,13 +76,13 @@ in {
       sonarr = {
         autoStart = true;
         image = "lscr.io/linuxserver/sonarr:latest";
-        ports = ["127.0.0.1:8989:8989"];
+        ports = [ "127.0.0.1:8989:8989" ];
         environment = {
           TZ = "America/Toronto";
           PUID = "1000";
           PGID = "100";
         };
-        extraOptions = ["--pull=always"];
+        extraOptions = [ "--pull=always" ];
         volumes = [
           "/var/lib/sonarr:/config"
           "/mnt/media/TV:/tv"
@@ -91,13 +93,13 @@ in {
       radarr = {
         autoStart = true;
         image = "lscr.io/linuxserver/radarr:latest";
-        ports = ["127.0.0.1:7878:7878"];
+        ports = [ "127.0.0.1:7878:7878" ];
         environment = {
           TZ = "America/Toronto";
           PUID = "1000";
           PGID = "100";
         };
-        extraOptions = ["--pull=always"];
+        extraOptions = [ "--pull=always" ];
         volumes = [
           "/var/lib/radarr:/config"
           "/mnt/media/Movies:/movies"
@@ -108,13 +110,13 @@ in {
       prowlarr = {
         autoStart = true;
         image = "lscr.io/linuxserver/prowlarr:latest";
-        ports = ["127.0.0.1:9696:9696"];
+        ports = [ "127.0.0.1:9696:9696" ];
         environment = {
           TZ = "America/Toronto";
           PUID = "1000";
           PGID = "100";
         };
-        extraOptions = ["--pull=always"];
+        extraOptions = [ "--pull=always" ];
         volumes = [
           "/var/lib/prowlarr:/config"
         ];
@@ -123,7 +125,7 @@ in {
       lidarr = {
         autoStart = true;
         image = "lscr.io/linuxserver/lidarr:latest";
-        ports = ["8686:8686"];
+        ports = [ "8686:8686" ];
         environment = {
           TZ = "America/Toronto";
           PUID = "1000";
@@ -139,7 +141,7 @@ in {
       overseerr = {
         autoStart = true;
         image = "ghcr.io/seerr-team/seerr:latest";
-        ports = ["5055:5055"];
+        ports = [ "5055:5055" ];
         environment = {
           LOG_LEVEL = "info";
           TZ = "America/Toronto";
@@ -152,7 +154,7 @@ in {
       stirlingpdf = {
         autoStart = true;
         image = "frooodle/s-pdf:latest";
-        ports = ["127.0.0.1:8082:8080"];
+        ports = [ "127.0.0.1:8082:8080" ];
         volumes = [
           "/var/stirlingpdf/trainingData:/usr/share/tessdata" # Required for extra OCR languages
           "/var/stirlingpdf/extraConfigs:/configs"
@@ -167,23 +169,25 @@ in {
     };
   };
 
-  systemd.services = let
-    # /mnt/media is an NFS automount: `docker run -v /mnt/media/...` accessing
-    # its bind-mount source already triggers/blocks on the automount itself
-    # (kernel autofs semantics - confirmed no RequiresMountsFor needed), and
-    # a genuine mount failure makes `docker run` exit non-zero, a real
-    # ExecStart failure that Restart=on-failure (set by the oci-containers
-    # module) already catches. The only gap is the default restart budget
-    # (5 tries/10s) being too small for a multi-second boot-time network
-    # race, so widen it here.
-    generousRestart = {
-      startLimitIntervalSec = 300;
-      startLimitBurst = 30;
-      serviceConfig.RestartSec = "5s";
+  systemd.services =
+    let
+      # /mnt/media is an NFS automount: `docker run -v /mnt/media/...` accessing
+      # its bind-mount source already triggers/blocks on the automount itself
+      # (kernel autofs semantics - confirmed no RequiresMountsFor needed), and
+      # a genuine mount failure makes `docker run` exit non-zero, a real
+      # ExecStart failure that Restart=on-failure (set by the oci-containers
+      # module) already catches. The only gap is the default restart budget
+      # (5 tries/10s) being too small for a multi-second boot-time network
+      # race, so widen it here.
+      generousRestart = {
+        startLimitIntervalSec = 300;
+        startLimitBurst = 30;
+        serviceConfig.RestartSec = "5s";
+      };
+    in
+    {
+      "docker-nzbget" = generousRestart;
+      "docker-sonarr" = generousRestart;
+      "docker-radarr" = generousRestart;
     };
-  in {
-    "docker-nzbget" = generousRestart;
-    "docker-sonarr" = generousRestart;
-    "docker-radarr" = generousRestart;
-  };
 }

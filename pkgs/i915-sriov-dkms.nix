@@ -1,7 +1,7 @@
-{
-  stdenv,
-  fetchFromGitHub,
-  kernel,
+{ stdenv
+, fetchFromGitHub
+, kernel
+,
 }:
 stdenv.mkDerivation rec {
   name = "i915-sriov-dkms-${version}";

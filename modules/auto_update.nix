@@ -1,8 +1,7 @@
-{
-  config,
-  lib,
-  inputs,
-  ...
+{ config
+, lib
+, inputs
+, ...
 }: {
   options = {
     autoUpdate.enable =

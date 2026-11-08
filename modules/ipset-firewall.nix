@@ -24,11 +24,10 @@
 #     defaultDrop     = true;
 #     refreshInterval = "Mon *-*-* 03:00:00";
 #   };
-{
-  config,
-  lib,
-  pkgs,
-  ...
+{ config
+, lib
+, pkgs
+, ...
 }:
 with lib; let
   cfg = config.services.ipsetFirewall;
@@ -190,77 +189,86 @@ with lib; let
   # ASN sets → ports 80/443; static CIDR-only sets → restrictPorts.
   # ---------------------------------------------------------------------------
   effectivePorts = _name: set:
-    if set.asns != []
-    then [80 443]
+    if set.asns != [ ]
+    then [ 80 443 ]
     else set.restrictPorts;
 
   # ---------------------------------------------------------------------------
   # Dual-stack firewall rules: mirrored iptables (v4) + ip6tables (v6).
   # ---------------------------------------------------------------------------
-  firewallRules = concatStringsSep "\n" (mapAttrsToList (
-      name: set: let
-        ports = effectivePorts name set;
+  firewallRules = concatStringsSep "\n" (mapAttrsToList
+    (
+      name: set:
+        let
+          ports = effectivePorts name set;
 
-        mkPortRules = ipt: suffix:
-          concatMapStringsSep "\n" (port: ''
-            ${ipt} -A nixos-fw -p tcp --dport ${toString port} \
-              -m set --match-set ${name}_${suffix} src -j nixos-fw-accept
-            ${optionalString cfg.defaultDrop ''
-              ${ipt} -A nixos-fw -p tcp --dport ${toString port} -j DROP
-            ''}
-          '')
-          ports;
+          mkPortRules = ipt: suffix:
+            concatMapStringsSep "\n"
+              (port: ''
+                ${ipt} -A nixos-fw -p tcp --dport ${toString port} \
+                  -m set --match-set ${name}_${suffix} src -j nixos-fw-accept
+                ${optionalString cfg.defaultDrop ''
+                  ${ipt} -A nixos-fw -p tcp --dport ${toString port} -j DROP
+                ''}
+              '')
+              ports;
 
-        mkAllPortsRule = ipt: suffix:
-          optionalString set.allowAllPorts ''
-            ${ipt} -A nixos-fw -m set --match-set ${name}_${suffix} src -j nixos-fw-accept
-          '';
-      in ''
-        # --- Safety net: ensure sets exist before referencing them ---
-        ${pkgs.ipset}/bin/ipset create -exist ${name}_v4 hash:net family inet  comment
-        ${pkgs.ipset}/bin/ipset create -exist ${name}_v6 hash:net family inet6 comment
+          mkAllPortsRule = ipt: suffix:
+            optionalString set.allowAllPorts ''
+              ${ipt} -A nixos-fw -m set --match-set ${name}_${suffix} src -j nixos-fw-accept
+            '';
+        in
+        ''
+          # --- Safety net: ensure sets exist before referencing them ---
+          ${pkgs.ipset}/bin/ipset create -exist ${name}_v4 hash:net family inet  comment
+          ${pkgs.ipset}/bin/ipset create -exist ${name}_v6 hash:net family inet6 comment
 
-        # --- IPv4 rules ---
-        ${mkPortRules "iptables" "v4"}
-        ${mkAllPortsRule "iptables" "v4"}
+          # --- IPv4 rules ---
+          ${mkPortRules "iptables" "v4"}
+          ${mkAllPortsRule "iptables" "v4"}
 
-        # --- IPv6 rules ---
-        ${mkPortRules "ip6tables" "v6"}
-        ${mkAllPortsRule "ip6tables" "v6"}
-      ''
+          # --- IPv6 rules ---
+          ${mkPortRules "ip6tables" "v6"}
+          ${mkAllPortsRule "ip6tables" "v6"}
+        ''
     )
     cfg.allowedSets);
 
   # ---------------------------------------------------------------------------
   # Teardown rules for extraStopCommands.
   # ---------------------------------------------------------------------------
-  stopRules = concatStringsSep "\n" (mapAttrsToList (
-      name: set: let
-        ports = effectivePorts name set;
+  stopRules = concatStringsSep "\n" (mapAttrsToList
+    (
+      name: set:
+        let
+          ports = effectivePorts name set;
 
-        mkDelPortRules = ipt: suffix:
-          concatMapStringsSep "\n" (port: ''
-            ${ipt} -D nixos-fw -p tcp --dport ${toString port} \
-              -m set --match-set ${name}_${suffix} src -j nixos-fw-accept 2>/dev/null || true
-            ${optionalString cfg.defaultDrop ''
-              ${ipt} -D nixos-fw -p tcp --dport ${toString port} -j DROP 2>/dev/null || true
-            ''}
-          '')
-          ports;
+          mkDelPortRules = ipt: suffix:
+            concatMapStringsSep "\n"
+              (port: ''
+                ${ipt} -D nixos-fw -p tcp --dport ${toString port} \
+                  -m set --match-set ${name}_${suffix} src -j nixos-fw-accept 2>/dev/null || true
+                ${optionalString cfg.defaultDrop ''
+                  ${ipt} -D nixos-fw -p tcp --dport ${toString port} -j DROP 2>/dev/null || true
+                ''}
+              '')
+              ports;
 
-        mkDelAllPortsRule = ipt: suffix:
-          optionalString set.allowAllPorts ''
-            ${ipt} -D nixos-fw -m set --match-set ${name}_${suffix} src -j nixos-fw-accept 2>/dev/null || true
-          '';
-      in ''
-        ${mkDelPortRules "iptables" "v4"}
-        ${mkDelAllPortsRule "iptables" "v4"}
-        ${mkDelPortRules "ip6tables" "v6"}
-        ${mkDelAllPortsRule "ip6tables" "v6"}
-      ''
+          mkDelAllPortsRule = ipt: suffix:
+            optionalString set.allowAllPorts ''
+              ${ipt} -D nixos-fw -m set --match-set ${name}_${suffix} src -j nixos-fw-accept 2>/dev/null || true
+            '';
+        in
+        ''
+          ${mkDelPortRules "iptables" "v4"}
+          ${mkDelAllPortsRule "iptables" "v4"}
+          ${mkDelPortRules "ip6tables" "v6"}
+          ${mkDelAllPortsRule "ip6tables" "v6"}
+        ''
     )
     cfg.allowedSets);
-in {
+in
+{
   # ===========================================================================
   # Options
   # ===========================================================================
@@ -268,7 +276,7 @@ in {
     enable = mkEnableOption "ipset-based ASN/CIDR firewall (dual-stack)";
 
     allowedSets = mkOption {
-      default = {};
+      default = { };
       description = ''
         Attribute set of named ipsets. Each entry produces two kernel sets:
         <n>_v4 (inet) and <n>_v6 (inet6), with mirrored iptables and
@@ -279,8 +287,8 @@ in {
         options = {
           cidrs = mkOption {
             type = types.listOf types.str;
-            default = [];
-            example = ["203.0.113.0/24" "2001:db8::/32"];
+            default = [ ];
+            example = [ "203.0.113.0/24" "2001:db8::/32" ];
             description = ''
               Static CIDR blocks to permanently include. IPv4 and IPv6 CIDRs
               can be mixed — they are automatically split into the correct
@@ -290,8 +298,8 @@ in {
 
           asns = mkOption {
             type = types.listOf types.str;
-            default = [];
-            example = ["AS812" "AS577" "AS852"];
+            default = [ ];
+            example = [ "AS812" "AS577" "AS852" ];
             description = ''
               ASNs whose announced prefixes will be fetched from the RIPE API
               for both IPv4 and IPv6. Sets with ASNs are automatically
@@ -319,8 +327,8 @@ in {
 
           restrictPorts = mkOption {
             type = types.listOf types.port;
-            default = [];
-            example = [22 8006];
+            default = [ ];
+            example = [ 22 8006 ];
             description = ''
               TCP ports to restrict for static CIDR-only sets (no asns).
               Ignored when asns is non-empty — ASN sets always use 80/443.
@@ -377,21 +385,21 @@ in {
   config = mkIf cfg.enable {
     assertions = [
       {
-        assertion = cfg.allowedSets != {};
+        assertion = cfg.allowedSets != { };
         message = "services.ipsetFirewall.allowedSets must not be empty.";
       }
     ];
 
-    environment.systemPackages = with pkgs; [ipset curl jq];
+    environment.systemPackages = with pkgs; [ ipset curl jq ];
 
     # -------------------------------------------------------------------------
     # 1. Restore saved state BEFORE the firewall starts.
     # -------------------------------------------------------------------------
     systemd.services.ipset-firewall-restore = {
       description = "Restore ipset state before firewall (dual-stack)";
-      before = ["firewall.service"];
-      wantedBy = ["multi-user.target"];
-      after = ["local-fs.target"];
+      before = [ "firewall.service" ];
+      wantedBy = [ "multi-user.target" ];
+      after = [ "local-fs.target" ];
       serviceConfig = {
         Type = "oneshot";
         RemainAfterExit = true;
@@ -404,9 +412,9 @@ in {
     # -------------------------------------------------------------------------
     systemd.services.ipset-firewall-load = {
       description = "Load/refresh ipset CIDR sets from ASN + UptimeRobot data";
-      after = ["network-online.target" "ipset-firewall-restore.service"];
-      wants = ["network-online.target"];
-      wantedBy = mkIf cfg.refreshOnBoot ["multi-user.target"];
+      after = [ "network-online.target" "ipset-firewall-restore.service" ];
+      wants = [ "network-online.target" ];
+      wantedBy = mkIf cfg.refreshOnBoot [ "multi-user.target" ];
       serviceConfig = {
         Type = "oneshot";
         ExecStart = loadScript;
@@ -419,7 +427,7 @@ in {
     # -------------------------------------------------------------------------
     systemd.timers.ipset-firewall-load = mkIf (cfg.refreshInterval != null) {
       description = "Periodic refresh of ipset sets (ASN + UptimeRobot)";
-      wantedBy = ["timers.target"];
+      wantedBy = [ "timers.target" ];
       timerConfig = {
         OnCalendar = cfg.refreshInterval;
         Persistent = true;

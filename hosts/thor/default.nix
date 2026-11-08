@@ -1,7 +1,6 @@
-{
-  inputs,
-  pkgs,
-  ...
+{ inputs
+, pkgs
+, ...
 }: {
   imports = [
     ./hardware-configuration.nix
@@ -33,20 +32,20 @@
   fileSystems."/mnt/media" = {
     device = "172.16.0.3:/volume2/Media";
     fsType = "nfs4";
-    options = ["auto" "x-systemd.automount" "_netdev"];
+    options = [ "auto" "x-systemd.automount" "_netdev" ];
   };
 
   systemd.services = {
     auto-reboot = {
       description = "Reboot Service";
-      startAt = ["Tue 03:00:00"];
+      startAt = [ "Tue 03:00:00" ];
       serviceConfig = {
         Type = "oneshot";
         ExecStart = "/run/current-system/sw/bin/reboot";
       };
     };
 
-    "borgbackup-job-plex".unitConfig.RequiresMountsFor = ["/mnt/media"];
+    "borgbackup-job-plex".unitConfig.RequiresMountsFor = [ "/mnt/media" ];
   };
 
   services.borgbackup.jobs = {

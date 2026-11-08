@@ -1,4 +1,4 @@
-{config, ...}: {
+{ config, ... }: {
   sops.secrets.grafanaAdminPassword = {
     owner = "grafana";
     group = "grafana";

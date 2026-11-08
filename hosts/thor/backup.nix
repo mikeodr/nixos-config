@@ -1,8 +1,8 @@
-{
-  config,
-  pkgs,
-  ...
-}: let
+{ config
+, pkgs
+, ...
+}:
+let
   paths = [
     "/var/lib/plex/Plex Media Server"
   ];
@@ -10,10 +10,11 @@
     "/var/lib/plex/Plex Media Server/Cache"
     "/var/lib/plex/Plex Media Server/Crash Reports"
   ];
-in {
-  sops.secrets."restic/bucket_access" = {};
-  sops.secrets."restic/thor/repository" = {};
-  sops.secrets."restic/thor/password" = {};
+in
+{
+  sops.secrets."restic/bucket_access" = { };
+  sops.secrets."restic/thor/repository" = { };
+  sops.secrets."restic/thor/password" = { };
 
   services.restic.backups.thor = {
     paths = paths;
@@ -81,5 +82,5 @@ in {
     };
   };
 
-  systemd.services."restic-backups-thor".onFailure = ["restic-notify-failure@%n.service"];
+  systemd.services."restic-backups-thor".onFailure = [ "restic-notify-failure@%n.service" ];
 }

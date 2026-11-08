@@ -1,22 +1,23 @@
-{
-  homeDir,
-  isDarwin,
-  lib,
-  pkgs,
-}: let
+{ homeDir
+, isDarwin
+, lib
+, pkgs
+,
+}:
+let
   sshSessionVariables =
     if pkgs.stdenv.hostPlatform.system == "x86_64-darwin" || pkgs.stdenv.hostPlatform.system == "aarch64-darwin"
     then {
       SSH_AUTH_SOCK = "${homeDir}/Library/Group Containers/2BUA8C4S2C.com.1password/t/agent.sock";
     }
-    else {};
+    else { };
 
   extraShellAliases =
     if isDarwin
     then {
       tailscale = "/Applications/Tailscale.app/Contents/MacOS/Tailscale";
     }
-    else {};
+    else { };
 
   shellAliases = {
     cp = "cp -v";
@@ -35,17 +36,17 @@
     clean = "clear";
   };
 
-  envs = {
-  };
+  envs = { };
 
   pathJoin = builtins.concatStringsSep ":";
-in {
+in
+{
   enable = true;
   dotDir = "${homeDir}/.config/zsh";
 
   history.size = 10000;
 
-  shellAliases = lib.mkMerge [shellAliases extraShellAliases];
+  shellAliases = lib.mkMerge [ shellAliases extraShellAliases ];
 
   sessionVariables = lib.mkMerge [
     envs

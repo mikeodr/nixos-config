@@ -1,5 +1,4 @@
-{pkgs-immich, ...}
-: {
+{ pkgs-immich, ... }: {
   services.immich = {
     enable = true;
     package = pkgs-immich.immich;

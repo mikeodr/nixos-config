@@ -1,8 +1,7 @@
-{
-  pkgs,
-  lib,
-  config,
-  ...
+{ pkgs
+, lib
+, config
+, ...
 }: {
   options = {
     intelAcceleration.enable =
@@ -13,7 +12,7 @@
     # Intel acceleration configs
     nixpkgs.config = {
       packageOverrides = pkgs: {
-        intel-vaapi-driver = pkgs.intel-vaapi-driver.override {enableHybridCodec = true;};
+        intel-vaapi-driver = pkgs.intel-vaapi-driver.override { enableHybridCodec = true; };
       };
     };
 

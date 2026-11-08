@@ -72,88 +72,96 @@
     };
   };
 
-  outputs = {
-    nixpkgs,
-    self,
-    ...
-  } @ inputs: let
-    lib = nixpkgs.lib;
+  outputs =
+    { nixpkgs
+    , self
+    , ...
+    } @ inputs:
+    let
+      lib = nixpkgs.lib;
 
-    overlays = [
-      (final: prev: {
-        gh = inputs.nixpkgs-unstable.legacyPackages.${prev.stdenv.hostPlatform.system}.gh;
-        tailscale = inputs.tailscale.packages."${prev.stdenv.hostPlatform.system}".default;
-      })
-    ];
+      overlays = [
+        (final: prev: {
+          gh = inputs.nixpkgs-unstable.legacyPackages.${prev.stdenv.hostPlatform.system}.gh;
+          tailscale = inputs.tailscale.packages."${prev.stdenv.hostPlatform.system}".default;
+        })
+      ];
 
-    mkSystem = import ./lib/mksystem.nix {
-      inherit inputs;
-      inherit nixpkgs;
-      inherit overlays;
-      inherit self;
-    };
-  in {
-    darwinConfigurations.Michaels-MacBook-Air = mkSystem "Michaels-MacBook-Air" {
-      system = "aarch64-darwin";
-      user = "mikeodr";
-      darwin = true;
-    };
-
-    darwinConfigurations.Michaels-MacBook-Pro = mkSystem "Michaels-MacBook-Pro" {
-      system = "aarch64-darwin";
-      user = "mikeodr";
-      email = "mikeo@tailscale.com";
-      signingkey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBU0iEDDQKTyGr91x3hK93fG79WIARtg8XgvDWbSg0LT";
-      darwin = true;
-    };
-
-    nixosConfigurations = {
-      luna = mkSystem "luna" {
-        system = "x86_64-linux";
+      mkSystem = import ./lib/mksystem.nix {
+        inherit inputs;
+        inherit nixpkgs;
+        inherit overlays;
+        inherit self;
       };
-
-      sherlock = mkSystem "sherlock" {
-        system = "x86_64-linux";
-      };
-
-      tachi = mkSystem "tachi" {
-        system = "aarch64-linux";
-        enableHomeManager = false;
-      };
-
-      thor = mkSystem "thor" {
-        system = "x86_64-linux";
-      };
-    };
-
-    # Deploy over LAN OpenSSH where possible: restarting tailscaled during
-    # activation kills Tailscale SSH sessions and triggers a rollback.
-    deploy.nodes = let
-      lanHosts = ["luna" "sherlock" "thor"];
-      # SSH aliases defined in ~/.ssh/config (keeps public IPs out of the repo)
-      overrides = {tachi = "tachi-deploy";};
     in
-      builtins.mapAttrs (name: cfg: {
-        hostname =
-          overrides.${
-            name
-          } or (
-            if builtins.elem name lanHosts
-            then "${name}.unusedbytes.ca"
-            else name
-          );
-        sshUser = "specter";
-        remoteBuild = true;
-        profiles.system = {
-          user = "root";
-          path = inputs.deploy-rs.lib.${cfg.pkgs.stdenv.hostPlatform.system}.activate.nixos cfg;
-        };
-      })
-      self.nixosConfigurations;
+    {
+      formatter = lib.genAttrs (import inputs.nix-systems) (
+        system: nixpkgs.legacyPackages.${system}.nixpkgs-fmt
+      );
 
-    checks =
-      builtins.mapAttrs
-      (_: deployLib: deployLib.deployChecks self.deploy)
-      (lib.filterAttrs (system: _: lib.hasSuffix "-linux" system) inputs.deploy-rs.lib);
-  };
+      darwinConfigurations.Michaels-MacBook-Air = mkSystem "Michaels-MacBook-Air" {
+        system = "aarch64-darwin";
+        user = "mikeodr";
+        darwin = true;
+      };
+
+      darwinConfigurations.Michaels-MacBook-Pro = mkSystem "Michaels-MacBook-Pro" {
+        system = "aarch64-darwin";
+        user = "mikeodr";
+        email = "mikeo@tailscale.com";
+        signingkey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBU0iEDDQKTyGr91x3hK93fG79WIARtg8XgvDWbSg0LT";
+        darwin = true;
+      };
+
+      nixosConfigurations = {
+        luna = mkSystem "luna" {
+          system = "x86_64-linux";
+        };
+
+        sherlock = mkSystem "sherlock" {
+          system = "x86_64-linux";
+        };
+
+        tachi = mkSystem "tachi" {
+          system = "aarch64-linux";
+          enableHomeManager = false;
+        };
+
+        thor = mkSystem "thor" {
+          system = "x86_64-linux";
+        };
+      };
+
+      # Deploy over LAN OpenSSH where possible: restarting tailscaled during
+      # activation kills Tailscale SSH sessions and triggers a rollback.
+      deploy.nodes =
+        let
+          lanHosts = [ "luna" "sherlock" "thor" ];
+          # SSH aliases defined in ~/.ssh/config (keeps public IPs out of the repo)
+          overrides = { tachi = "tachi-deploy"; };
+        in
+        builtins.mapAttrs
+          (name: cfg: {
+            hostname =
+              overrides.${
+              name
+              } or (
+                if builtins.elem name lanHosts
+                then "${name}.unusedbytes.ca"
+                else name
+              );
+            sshUser = "specter";
+            remoteBuild = true;
+            profiles.system = {
+              user = "root";
+              path = inputs.deploy-rs.lib.${cfg.pkgs.stdenv.hostPlatform.system}.activate.nixos cfg;
+            };
+          })
+          self.nixosConfigurations;
+
+      checks =
+        builtins.mapAttrs
+          (_: deployLib: deployLib.deployChecks self.deploy)
+          (lib.filterAttrs (system: _: lib.hasSuffix "-linux" system) inputs.deploy-rs.lib);
+    };
 }

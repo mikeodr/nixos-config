@@ -1,8 +1,8 @@
-{
-  config,
-  pkgs,
-  ...
-}: let
+{ config
+, pkgs
+, ...
+}:
+let
   blackboxConfig = {
     modules = {
       http_2xx = {
@@ -16,7 +16,8 @@
       };
     };
   };
-in {
+in
+{
   sops.secrets.hassToken = {
     owner = "prometheus";
     mode = "440";
@@ -50,7 +51,7 @@ in {
       {
         static_configs = [
           {
-            targets = ["localhost:9093"];
+            targets = [ "localhost:9093" ];
           }
         ];
       }
@@ -77,16 +78,16 @@ in {
       {
         job_name = "http_probe";
         params = {
-          module = ["http_2xx"];
+          module = [ "http_2xx" ];
         };
         metrics_path = "/probe";
         relabel_configs = [
           {
-            source_labels = ["__address__"];
+            source_labels = [ "__address__" ];
             target_label = "__param_target";
           }
           {
-            source_labels = ["__param_target"];
+            source_labels = [ "__param_target" ];
             target_label = "instance";
           }
           {
@@ -118,16 +119,16 @@ in {
       {
         job_name = "nut_tcp";
         params = {
-          module = ["tcp_connect"];
+          module = [ "tcp_connect" ];
         };
         metrics_path = "/probe";
         relabel_configs = [
           {
-            source_labels = ["__address__"];
+            source_labels = [ "__address__" ];
             target_label = "__param_target";
           }
           {
-            source_labels = ["__param_target"];
+            source_labels = [ "__param_target" ];
             target_label = "instance";
           }
           {
@@ -137,7 +138,7 @@ in {
         ];
         static_configs = [
           {
-            targets = ["172.16.0.15:3493"];
+            targets = [ "172.16.0.15:3493" ];
           }
         ];
       }
@@ -148,7 +149,7 @@ in {
         # See note about checkConfig above
         authorization.credentials_file = config.sops.secrets.hassToken.path;
         scheme = "https";
-        static_configs = [{targets = ["hass.unusedbytes.ca"];}];
+        static_configs = [{ targets = [ "hass.unusedbytes.ca" ]; }];
       }
     ];
   };

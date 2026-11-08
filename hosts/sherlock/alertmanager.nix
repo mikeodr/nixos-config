@@ -1,4 +1,4 @@
-{config, ...}: {
+{ config, ... }: {
   sops.secrets = {
     slackApiHook = {
       owner = "prometheus";
@@ -23,7 +23,7 @@
       };
 
       route = {
-        group_by = ["alertname"];
+        group_by = [ "alertname" ];
         group_wait = "10s";
         group_interval = "10s";
         receiver = "blackhole";
@@ -65,7 +65,7 @@
         }
         {
           name = "warning_receiver";
-          slack_configs = [{send_resolved = true;}];
+          slack_configs = [{ send_resolved = true; }];
         }
       ];
 
@@ -73,7 +73,7 @@
         {
           source_match.severity = "critical";
           target_match.severity = "warning";
-          equal = ["alertname" "dev" "instance"];
+          equal = [ "alertname" "dev" "instance" ];
         }
       ];
     };

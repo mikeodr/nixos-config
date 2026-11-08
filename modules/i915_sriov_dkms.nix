@@ -1,7 +1,6 @@
-{
-  config,
-  lib,
-  ...
+{ config
+, lib
+, ...
 }: {
   options = {
     i915SriovDkms.enable =
@@ -10,7 +9,7 @@
 
   config = lib.mkIf config.i915SriovDkms.enable {
     boot.extraModulePackages = [
-      (config.boot.kernelPackages.callPackage ../pkgs/i915-sriov-dkms.nix {})
+      (config.boot.kernelPackages.callPackage ../pkgs/i915-sriov-dkms.nix { })
     ];
   };
 }

@@ -1,8 +1,7 @@
-{
-  config,
-  lib,
-  pkgs,
-  ...
+{ config
+, lib
+, pkgs
+, ...
 }: {
   options = {
     ip_forwarding.enable =
@@ -10,14 +9,14 @@
 
     ip_forward_interfaces = lib.mkOption {
       type = lib.types.listOf lib.types.str;
-      default = ["ens18"];
+      default = [ "ens18" ];
     };
 
     gro_forwarding.enable = lib.mkEnableOption "Enable UDP GRO forwarding on specified interfaces";
 
     gro_forwarding.interfaces = lib.mkOption {
       type = lib.types.listOf lib.types.str;
-      default = ["ens18"];
+      default = [ "ens18" ];
     };
   };
 
@@ -37,9 +36,9 @@
         script =
           lib.strings.concatStrings (lib.lists.forEach config.gro_forwarding.interfaces
             (x: "${pkgs.ethtool}/bin/ethtool -K ${x} rx-udp-gro-forwarding on rx-gro-list off\n"));
-        wantedBy = ["multi-user.target"];
-        after = ["network.target"];
-        requires = ["network.target"];
+        wantedBy = [ "multi-user.target" ];
+        after = [ "network.target" ];
+        requires = [ "network.target" ];
       };
     })
   ];

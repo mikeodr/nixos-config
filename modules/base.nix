@@ -1,4 +1,4 @@
-{pkgs, ...}: {
+{ pkgs, ... }: {
   imports = [
     ./auto_update.nix
     ./ld_link.nix
@@ -18,8 +18,8 @@
   nix = {
     settings = {
       auto-optimise-store = true;
-      experimental-features = ["nix-command" "flakes"];
-      trusted-users = ["specter"];
+      experimental-features = [ "nix-command" "flakes" ];
+      trusted-users = [ "specter" ];
       warn-dirty = false;
     };
 

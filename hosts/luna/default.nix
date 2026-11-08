@@ -1,9 +1,8 @@
-{
-  config,
-  inputs,
-  pkgs,
-  pkgs-unstable,
-  ...
+{ config
+, inputs
+, pkgs
+, pkgs-unstable
+, ...
 }: {
   disabledModules = [
     "services/security/tsidp.nix"
@@ -89,17 +88,17 @@
     "/mnt/media" = {
       device = "172.16.0.3:/volume2/Media";
       fsType = "nfs4";
-      options = ["auto" "x-systemd.automount" "_netdev"];
+      options = [ "auto" "x-systemd.automount" "_netdev" ];
     };
     "/mnt/music" = {
       device = "172.16.0.3:/volume2/Music";
       fsType = "nfs4";
-      options = ["auto" "x-systemd.automount" "_netdev"];
+      options = [ "auto" "x-systemd.automount" "_netdev" ];
     };
     "/mnt/immich" = {
       device = "172.16.0.3:/volume2/immich";
       fsType = "nfs4";
-      options = ["auto" "x-systemd.automount" "_netdev"];
+      options = [ "auto" "x-systemd.automount" "_netdev" ];
     };
   };
 
@@ -113,7 +112,7 @@
   };
 
   # Give jellyfin access to the GPU
-  users.users.jellyfin.extraGroups = ["render" "video"];
+  users.users.jellyfin.extraGroups = [ "render" "video" ];
 
   services.audiobookshelf = {
     enable = true;
@@ -121,7 +120,7 @@
     host = "0.0.0.0";
     port = 8081;
   };
-  networking.firewall.interfaces.tailscale0.allowedTCPPorts = [8081];
+  networking.firewall.interfaces.tailscale0.allowedTCPPorts = [ 8081 ];
 
   services.ntfy-sh = {
     enable = true;

@@ -1,7 +1,6 @@
-{
-  config,
-  lib,
-  ...
+{ config
+, lib
+, ...
 }: {
   options = {
     acmeCertGeneration.enable =
@@ -9,7 +8,7 @@
   };
 
   config = lib.mkIf config.acmeCertGeneration.enable {
-    sops.secrets."security/acme/cloudflare_dns_api_token" = {};
+    sops.secrets."security/acme/cloudflare_dns_api_token" = { };
 
     security.acme = {
       acceptTerms = true;
@@ -17,7 +16,7 @@
 
       certs."unusedbytes.ca" = {
         domain = "unusedbytes.ca";
-        extraDomainNames = ["*.unusedbytes.ca"];
+        extraDomainNames = [ "*.unusedbytes.ca" ];
         dnsProvider = "cloudflare";
         dnsPropagationCheck = true;
         credentialFiles = {

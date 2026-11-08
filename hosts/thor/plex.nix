@@ -1,8 +1,8 @@
-{
-  config,
-  pkgs,
-  ...
-}: let
+{ config
+, pkgs
+, ...
+}:
+let
   plex-version = {
     version = "1.43.5.11079-b3b13e506";
     sha256 = "sha256-dOmnHJfgbW6SXMQ5gnkUH9g47p30RvkOdpYU+iyHogY=";
@@ -16,12 +16,13 @@
       };
     });
   };
-in {
+in
+{
   sops.secrets = {
     "plex_env" = {
       sopsFile = ./secrets.yaml;
     };
-    "security/acme/plex_pkcs12_pass" = {};
+    "security/acme/plex_pkcs12_pass" = { };
   };
 
   security.acme.certs."unusedbytes.ca" = {
@@ -31,11 +32,11 @@ in {
       chown acme:plex plex.pkfx
       chmod 640 plex.pkfx
     '';
-    reloadServices = ["plex" "caddy"];
+    reloadServices = [ "plex" "caddy" ];
   };
 
-  users.users.plex.extraGroups = ["acme" "render" "video"];
-  users.users.caddy.extraGroups = ["acme"];
+  users.users.plex.extraGroups = [ "acme" "render" "video" ];
+  users.users.caddy.extraGroups = [ "acme" ];
 
   services = {
     plex = {

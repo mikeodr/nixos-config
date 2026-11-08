@@ -1,20 +1,20 @@
-{
-  user,
-  email,
-  signingkey,
-  ...
-}: {
-  pkgs,
-  lib,
-  ...
-}: let
+{ user
+, email
+, signingkey
+, ...
+}: { pkgs
+   , lib
+   , ...
+   }:
+let
   homeDir =
     if isDarwin
     then "/Users/${user}"
     else "/home/${user}";
   isDarwin = pkgs.stdenv.hostPlatform.isDarwin;
   isLinux = pkgs.stdenv.hostPlatform.isLinux;
-in {
+in
+{
   programs.home-manager.enable = true;
 
   # Manpage generation builds options.json in a way that triggers a
@@ -70,7 +70,7 @@ in {
   programs.zoxide = {
     enable = true;
     enableZshIntegration = true;
-    options = ["--cmd cd"];
+    options = [ "--cmd cd" ];
   };
 
   programs.starship = {
@@ -95,13 +95,12 @@ in {
         "rectangle/RectangleConfig.json".text = builtins.readFile ./RectangleConfig.json;
         "ghostty/config".text = builtins.readFile ./ghostty.darwin;
       }
-      else {}
+      else { }
     )
     // (
       if isLinux
-      then {
-      }
-      else {}
+      then { }
+      else { }
     );
 
   programs.git = {
@@ -149,13 +148,13 @@ in {
   # macOS-specific targets to copy apps instead of linking
   # See: https://github.com/nix-community/home-manager/issues/8357
   targets =
-    {}
+    { }
     // (
       if isDarwin
       then {
         darwin.copyApps.enable = true;
         darwin.linkApps.enable = false;
       }
-      else {}
+      else { }
     );
 }

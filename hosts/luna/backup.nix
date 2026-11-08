@@ -1,8 +1,8 @@
-{
-  config,
-  pkgs,
-  ...
-}: let
+{ config
+, pkgs
+, ...
+}:
+let
   # Shared between the "services" and "services-remote" restic jobs below.
   servicePaths = [
     "/var/lib/audiobookshelf/metadata/backups"
@@ -35,17 +35,18 @@
       ${pkgs.curl}/bin/curl -fsS "$uri?status=down&msg=${job}" >/dev/null
     fi
   '';
-in {
-  sops.secrets."restic/bucket_access" = {};
-  sops.secrets."restic/immich/repository" = {};
-  sops.secrets."restic/immich/password" = {};
-  sops.secrets."restic/luna/repository" = {};
-  sops.secrets."restic/luna/password" = {};
-  sops.secrets."restic/luna/uptimeuri/immich" = {};
-  sops.secrets."restic/luna/uptimeuri/immich-check" = {};
-  sops.secrets."restic/luna/uptimeuri/services" = {};
-  sops.secrets."restic/luna/uptimeuri/services-remote" = {};
-  sops.secrets."restic/luna/uptimeuri/services-remote-check" = {};
+in
+{
+  sops.secrets."restic/bucket_access" = { };
+  sops.secrets."restic/immich/repository" = { };
+  sops.secrets."restic/immich/password" = { };
+  sops.secrets."restic/luna/repository" = { };
+  sops.secrets."restic/luna/password" = { };
+  sops.secrets."restic/luna/uptimeuri/immich" = { };
+  sops.secrets."restic/luna/uptimeuri/immich-check" = { };
+  sops.secrets."restic/luna/uptimeuri/services" = { };
+  sops.secrets."restic/luna/uptimeuri/services-remote" = { };
+  sops.secrets."restic/luna/uptimeuri/services-remote-check" = { };
 
   # Immich's docs (docs.immich.app/administration/backup-and-restore) list
   # upload/ and library/ as the directories holding original assets that
@@ -53,7 +54,7 @@ in {
   # that are safe to skip. backups/ holds Immich's own daily pg_dump of the
   # database and is included so the DB stays backed up alongside the media.
   services.restic.backups.immich = {
-    paths = ["/mnt/immich"];
+    paths = [ "/mnt/immich" ];
     exclude = [
       "/mnt/immich/thumbs"
       "/mnt/immich/encoded-video"
@@ -106,7 +107,7 @@ in {
     };
   };
 
-  systemd.services."restic-backups-immich".unitConfig.RequiresMountsFor = ["/mnt/immich"];
+  systemd.services."restic-backups-immich".unitConfig.RequiresMountsFor = [ "/mnt/immich" ];
 
   services.restic.backups.services = {
     paths = servicePaths;
@@ -129,7 +130,7 @@ in {
     ];
   };
 
-  systemd.services."restic-backups-services".unitConfig.RequiresMountsFor = ["/mnt/media"];
+  systemd.services."restic-backups-services".unitConfig.RequiresMountsFor = [ "/mnt/media" ];
 
   # Offsite counterpart of the job above, converted from the old
   services.restic.backups.services-remote = {
@@ -204,9 +205,9 @@ in {
     };
   };
 
-  systemd.services."restic-backups-immich".onFailure = ["restic-notify-failure@%n.service"];
-  systemd.services."restic-backups-immich-check".onFailure = ["restic-notify-failure@%n.service"];
-  systemd.services."restic-backups-services".onFailure = ["restic-notify-failure@%n.service"];
-  systemd.services."restic-backups-services-remote".onFailure = ["restic-notify-failure@%n.service"];
-  systemd.services."restic-backups-services-remote-check".onFailure = ["restic-notify-failure@%n.service"];
+  systemd.services."restic-backups-immich".onFailure = [ "restic-notify-failure@%n.service" ];
+  systemd.services."restic-backups-immich-check".onFailure = [ "restic-notify-failure@%n.service" ];
+  systemd.services."restic-backups-services".onFailure = [ "restic-notify-failure@%n.service" ];
+  systemd.services."restic-backups-services-remote".onFailure = [ "restic-notify-failure@%n.service" ];
+  systemd.services."restic-backups-services-remote-check".onFailure = [ "restic-notify-failure@%n.service" ];
 }

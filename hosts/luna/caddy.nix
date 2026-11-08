@@ -1,6 +1,6 @@
-{config, ...}: {
+{ config, ... }: {
   # Ensure cert renewals reload caddy
-  security.acme.certs."unusedbytes.ca".reloadServices = ["caddy"];
+  security.acme.certs."unusedbytes.ca".reloadServices = [ "caddy" ];
 
   services.tailscale.permitCertUid = "caddy";
   services.caddy = {
@@ -123,7 +123,7 @@
         '';
       };
       "ntfy.unusedbytes.ca" = {
-        serverAliases = ["ntfy.cerberus-basilisk.ts.net"];
+        serverAliases = [ "ntfy.cerberus-basilisk.ts.net" ];
         extraConfig = ''
           reverse_proxy http://localhost:8888
 

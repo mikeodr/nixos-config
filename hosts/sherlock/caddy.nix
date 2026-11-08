@@ -1,7 +1,7 @@
-{config, ...}: {
+{ config, ... }: {
   acmeCertGeneration.enable = true;
 
-  security.acme.certs."unusedbytes.ca".reloadServices = ["caddy"];
+  security.acme.certs."unusedbytes.ca".reloadServices = [ "caddy" ];
 
   services.caddy = {
     enable = true;
@@ -26,6 +26,6 @@
   };
 
   networking.firewall = {
-    allowedTCPPorts = [80 443];
+    allowedTCPPorts = [ 80 443 ];
   };
 }

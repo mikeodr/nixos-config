@@ -1,14 +1,13 @@
-{
-  config,
-  pkgs,
-  self,
-  currentSystemUser,
-  ...
+{ config
+, pkgs
+, self
+, currentSystemUser
+, ...
 }: {
   # direnv 2.37.1 fish test is killed (SIGKILL) by the macOS sandbox during build
   nixpkgs.overlays = [
     (final: prev: {
-      direnv = prev.direnv.overrideAttrs (_: {doCheck = false;});
+      direnv = prev.direnv.overrideAttrs (_: { doCheck = false; });
     })
   ];
 
@@ -119,7 +118,7 @@
 
   system.startup.chime = false;
 
-  sops.secrets.github_token = {};
+  sops.secrets.github_token = { };
 
   sops.templates = {
     nix-netrc-github = {
@@ -146,7 +145,7 @@
       auto-optimise-store = true;
       # Lets deploy-rs remote builds pass --store without
       # "not a trusted user" warnings from the local daemon.
-      trusted-users = ["root" "mikeodr"];
+      trusted-users = [ "root" "mikeodr" ];
     };
   };
 

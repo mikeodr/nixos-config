@@ -1,16 +1,15 @@
-{
-  config,
-  pkgs,
-  ...
+{ config
+, pkgs
+, ...
 }: {
   # Keep Tailscale's advertised relay static endpoints in sync with luna's
   # current public addresses, since both can change (DHCP lease renewal /
   # SLAAC renumbering).
   systemd.services.tailscale-relay-endpoints = {
     description = "Update Tailscale relay static endpoints with luna's current public addresses";
-    after = ["network-online.target" "tailscaled.service"];
-    wants = ["network-online.target"];
-    path = [pkgs.iproute2 pkgs.gawk pkgs.curl];
+    after = [ "network-online.target" "tailscaled.service" ];
+    wants = [ "network-online.target" ];
+    path = [ pkgs.iproute2 pkgs.gawk pkgs.curl ];
     serviceConfig.Type = "oneshot";
     script = ''
       set -euo pipefail
@@ -40,7 +39,7 @@
 
   systemd.timers.tailscale-relay-endpoints = {
     description = "Periodically refresh Tailscale relay static endpoints";
-    wantedBy = ["timers.target"];
+    wantedBy = [ "timers.target" ];
     timerConfig = {
       OnBootSec = "2min";
       OnUnitActiveSec = "12h";
