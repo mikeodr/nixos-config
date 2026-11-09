@@ -109,7 +109,7 @@ in
       user = {
         name = "Mike O'Driscoll";
         email = email;
-        signingkey = signingkey;
+        signingkey = lib.mkIf (signingkey != null) signingkey;
       };
 
       init = {

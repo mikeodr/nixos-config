@@ -143,6 +143,13 @@
         claude = mkHome "claude" {
           system = "x86_64-linux";
         };
+
+        mikeo-llm-sandbox = mkHome "mikeo-llm-sandbox" {
+          system = "x86_64-linux";
+          user = "ubuntu";
+          email = "mikeo@tailscale.com";
+          signingkey = null;
+        };
       };
 
       # Deploy over LAN OpenSSH where possible: restarting tailscaled during
