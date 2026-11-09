@@ -93,6 +93,12 @@
         inherit overlays;
         inherit self;
       };
+
+      mkHome = import ./lib/mkhome.nix {
+        inherit inputs;
+        inherit nixpkgs;
+        inherit overlays;
+      };
     in
     {
       formatter = lib.genAttrs (import inputs.nix-systems) (
@@ -132,6 +138,13 @@
         };
       };
 
+      # Standalone home-manager configs for non-NixOS hosts
+      homeConfigurations = {
+        claude = mkHome "claude" {
+          system = "x86_64-linux";
+        };
+      };
+
       # Deploy over LAN OpenSSH where possible: restarting tailscaled during
       # activation kills Tailscale SSH sessions and triggers a rollback.
       deploy.nodes =
@@ -157,7 +170,19 @@
               path = inputs.deploy-rs.lib.${cfg.pkgs.stdenv.hostPlatform.system}.activate.nixos cfg;
             };
           })
-          self.nixosConfigurations;
+          self.nixosConfigurations
+        // builtins.mapAttrs
+          (name: cfg: {
+            hostname = name;
+            sshUser = cfg.config.home.username;
+            remoteBuild = true;
+            # Home-manager only: no system profile, activate as the user
+            profiles.home = {
+              user = cfg.config.home.username;
+              path = inputs.deploy-rs.lib.${cfg.pkgs.stdenv.hostPlatform.system}.activate.home-manager cfg;
+            };
+          })
+          self.homeConfigurations;
 
       checks =
         builtins.mapAttrs
