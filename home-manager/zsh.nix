@@ -56,6 +56,7 @@ in
         "/Applications/Wireshark.app/Contents/MacOS"
         "${homeDir}/go/bin"
         "${homeDir}/bin"
+        "${homeDir}/.local/bin"
         "$PATH"
       ];
     }
