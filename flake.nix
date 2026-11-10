@@ -100,11 +100,12 @@
         inherit overlays;
       };
 
-      # Nodes only reachable from specific networks. They get the `on-demand`
-      # deploy group; everything else gets `default`.
-      #   deploy . --groups default     # skip on-demand hosts
-      #   deploy .#mikeo-llm-sandbox    # deploy one explicitly
-      onDemandHosts = [ "mikeo-llm-sandbox" ];
+      # deploy-rs groups per node; nodes not listed get [ "home" ].
+      #   deploy . --groups home        # personal hosts
+      #   deploy . --groups work        # work hosts (only reachable from work network)
+      nodeGroups = {
+        mikeo-llm-sandbox = [ "work" ];
+      };
     in
     {
       formatter = lib.genAttrs (import inputs.nix-systems) (
@@ -166,7 +167,7 @@
           # SSH aliases defined in ~/.ssh/config (keeps public IPs out of the repo)
           overrides = { tachi = "tachi-deploy"; };
           withGroups = builtins.mapAttrs (name: node: node // {
-            groups = if builtins.elem name onDemandHosts then [ "on-demand" ] else [ "home" ];
+            groups = nodeGroups.${name} or [ "home" ];
           });
         in
         withGroups (builtins.mapAttrs
