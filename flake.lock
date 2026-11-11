@@ -245,6 +245,22 @@
         "type": "github"
       }
     },
+    "immich": {
+      "locked": {
+        "lastModified": 1794426753,
+        "narHash": "sha256-EqGvp/LEyqcsXJvR9ExNjg5/odzlEcwfNjOWfKFdxi0=",
+        "owner": "nixos",
+        "repo": "nixpkgs",
+        "rev": "0c008d2a0fa17e3a2fc525e6e75c1ecde9944d9d",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nixos",
+        "ref": "master",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
     "intel-gpu-exporter": {
       "inputs": {
         "nixpkgs": [
@@ -390,22 +406,6 @@
         "type": "github"
       }
     },
-    "nixpkgs-immich": {
-      "locked": {
-        "lastModified": 1794003362,
-        "narHash": "sha256-bX+pIUSsGJtV0uQBhHgIPFuTG8rhpmD2I7NISP8q7Uc=",
-        "owner": "nixos",
-        "repo": "nixpkgs",
-        "rev": "073bb6d3d6c0bf2799395d4c882eab0fe5767844",
-        "type": "github"
-      },
-      "original": {
-        "owner": "nixos",
-        "ref": "master",
-        "repo": "nixpkgs",
-        "type": "github"
-      }
-    },
     "nixpkgs-regression": {
       "locked": {
         "lastModified": 1643052045,
@@ -497,13 +497,13 @@
         "determinate": "determinate",
         "disko": "disko",
         "home-manager": "home-manager",
+        "immich": "immich",
         "intel-gpu-exporter": "intel-gpu-exporter",
         "nix-darwin": "nix-darwin",
         "nix-homebrew": "nix-homebrew",
         "nix-systems": "nix-systems",
         "nixpkgs": "nixpkgs_3",
         "nixpkgs-darwin": "nixpkgs-darwin",
-        "nixpkgs-immich": "nixpkgs-immich",
         "nixpkgs-unstable": "nixpkgs-unstable",
         "prometheus-plex-exporter": "prometheus-plex-exporter",
         "sops-nix": "sops-nix",

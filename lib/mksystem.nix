@@ -42,7 +42,7 @@ systemFunc {
           inherit system;
           config.allowUnfree = true;
         };
-        pkgs-immich = import inputs.nixpkgs-immich {
+        pkgs-immich = import inputs.immich {
           inherit system;
           config.allowUnfree = true;
         };
