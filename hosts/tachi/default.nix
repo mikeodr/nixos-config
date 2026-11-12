@@ -44,7 +44,20 @@
     uptime-kuma = {
       enable = true;
       appriseSupport = true;
-      package = pkgs-unstable.uptime-kuma;
+      package = pkgs-unstable.uptime-kuma.overrideAttrs (old: rec {
+        version = "2.5.11";
+        src = pkgs.fetchFromGitHub {
+          owner = "louislam";
+          repo = "uptime-kuma";
+          tag = version;
+          hash = "sha256-2qRqcZ9xEbxUVCGQa1+3rCXfgaCSM867CtwRMEjG+bI=";
+        };
+        npmDeps = pkgs.fetchNpmDeps {
+          inherit src;
+          name = "uptime-kuma-${version}-npm-deps";
+          hash = "sha256-mPaQ72EpqWsEmXPvv27+AYkjHJMLNQ1NwukBqwoKblY=";
+        };
+      });
     };
 
     ntfy-sh = {
