@@ -6,7 +6,6 @@
 }: {
   imports = [
     ./disk-config.nix
-    ./btc.nix
     ./hardware-configuration.nix
     ../../modules/server.nix
     ../../modules/ipset-firewall.nix
