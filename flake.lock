@@ -247,11 +247,11 @@
     },
     "immich": {
       "locked": {
-        "lastModified": 1794426753,
-        "narHash": "sha256-EqGvp/LEyqcsXJvR9ExNjg5/odzlEcwfNjOWfKFdxi0=",
+        "lastModified": 1794770964,
+        "narHash": "sha256-DGIH/6RiJoJDKhld1AQgLNLlmEZJRYH8ep8S1/QAPVw=",
         "owner": "nixos",
         "repo": "nixpkgs",
-        "rev": "0c008d2a0fa17e3a2fc525e6e75c1ecde9944d9d",
+        "rev": "a509423fafa2671f7787892773522fbf95eee94e",
         "type": "github"
       },
       "original": {
