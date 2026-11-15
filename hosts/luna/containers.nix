@@ -32,7 +32,7 @@ in
       };
 
       mealie = {
-        image = "ghcr.io/mealie-recipes/mealie:v2.5.0";
+        image = "ghcr.io/mealie-recipes/mealie:v3.31.0";
         autoStart = true;
         volumes = [ "/var/lib/pods/mealie/data:/app/data" ];
         environmentFiles = [
@@ -44,11 +44,13 @@ in
           PGID = "1000";
           ALLOW_SIGNUP = "false";
           DB_ENGINE = "sqlite";
-          BASE_URL = "mealie.unusedbytes.ca";
+          BASE_URL = "https://mealie.unusedbytes.ca";
           OIDC_AUTH_ENABLED = "true";
           OIDC_AUTO_REDIRECT = "false";
           OIDC_PROVIDER_NAME = "Tailscale";
           OIDC_NAME_CLAIM = "email";
+          # tsidp does not emit the email_verified claim (required since v3.21.0)
+          OIDC_REQUIRES_EMAIL_VERIFICATION = "false";
           # OIDC secrets expected in env file (config.sops.secrets.mealie.path):
           # OIDC_CLIENT_ID
           # OIDC_CLIENT_SECRET
