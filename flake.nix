@@ -149,6 +149,7 @@
       homeConfigurations = {
         claude = mkHome "claude" {
           system = "x86_64-linux";
+          signingkey = null;
         };
 
         mikeo-llm-sandbox = mkHome "mikeo-llm-sandbox" {
