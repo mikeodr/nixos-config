@@ -139,7 +139,7 @@ in
       core.autocrlf = "input";
       core.excludesFile = "${homeDir}/.config/git/ignore";
       # Sign all commits using ssh key
-      commit.gpgsign = true;
+      commit.gpgsign = signingkey != null;
       gpg.format = "ssh";
       push.autoSetupRemote = true;
     };
