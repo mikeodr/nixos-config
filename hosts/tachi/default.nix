@@ -45,17 +45,17 @@
       enable = true;
       appriseSupport = true;
       package = pkgs-unstable.uptime-kuma.overrideAttrs (old: rec {
-        version = "2.5.11";
+        version = "2.5.12";
         src = pkgs.fetchFromGitHub {
           owner = "louislam";
           repo = "uptime-kuma";
           tag = version;
-          hash = "sha256-2qRqcZ9xEbxUVCGQa1+3rCXfgaCSM867CtwRMEjG+bI=";
+          hash = "sha256-AibXoazv1d79ORKF4CERMz0LauTxO2wAGohDd1szz5U=";
         };
         npmDeps = pkgs.fetchNpmDeps {
           inherit src;
           name = "uptime-kuma-${version}-npm-deps";
-          hash = "sha256-mPaQ72EpqWsEmXPvv27+AYkjHJMLNQ1NwukBqwoKblY=";
+          hash = "sha256-qR2DmvaflGcsACy4Jb91SY2XBB4HlCJOTG1iUHTSHUc=";
         };
       });
     };
