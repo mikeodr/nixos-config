@@ -23,8 +23,27 @@
       # devices = [ ];
       efiSupport = true;
       efiInstallAsRemovable = true;
+      configurationLimit = 3;
     };
   };
+
+  # The disk can't be grown, so keep the store and logs on a short leash.
+  nix = {
+    gc = {
+      dates = lib.mkForce "daily";
+      options = lib.mkForce "--delete-older-than 3d";
+    };
+    settings = {
+      # Deploys use remoteBuild, so builds land here: if free space drops
+      # below min-free mid-build, Nix GCs until max-free is available.
+      min-free = 3 * 1024 * 1024 * 1024;
+      max-free = 8 * 1024 * 1024 * 1024;
+    };
+  };
+
+  services.journald.extraConfig = ''
+    SystemMaxUse=500M
+  '';
 
   networking.hostName = "tachi";
   networking.domain = "";
