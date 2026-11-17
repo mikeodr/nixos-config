@@ -73,6 +73,17 @@ in
     options = [ "--cmd cd" ];
   };
 
+  # Ctrl-R: history search, Ctrl-T: insert file path, Alt-C: cd into subdir
+  programs.fzf = {
+    enable = true;
+    enableZshIntegration = true;
+    defaultOptions = [
+      "--height=40%"
+      "--layout=reverse"
+      "--border"
+    ];
+  };
+
   programs.starship = {
     enable = true;
     enableBashIntegration = true;
