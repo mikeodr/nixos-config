@@ -64,12 +64,6 @@
       inputs.systems.follows = "nix-systems";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-
-    prometheus-plex-exporter = {
-      url = "github:mikeodr/prometheus-plex-exporter";
-      inputs.nixpkgs.follows = "nixpkgs";
-      inputs.systems.follows = "nix-systems";
-    };
   };
 
   outputs =

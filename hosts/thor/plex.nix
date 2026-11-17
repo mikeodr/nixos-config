@@ -82,10 +82,5 @@ in
       enable = true;
       openFirewall = true;
     };
-
-    prometheus-plex-exporter = {
-      enable = true;
-      environmentFile = config.sops.secrets.plex_env.path;
-    };
   };
 }

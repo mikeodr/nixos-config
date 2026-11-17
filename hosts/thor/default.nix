@@ -9,7 +9,6 @@
     ./plex.nix
     ./backup.nix
     inputs.intel-gpu-exporter.nixosModules.default
-    inputs.prometheus-plex-exporter.nixosModules.default
   ];
 
   gro_forwarding.enable = true;
