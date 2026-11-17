@@ -271,11 +271,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1793114843,
-        "narHash": "sha256-cEcQTrzVgQ8/acDixPVXMOaxJShcVdkOzFTbAsteeuY=",
+        "lastModified": 1794941026,
+        "narHash": "sha256-ijUxqoSPlcWueT1Ka5vYJbt+xl/7YLoyWzUJ6oDUgC0=",
         "owner": "mikeodr",
         "repo": "intel-gpu-exporter-go",
-        "rev": "aef6f012cb0ab0b2b1062642dd576dac4c288f37",
+        "rev": "07db847c0c1875689ddce03fad353eeb366edd4d",
         "type": "github"
       },
       "original": {
@@ -478,11 +478,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1793114634,
-        "narHash": "sha256-aMs0BuZ7hBANymp6wuHC8DC16SV9Oz9HMzu2GQKqXXQ=",
+        "lastModified": 1794506398,
+        "narHash": "sha256-erlAzR5kkvH/bZ1LL+1CtvwqsWBIetzeU4VkhWd+hvo=",
         "owner": "mikeodr",
         "repo": "prometheus-plex-exporter",
-        "rev": "e518d42445d588c28b2e8a779ea8a8aa865bd587",
+        "rev": "e5703768006cd25eceb6e1503e47a04c970a97b1",
         "type": "github"
       },
       "original": {
