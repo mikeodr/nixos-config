@@ -35,6 +35,9 @@
   # Contains ATTIC_SERVER_TOKEN_RS256_SECRET_BASE64="<openssl genrsa -traditional 4096 | base64 -w0>"
   sops.secrets."atticd/env" = {
     sopsFile = ./secrets.yaml;
+    # Rotating the signing key must restart atticd, or it keeps validating
+    # tokens against the old key.
+    restartUnits = [ "atticd.service" ];
   };
 
   services.atticd = {
