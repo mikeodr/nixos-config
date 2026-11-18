@@ -1,6 +1,10 @@
 # Build every nixosConfiguration and push the closures to the Attic cache on
 # forge, so deploy-rs (remoteBuild = true) substitutes instead of building.
 #
+# One job per system (not per host): all hosts of a system are built in a
+# single `nix build`, so shared derivations (Tailscale's Go toolchain,
+# tailscale, sops-install-secrets, the i915 DKMS module, ...) build once.
+#
 # - Pull requests: build only (GitHub Actions cache via Magic Nix Cache).
 # - main: also join the tailnet as tag:ci (GitHub OIDC -> Tailscale workload
 #   identity, subject repo:mikeodr/nixos-config:ref:refs/heads/main), pull
@@ -29,7 +33,7 @@ env:
 
 jobs:
   hosts:
-    name: Discover hosts
+    name: Discover systems
     runs-on: ubuntu-latest
     outputs:
       matrix: ${{ steps.matrix.outputs.matrix }}
@@ -43,17 +47,23 @@ jobs:
       - id: matrix
         name: List nixosConfigurations
         run: |
-          # shellcheck disable=SC2016 # ${n} is Nix interpolation
-          matrix=$(nix eval --json .#nixosConfigurations --apply 'cs: map (n: {
-            host = n;
-            runner = if cs.${n}.pkgs.stdenv.hostPlatform.system == "aarch64-linux"
-                     then "ubuntu-24.04-arm" else "ubuntu-latest";
-          }) (builtins.attrNames cs)')
+          # One entry per system: { system, runner, hosts = "a b c" }.
+          # shellcheck disable=SC2016 # ${n}/${s} are Nix interpolation
+          matrix=$(nix eval --json .#nixosConfigurations --apply 'cs:
+            let
+              bySystem = builtins.groupBy
+                (n: cs.${n}.pkgs.stdenv.hostPlatform.system)
+                (builtins.attrNames cs);
+            in map (s: {
+              system = s;
+              runner = if s == "aarch64-linux" then "ubuntu-24.04-arm" else "ubuntu-latest";
+              hosts = builtins.concatStringsSep " " bySystem.${s};
+            }) (builtins.attrNames bySystem)')
           echo "$matrix" | jq .
           echo "matrix=$matrix" >> "$GITHUB_OUTPUT"
 
   build:
-    name: Build ${{ matrix.host }}
+    name: Build ${{ matrix.system }}
     needs: hosts
     runs-on: ${{ matrix.runner }}
     permissions:
@@ -99,12 +109,50 @@ jobs:
           # Adds forge as a substituter (+ netrc) for this runner's builds.
           "$RUNNER_TEMP/attic-client/bin/attic" use "forge:$ATTIC_CACHE"
 
-      - name: Build
+      - name: Build ${{ matrix.hosts }}
+        env:
+          HOSTS: ${{ matrix.hosts }}
         run: |
-          nix build -L -o result \
-            '.#nixosConfigurations.${{ matrix.host }}.config.system.build.toplevel'
+          installables=()
+          for h in $HOSTS; do
+            installables+=(".#nixosConfigurations.$h.config.system.build.toplevel")
+          done
+          # --keep-going: one broken host doesn't stop the others building.
+          nix build -L --keep-going --no-link "${installables[@]}"
+
+      - name: Collect results
+        if: always()
+        env:
+          HOSTS: ${{ matrix.hosts }}
+        run: |
+          {
+            echo "### ${{ matrix.system }}"
+            echo "| Host | Result |"
+            echo "|---|---|"
+          } >> "$GITHUB_STEP_SUMMARY"
+          : > "$RUNNER_TEMP/built-paths"
+          for h in $HOSTS; do
+            # Eval the store path, then check it exists locally (never builds).
+            if ! out=$(nix eval --raw ".#nixosConfigurations.$h.config.system.build.toplevel.outPath"); then
+              echo "| $h | ❌ eval failed |" >> "$GITHUB_STEP_SUMMARY"
+              continue
+            fi
+            if nix path-info "$out" >/dev/null 2>&1; then
+              echo "$out" >> "$RUNNER_TEMP/built-paths"
+              echo "| $h | ✅ built |" >> "$GITHUB_STEP_SUMMARY"
+            else
+              echo "| $h | ❌ failed |" >> "$GITHUB_STEP_SUMMARY"
+            fi
+          done
+          cat "$RUNNER_TEMP/built-paths"
 
       - name: Push to Attic
-        if: env.PUSH == 'true'
-        # Paths signed by cache.nixos.org or already in the cache are skipped.
-        run: attic push "forge:$ATTIC_CACHE" result
+        # Push whatever built, even if another host on this system failed.
+        if: always() && env.PUSH == 'true'
+        run: |
+          if [ ! -s "$RUNNER_TEMP/built-paths" ]; then
+            echo "Nothing built; nothing to push."
+            exit 0
+          fi
+          # Paths signed by cache.nixos.org or already in the cache are skipped.
+          xargs attic push "forge:$ATTIC_CACHE" < "$RUNNER_TEMP/built-paths"
