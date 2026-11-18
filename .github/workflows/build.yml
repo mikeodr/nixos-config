@@ -103,6 +103,10 @@ jobs:
         env:
           ATTIC_TOKEN: ${{ secrets.ATTIC_TOKEN }}
         run: |
+          # atticd-atticadm runs via `systemd-run --pty`, so tokens copied from its
+          # output can carry a trailing \r. An invalid token silently falls back
+          # to anonymous (read-only on a public cache), so strip whitespace.
+          ATTIC_TOKEN=$(printf %s "$ATTIC_TOKEN" | tr -d '[:space:]')
           nix build --inputs-from . nixpkgs#attic-client -o "$RUNNER_TEMP/attic-client"
           echo "$RUNNER_TEMP/attic-client/bin" >> "$GITHUB_PATH"
           "$RUNNER_TEMP/attic-client/bin/attic" login forge "$ATTIC_ENDPOINT" "$ATTIC_TOKEN"
