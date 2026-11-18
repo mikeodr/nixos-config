@@ -63,6 +63,7 @@ in
         static_configs = [
           {
             targets = [
+              "forge.unusedbytes.ca:9100"
               "fusion01.unusedbytes.ca:9100"
               "fusion02.unusedbytes.ca:9100"
               "fusion03.unusedbytes.ca:9100"

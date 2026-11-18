@@ -1,0 +1,110 @@
+# Build every nixosConfiguration and push the closures to the Attic cache on
+# forge, so deploy-rs (remoteBuild = true) substitutes instead of building.
+#
+# - Pull requests: build only (GitHub Actions cache via Magic Nix Cache).
+# - main: also join the tailnet as tag:ci (GitHub OIDC -> Tailscale workload
+#   identity, subject repo:mikeodr/nixos-config:ref:refs/heads/main), pull
+#   from and push to forge.
+#
+# Secrets: TS_OAUTH_CLIENT_ID, TS_AUDIENCE, ATTIC_TOKEN (--pull home --push home)
+name: build-hosts
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: build-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  ATTIC_ENDPOINT: https://forge.cerberus-basilisk.ts.net
+  ATTIC_CACHE: home
+  PUSH: ${{ github.event_name != 'pull_request' && github.ref == 'refs/heads/main' }}
+
+jobs:
+  hosts:
+    name: Discover hosts
+    runs-on: ubuntu-latest
+    outputs:
+      matrix: ${{ steps.matrix.outputs.matrix }}
+    steps:
+      - uses: actions/checkout@v7
+      # Upstream Nix: Determinate Nix would log in to FlakeHub with the job's
+      # OIDC token and 401 on cache.flakehub.com (no FlakeHub Cache plan).
+      - uses: DeterminateSystems/nix-installer-action@v23
+        with:
+          determinate: false
+      - id: matrix
+        name: List nixosConfigurations
+        run: |
+          # shellcheck disable=SC2016 # ${n} is Nix interpolation
+          matrix=$(nix eval --json .#nixosConfigurations --apply 'cs: map (n: {
+            host = n;
+            runner = if cs.${n}.pkgs.stdenv.hostPlatform.system == "aarch64-linux"
+                     then "ubuntu-24.04-arm" else "ubuntu-latest";
+          }) (builtins.attrNames cs)')
+          echo "$matrix" | jq .
+          echo "matrix=$matrix" >> "$GITHUB_OUTPUT"
+
+  build:
+    name: Build ${{ matrix.host }}
+    needs: hosts
+    runs-on: ${{ matrix.runner }}
+    permissions:
+      contents: read
+      id-token: write # Tailscale workload identity federation
+    strategy:
+      fail-fast: false
+      matrix:
+        include: ${{ fromJSON(needs.hosts.outputs.matrix) }}
+    steps:
+      # Must run before Nix is installed; frees runner disk for /nix.
+      - uses: wimpysworld/nothing-but-nix@v12
+
+      - uses: actions/checkout@v7
+
+      # Upstream Nix: Determinate Nix would log in to FlakeHub with the job's
+      # OIDC token and 401 on cache.flakehub.com (no FlakeHub Cache plan).
+      - uses: DeterminateSystems/nix-installer-action@v23
+        with:
+          determinate: false
+
+      - uses: DeterminateSystems/magic-nix-cache-action@v15
+        with:
+          use-flakehub: false
+
+      - name: Join tailnet
+        if: env.PUSH == 'true'
+        uses: tailscale/github-action@v4
+        with:
+          oauth-client-id: ${{ secrets.TS_OAUTH_CLIENT_ID }}
+          audience: ${{ secrets.TS_AUDIENCE }}
+          tags: tag:ci
+          ping: forge.cerberus-basilisk.ts.net
+
+      - name: Configure Attic
+        if: env.PUSH == 'true'
+        env:
+          ATTIC_TOKEN: ${{ secrets.ATTIC_TOKEN }}
+        run: |
+          nix build --inputs-from . nixpkgs#attic-client -o "$RUNNER_TEMP/attic-client"
+          echo "$RUNNER_TEMP/attic-client/bin" >> "$GITHUB_PATH"
+          "$RUNNER_TEMP/attic-client/bin/attic" login forge "$ATTIC_ENDPOINT" "$ATTIC_TOKEN"
+          # Adds forge as a substituter (+ netrc) for this runner's builds.
+          "$RUNNER_TEMP/attic-client/bin/attic" use "forge:$ATTIC_CACHE"
+
+      - name: Build
+        run: |
+          nix build -L -o result \
+            '.#nixosConfigurations.${{ matrix.host }}.config.system.build.toplevel'
+
+      - name: Push to Attic
+        if: env.PUSH == 'true'
+        # Paths signed by cache.nixos.org or already in the cache are skipped.
+        run: attic push "forge:$ATTIC_CACHE" result
