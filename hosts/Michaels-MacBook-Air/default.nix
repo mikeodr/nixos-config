@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, currentSystemUser, ... }:
 let
 in {
   # Used for backwards compatibility, please read the changelog before changing.
@@ -12,6 +12,8 @@ in {
   imports = [
     ../../modules/darwin.nix
   ];
+
+  home-manager.users.${currentSystemUser}.imports = [ ./ssh.nix ];
 
   homebrew = {
     casks = [

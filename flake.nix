@@ -59,6 +59,11 @@
       inputs.systems.follows = "nix-systems";
     };
 
+    rex = {
+      url = "https://pkgs.superlogical.com/rex/nix/snapshot.tar.gz";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     intel-gpu-exporter = {
       url = "github:mikeodr/intel-gpu-exporter-go";
       inputs.systems.follows = "nix-systems";

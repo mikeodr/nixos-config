@@ -1,8 +1,10 @@
-{ user
+{ inputs
+, user
 , email
 , signingkey
 , ...
-}: { pkgs
+}: { config
+   , pkgs
    , lib
    , ...
    }:
@@ -15,6 +17,8 @@ let
   isLinux = pkgs.stdenv.hostPlatform.isLinux;
 in
 {
+  imports = [ inputs.rex.homeManagerModules.default ];
+
   programs.home-manager.enable = true;
 
   # Manpage generation builds options.json in a way that triggers a
@@ -41,6 +45,16 @@ in
     lib = lib;
     pkgs = pkgs;
   };
+
+  # Rex terminal multiplexer: https://www.superlogical.com/rex/docs
+  programs.rex = {
+    enable = true;
+    # The ssh guard is added via programs.ssh, so it only works on hosts where
+    # home-manager manages ~/.ssh/config. Elsewhere, run `rex terminfo setup`.
+    sshGuard = config.programs.ssh.enable;
+  };
+
+  services.rex.enable = isLinux;
 
   programs.tmux = {
     enable = true;
