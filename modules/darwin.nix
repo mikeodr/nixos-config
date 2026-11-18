@@ -12,6 +12,9 @@
   ];
 
   system.primaryUser = "mikeodr";
+
+  # ssh config shared by all Macs (1Password agent, etc.)
+  home-manager.users.${currentSystemUser}.imports = [ ../home-manager/ssh-darwin.nix ];
   # Used for backwards compatibility, please read the changelog before changing.
   # $ darwin-rebuild changelog
   system.stateVersion = 5;

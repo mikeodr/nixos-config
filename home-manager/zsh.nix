@@ -68,8 +68,7 @@ in
 
   oh-my-zsh = {
     enable = true;
-    plugins = [
-      "1password"
+    plugins = lib.optional isDarwin "1password" ++ [
       "command-not-found"
       "direnv"
       "golang"
