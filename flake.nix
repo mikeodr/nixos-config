@@ -126,6 +126,10 @@
       };
 
       nixosConfigurations = {
+        forge = mkSystem "forge" {
+          system = "x86_64-linux";
+        };
+
         luna = mkSystem "luna" {
           system = "x86_64-linux";
         };
@@ -163,7 +167,7 @@
       # activation kills Tailscale SSH sessions and triggers a rollback.
       deploy.nodes =
         let
-          lanHosts = [ "luna" "sherlock" "thor" ];
+          lanHosts = [ "forge" "luna" "sherlock" "thor" ];
           # SSH aliases defined in ~/.ssh/config (keeps public IPs out of the repo)
           overrides = { tachi = "tachi-deploy"; };
           withGroups = builtins.mapAttrs (name: node: node // {
