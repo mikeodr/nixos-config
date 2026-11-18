@@ -7,6 +7,7 @@ keys:
   - &dauntless age1yj88d45sjqz4y8kg0rhs2m4ek3cdvhvnqa88edkfs4ekd3wyzduq4pps3n
   - &ghost age1wtecvfxxjk38uj438rzv8xxayjxthl0l2v5usk2yxxm34ggmpp4s32qwnh
   - &work age1gpqqrzyg0dw9fg2s2tq3epsrh8rx4ylh7qww4rsnffuf2n4ynpqsyf87du
+  - &forge age19qn6zlsz4qskhjsf4wy0nd49qu0suudcszmz8atvkkvh34498ugs9dc6ks
 creation_rules:
   - path_regex: secrets/secrets.yaml$
     key_groups:
@@ -19,6 +20,7 @@ creation_rules:
           - *dauntless
           - *ghost
           - *work
+          - *forge
   - path_regex: hosts/luna/secrets.yaml$
     key_groups:
       - age:
@@ -39,4 +41,9 @@ creation_rules:
     key_groups:
       - age:
           - *thor
+          - *darwin
+  - path_regex: hosts/forge/secrets.yaml$
+    key_groups:
+      - age:
+          - *forge
           - *darwin
