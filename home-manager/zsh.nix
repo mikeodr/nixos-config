@@ -64,6 +64,10 @@ in
 
   initContent = ''
     eval "$(starship init zsh)"
+
+    if (( $+commands[rex] )); then
+      source <(rex completion zsh)
+    fi
   '';
 
   oh-my-zsh = {
