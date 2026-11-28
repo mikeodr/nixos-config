@@ -1,6 +1,5 @@
 { pkgs, ... }: {
   imports = [
-    ./auto_update.nix
     ./ld_link.nix
   ];
 
