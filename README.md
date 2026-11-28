@@ -16,6 +16,18 @@ Secrets are encrypted with [sops-nix](https://github.com/Mic92/sops-nix) for dep
 
 Please see [Vimjoyer's Excellent Video](https://www.youtube.com/watch?v=G5f6GC7SnhU) in addition to the `sops-nix` documentation.
 
+## Inputs
+
+Inputs are pinned with [tack](https://github.com/manic-systems/tack) instead of `flake.lock`.
+Pins live in `.tack/pins.toml`, locked revisions in `.tack/pins.lock.json`.
+
+- `tack look`: show upstream drift
+- `tack update`: update all pins (`tack update <name>` for one)
+- `tack add <name> <url> --follows nixpkgs`: add a pin
+- `tack undo`: revert the last tack edit
+
+`tack` is in nixpkgs (`nix shell nixpkgs#tack`). Set `GITHUB_TOKEN` to avoid GitHub API rate limits.
+
 ## Running
 
 ### Deploying

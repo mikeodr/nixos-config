@@ -1,0 +1,113 @@
+# tack pins
+# edit by hand or with tack add / rm / alias
+# nix reads pins.lock.json
+# this file drives tack update
+
+# shorturl schemes
+# scheme rest expands rest into {path}
+[shorturls]
+# gh = "github:{path}"
+
+# all_follow maps input names to the top-level pin they follow
+# opt out per-input with exclude_follow
+[all_follow]
+systems = "nix-systems"
+flake-compat = "flake-compat"
+nixpkgs = "nixpkgs"
+
+# inputs.<name> fields
+#   url             required, shorturl ok, ?rev=<sha> pins an exact commit
+#   type            flake (default), fetch, or fixed
+#   flake           legacy false means type = "fetch"
+#   follows         { child = "pin" } override map
+#   exclude_follow  all_follow names to skip
+#   dir             subdir holding flake.nix
+#   submodules      fetch git submodules
+#   unpack          fixed-only tarball or file
+[inputs]
+
+[inputs.deploy-rs]
+url = "github:serokell/deploy-rs"
+
+[inputs.deploy-rs.follows]
+nixpkgs = "nixpkgs"
+
+[inputs.determinate]
+url = "github:DeterminateSystems/determinate"
+tag = "v3.{version}"
+
+[inputs.disko]
+url = "github:nix-community/disko"
+
+[inputs.disko.follows]
+nixpkgs = "nixpkgs"
+
+[inputs.home-manager]
+url = "github:nix-community/home-manager/release-26.05"
+
+[inputs.home-manager.follows]
+nixpkgs = "nixpkgs"
+
+[inputs.intel-gpu-exporter]
+url = "github:mikeodr/intel-gpu-exporter-go"
+
+[inputs.intel-gpu-exporter.follows]
+nixpkgs = "nixpkgs"
+
+[inputs.nix-darwin]
+url = "github:LnL7/nix-darwin/nix-darwin-26.05"
+
+[inputs.nix-darwin.follows]
+nixpkgs = "nixpkgs-darwin"
+
+[inputs.nix-homebrew]
+url = "github:zhaofengli-wip/nix-homebrew"
+
+[inputs.nix-systems]
+url = "github:nix-systems/default"
+
+[inputs.nixpkgs]
+url = "github:NixOS/nixpkgs/nixos-26.05"
+
+[inputs.nixpkgs-darwin]
+url = "github:NixOS/nixpkgs/nixpkgs-26.05-darwin"
+
+[inputs.nixpkgs-unstable]
+url = "github:nixos/nixpkgs?ref=nixos-unstable"
+
+[inputs.rex]
+url = "https://pkgs.superlogical.com/rex/nix/snapshot.tar.gz"
+
+[inputs.rex.follows]
+nixpkgs = "nixpkgs"
+
+[inputs.sops-nix]
+url = "github:Mic92/sops-nix"
+
+[inputs.sops-nix.follows]
+nixpkgs = "nixpkgs"
+
+[inputs.tailscale]
+url = "github:tailscale/tailscale"
+
+[inputs.tailscale.follows]
+nixpkgs = "nixpkgs-unstable"
+
+[inputs.tailscale-golink]
+url = "github:tailscale/golink"
+
+[inputs.tailscale-golink.follows]
+nixpkgs = "nixpkgs"
+
+[inputs.tsidp]
+url = "github:tailscale/tsidp"
+
+[inputs.tsidp.follows]
+nixpkgs = "nixpkgs-unstable"
+
+[inputs.tack]
+url = "github:manic-systems/tack"
+tag = "v2.{version}"
+
+[inputs.tack.follows]
+nixpkgs = "nixpkgs"

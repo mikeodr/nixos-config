@@ -107,7 +107,9 @@ jobs:
           # output can carry a trailing \r. An invalid token silently falls back
           # to anonymous (read-only on a public cache), so strip whitespace.
           ATTIC_TOKEN=$(printf %s "$ATTIC_TOKEN" | tr -d '[:space:]')
-          nix build --inputs-from . nixpkgs#attic-client -o "$RUNNER_TEMP/attic-client"
+          # Inputs are tack pins, not flake inputs, so --inputs-from can't see nixpkgs.
+          nix build --impure -o "$RUNNER_TEMP/attic-client" --expr \
+            '(import ./.tack { }).nixpkgs.legacyPackages.${builtins.currentSystem}.attic-client'
           echo "$RUNNER_TEMP/attic-client/bin" >> "$GITHUB_PATH"
           "$RUNNER_TEMP/attic-client/bin/attic" login forge "$ATTIC_ENDPOINT" "$ATTIC_TOKEN"
           # Adds forge as a substituter (+ netrc) for this runner's builds.

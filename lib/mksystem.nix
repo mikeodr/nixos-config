@@ -33,16 +33,13 @@ systemFunc {
   specialArgs =
     {
       inherit self;
+      tack = inputs.tack.packages.${system};
     }
     // (
       if darwin
       then { inherit darwin-unstable; }
       else {
         pkgs-unstable = import inputs.nixpkgs-unstable {
-          inherit system;
-          config.allowUnfree = true;
-        };
-        pkgs-immich = import inputs.immich {
           inherit system;
           config.allowUnfree = true;
         };

@@ -1,82 +1,13 @@
 {
   description = "Nix configs for my systems, servers and macs";
 
-  inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-26.05";
-    nixpkgs-unstable.url = "github:nixos/nixpkgs?ref=nixos-unstable";
-    immich.url = "github:nixos/nixpkgs?ref=master";
-    nixpkgs-darwin.url = "github:NixOS/nixpkgs/nixpkgs-26.05-darwin";
-    nix-systems.url = "github:nix-systems/default";
-
-    determinate = {
-      url = "https://flakehub.com/f/DeterminateSystems/determinate/3";
-    };
-
-    deploy-rs = {
-      url = "github:serokell/deploy-rs";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
-    disko = {
-      url = "github:nix-community/disko";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
-    nix-darwin = {
-      url = "github:LnL7/nix-darwin/nix-darwin-26.05";
-      inputs.nixpkgs.follows = "nixpkgs-darwin";
-    };
-
-    nix-homebrew = {
-      url = "github:zhaofengli-wip/nix-homebrew";
-    };
-
-    home-manager = {
-      url = "github:nix-community/home-manager/release-26.05";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
-    sops-nix = {
-      url = "github:Mic92/sops-nix";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
-    tailscale = {
-      url = "github:tailscale/tailscale";
-      inputs.nixpkgs.follows = "nixpkgs-unstable";
-      inputs.systems.follows = "nix-systems";
-    };
-
-    tailscale-golink = {
-      url = "github:tailscale/golink";
-      inputs.nixpkgs.follows = "nixpkgs";
-      inputs.systems.follows = "nix-systems";
-    };
-
-    tsidp = {
-      url = "github:tailscale/tsidp";
-      inputs.nixpkgs.follows = "nixpkgs-unstable";
-      inputs.systems.follows = "nix-systems";
-    };
-
-    rex = {
-      url = "https://pkgs.superlogical.com/rex/nix/snapshot.tar.gz";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
-    intel-gpu-exporter = {
-      url = "github:mikeodr/intel-gpu-exporter-go";
-      inputs.systems.follows = "nix-systems";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-  };
-
+  # Inputs are pinned with tack (https://github.com/manic-systems/tack):
+  # see .tack/pins.toml, update with `tack update`.
   outputs =
-    { nixpkgs
-    , self
-    , ...
-    } @ inputs:
+    { self, ... } @ args:
     let
+      inputs = (import ./.tack { overrides = args.tackOverrides or { }; }) // { inherit self; };
+      nixpkgs = inputs.nixpkgs;
       lib = nixpkgs.lib;
 
       overlays = [

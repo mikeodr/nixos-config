@@ -1,0 +1,168 @@
+{
+  "$declared": {
+    "deploy-rs": "github:serokell/deploy-rs",
+    "determinate": "github:DeterminateSystems/determinate",
+    "disko": "github:nix-community/disko",
+    "home-manager": "github:nix-community/home-manager/release-26.05",
+    "intel-gpu-exporter": "github:mikeodr/intel-gpu-exporter-go",
+    "nix-darwin": "github:LnL7/nix-darwin/nix-darwin-26.05",
+    "nix-homebrew": "github:zhaofengli-wip/nix-homebrew",
+    "nix-systems": "github:nix-systems/default",
+    "nixpkgs": "github:NixOS/nixpkgs/nixos-26.05",
+    "nixpkgs-darwin": "github:NixOS/nixpkgs/nixpkgs-26.05-darwin",
+    "nixpkgs-unstable": "github:nixos/nixpkgs?ref=nixos-unstable",
+    "rex": "https://pkgs.superlogical.com/rex/nix/snapshot.tar.gz",
+    "sops-nix": "github:Mic92/sops-nix",
+    "tack": "github:manic-systems/tack",
+    "tailscale": "github:tailscale/tailscale",
+    "tailscale-golink": "github:tailscale/golink",
+    "tsidp": "github:tailscale/tsidp"
+  },
+  "deploy-rs": {
+    "type": "github",
+    "owner": "serokell",
+    "repo": "deploy-rs",
+    "rev": "1cec0527bd09074bbee6d4461900ce5d58267217",
+    "narHash": "sha256-eINUtQW48bf9G3EYprthHMll8VDKxaXQP52TZFuwMmE=",
+    "lastModified": 1792446739
+  },
+  "determinate": {
+    "type": "github",
+    "owner": "DeterminateSystems",
+    "repo": "determinate",
+    "rev": "49968eb8f0f1a3c9c8790e9ead7ce7b5196f6c0f",
+    "narHash": "sha256-cIFgw0dKxzQULB8OSVLsXSrKfPfWzfzJA17rss9dqCg=",
+    "lastModified": 1795047249,
+    "tag": "v3.24.3",
+    "version": "3.24.3"
+  },
+  "disko": {
+    "type": "github",
+    "owner": "nix-community",
+    "repo": "disko",
+    "rev": "44761d4f745b95e037458a0e57133c5700c8e320",
+    "narHash": "sha256-D35n2Q2v1KrlF9LS/pFl8Z3EBMJW6qvPw5q4HMbXXLg=",
+    "lastModified": 1795168368
+  },
+  "flake-compat": {
+    "type": "github",
+    "owner": "NixOS",
+    "repo": "flake-compat",
+    "rev": "5edf11c44bc78a0d334f6334cdaf7d60d732daab",
+    "narHash": "sha256-vNpUSpF5Nuw8xvDLj2KCwwksIbjua2LZCqhV1LNRDns=",
+    "lastModified": 1767039857
+  },
+  "home-manager": {
+    "type": "github",
+    "owner": "nix-community",
+    "repo": "home-manager",
+    "rev": "6480d7d8533b88c78cc6dcda395ab89cd546e450",
+    "narHash": "sha256-XYoMPsqRFZ6jOaYI1KAAu8fzqif4tkCX8mhEKrViDXQ=",
+    "lastModified": 1795325060
+  },
+  "intel-gpu-exporter": {
+    "type": "github",
+    "owner": "mikeodr",
+    "repo": "intel-gpu-exporter-go",
+    "rev": "07db847c0c1875689ddce03fad353eeb366edd4d",
+    "narHash": "sha256-ijUxqoSPlcWueT1Ka5vYJbt+xl/7YLoyWzUJ6oDUgC0=",
+    "lastModified": 1794941026
+  },
+  "nix-darwin": {
+    "type": "github",
+    "owner": "LnL7",
+    "repo": "nix-darwin",
+    "rev": "d31953cf55f9027a56e9be938daf5db8c5655663",
+    "narHash": "sha256-53jIZEWNh96irEXhsMZFoNhLJgGSU3nYl1i4wFQHAsU=",
+    "lastModified": 1792800221
+  },
+  "nix-homebrew": {
+    "type": "github",
+    "owner": "zhaofengli-wip",
+    "repo": "nix-homebrew",
+    "rev": "b279e781fbfede43b2b20e7278cf3c5312ca3301",
+    "narHash": "sha256-qpfNQ5tFivEE9t7CsQcir3FTCr6zYji53YS9pm3AzyA=",
+    "lastModified": 1795755327
+  },
+  "nix-systems": {
+    "type": "github",
+    "owner": "nix-systems",
+    "repo": "default",
+    "rev": "d36eeed142f88b5a636f2e3856a53c61654cf29b",
+    "narHash": "sha256-uuanbkFk8a313Zfrxdcz8Us/yQtaxNnKJtX8v0ZPpd8=",
+    "lastModified": 1791244623
+  },
+  "nixpkgs": {
+    "type": "github",
+    "owner": "NixOS",
+    "repo": "nixpkgs",
+    "rev": "5b31ff946309736077f0c4ee23bb85d0a0a1c181",
+    "narHash": "sha256-CiSQ3/bsP5gXG2SQzOgwhqwl9MkBRhQQqJd3YmpaYL4=",
+    "lastModified": 1795502373
+  },
+  "nixpkgs-darwin": {
+    "type": "github",
+    "owner": "NixOS",
+    "repo": "nixpkgs",
+    "rev": "b79fb186802610f5363769394ba4a4b921ea15c9",
+    "narHash": "sha256-JBEgYBIuOlup7DBbXC6B1liz98eNSgtOKoFGqKryXU4=",
+    "lastModified": 1795548719
+  },
+  "nixpkgs-unstable": {
+    "type": "github",
+    "owner": "nixos",
+    "repo": "nixpkgs",
+    "rev": "2786a2a72088ecf32aea5b3ec52099e6a7cff78f",
+    "narHash": "sha256-f/VVvxf5RsQgWVhUtefoca5ktVg0DA2bnkMOcmSnozo=",
+    "lastModified": 1795234589
+  },
+  "rex": {
+    "type": "tarball",
+    "url": "https://pkgs.superlogical.com/rex/nix/snapshot/0.1.0-snapshot.2699.tar.gz",
+    "narHash": "sha256-KfOAa4Dd/LLnjFdAKhea8MgEHkruaeOjdD71Pi+h/6Q=",
+    "lastModified": 1795809254
+  },
+  "sops-nix": {
+    "type": "github",
+    "owner": "Mic92",
+    "repo": "sops-nix",
+    "rev": "d5abe5e53200ad48254e8e6bd95e6cef94e66577",
+    "narHash": "sha256-2p8/wnENYHU2Z79Ir/rpq+V1sMI9mSD6xGAlvlbVBUY=",
+    "lastModified": 1795471345
+  },
+  "tack": {
+    "type": "github",
+    "owner": "manic-systems",
+    "repo": "tack",
+    "rev": "393ed432b3321a44a87e8a588552b51d5dad8f6e",
+    "narHash": "sha256-CUECELH3ty3Imlmbt88IC+ZkUxHPyd3FHuN9WWG4P+c=",
+    "lastModified": 1795730888,
+    "public": true,
+    "tag": "v2.0.0",
+    "version": "2.0.0"
+  },
+  "tailscale": {
+    "type": "github",
+    "owner": "tailscale",
+    "repo": "tailscale",
+    "rev": "72a7f41564816f6e3070c3bc87764ab54167e2cd",
+    "narHash": "sha256-qPbIWnLlpLOkZC8aZJCF3GQ4W0h3uczGbZVO2k2xUR0=",
+    "lastModified": 1795712337
+  },
+  "tailscale-golink": {
+    "type": "github",
+    "owner": "tailscale",
+    "repo": "golink",
+    "rev": "9f64a6d46c772b056e0c41eb2d143d69c7957757",
+    "narHash": "sha256-BzWU0QXh/gdtSMFNGqlEhPislTIR06rynbHNfjTE/rk=",
+    "lastModified": 1795737513
+  },
+  "tsidp": {
+    "type": "github",
+    "owner": "tailscale",
+    "repo": "tsidp",
+    "rev": "3c4364fa73369fc641652272b55f67c7fb73fbca",
+    "narHash": "sha256-1tWxqV+V4jbdhVVMQ+oxmIArs6puEK9UNAdLlT38pE0=",
+    "lastModified": 1794976606
+  }
+}
